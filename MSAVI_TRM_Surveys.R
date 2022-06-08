@@ -288,6 +288,10 @@ tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
 tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
 equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
 
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 # Calculate OLS
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100

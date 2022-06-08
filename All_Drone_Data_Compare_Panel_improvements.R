@@ -316,6 +316,15 @@ x <- as.vector(SecondRunBkdSeqresampGreen)
 y <- as.vector(TRM_1_seqFootprintSpectralonReflectance$green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -327,6 +336,8 @@ p1sg <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -346,6 +357,15 @@ x <- as.vector(SecondRunBkdSeqresampRed)
 y <- as.vector(TRM_1_seqFootprintSpectralonReflectance$red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -357,6 +377,8 @@ p1sr <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -376,6 +398,15 @@ x <- as.vector(SecondRunBkdSeqresampRedEdge)
 y <- as.vector(TRM_1_seqFootprintSpectralonReflectance$redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -387,6 +418,8 @@ p1sre <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -406,6 +439,15 @@ x <- as.vector(SecondRunBkdSeqresampNIR)
 y <- as.vector(TRM_1_seqFootprintSpectralonReflectance$NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -417,6 +459,8 @@ p1sni <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -436,6 +480,16 @@ x <- as.vector(SecondRunBkdSeqresampNDVI)
 y <- as.vector(TRM_1_seqFootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -447,6 +501,8 @@ p1snv <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -475,6 +531,16 @@ x <- as.vector(SecondRunBkdMREresampBlue)
 y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$blue)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -486,6 +552,8 @@ p1mb <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -505,6 +573,16 @@ x <- as.vector(SecondRunBkdMREresampGreen)
 y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -516,6 +594,8 @@ p1mg <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -535,6 +615,15 @@ x <- as.vector(SecondRunBkdMREresampRed)
 y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -546,6 +635,8 @@ p1mr <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -565,6 +656,16 @@ x <- as.vector(SecondRunBkdMREresampRedEdge)
 y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -576,6 +677,8 @@ p1mre <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -595,6 +698,16 @@ x <- as.vector(SecondRunBkdMREresampNIR)
 y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -606,6 +719,8 @@ p1mni <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -625,6 +740,16 @@ x <- as.vector(SecondRunBkdMREresampNDVI)
 y <- as.vector(TRM_1_MREFootprintNDVI$TRM_1_MRE_2lines_SPE_index_ndvi)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -636,6 +761,8 @@ p1mnv <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -676,6 +803,16 @@ x <- as.vector(SecondRunBkdSeqresampGreen)
 y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -687,6 +824,8 @@ p2sg <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -706,6 +845,16 @@ x <- as.vector(SecondRunBkdSeqresampRed)
 y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -717,6 +866,8 @@ p2sr <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -736,6 +887,16 @@ x <- as.vector(SecondRunBkdSeqresampRedEdge)
 y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -747,6 +908,8 @@ p2sre <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -766,6 +929,16 @@ x <- as.vector(SecondRunBkdSeqresampNIR)
 y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -777,6 +950,8 @@ p2sni <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -796,6 +971,16 @@ x <- as.vector(SecondRunBkdSeqresampNDVI)
 y <- as.vector(TRM_2_seqFootprintSpectralonNDVI$TRM_2_SEQ_proj2lines_index_ndvi)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -807,6 +992,8 @@ p2snv <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -837,6 +1024,16 @@ x <- as.vector(SecondRunBkdMREresampBlue)
 y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$blue)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -848,6 +1045,8 @@ p2mb <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -867,6 +1066,16 @@ x <- as.vector(SecondRunBkdMREresampGreen)
 y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -878,6 +1087,8 @@ p2mg <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -897,6 +1108,16 @@ x <- as.vector(SecondRunBkdMREresampRed)
 y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -908,6 +1129,8 @@ p2mr <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -928,6 +1151,16 @@ y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
 lmres <- lm(y~x)
@@ -938,6 +1171,8 @@ p2mre <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -958,6 +1193,16 @@ y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
 lmres <- lm(y~x)
@@ -968,6 +1213,8 @@ p2mni <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -987,6 +1234,16 @@ x <- as.vector(SecondRunBkdMREresampNDVI)
 y <- as.vector(TRM_2_MREFootprintNDVI$TRM_2_MRE_proj2lines_index_ndvi)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -998,6 +1255,8 @@ p2mnv <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -1028,6 +1287,16 @@ plot(p2mnv)
   y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$green)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
   
   MADval <- mean(abs(x-y))
   MADrel <- MADval/mean(x)*100
@@ -1039,6 +1308,8 @@ plot(p2mnv)
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
     #theme(text = element_text(size=20))+
     scale_color_identity() +
     theme_fancy() +
@@ -1058,6 +1329,16 @@ plot(p2mnv)
   y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$red)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
   
   MADval <- mean(abs(x-y))
   MADrel <- MADval/mean(x)*100
@@ -1069,6 +1350,8 @@ plot(p2mnv)
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
     #theme(text = element_text(size=20))+
     scale_color_identity() +
     theme_fancy() +
@@ -1088,6 +1371,16 @@ plot(p2mnv)
   y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$redEdge)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
   
   MADval <- mean(abs(x-y))
   MADrel <- MADval/mean(x)*100
@@ -1099,6 +1392,8 @@ plot(p2mnv)
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
     #theme(text = element_text(size=20))+
     scale_color_identity() +
     theme_fancy() +
@@ -1118,6 +1413,16 @@ plot(p2mnv)
   y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$NIR)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
   
   MADval <- mean(abs(x-y))
   MADrel <- MADval/mean(x)*100
@@ -1129,6 +1434,8 @@ plot(p2mnv)
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
     #theme(text = element_text(size=20))+
     scale_color_identity() +
     theme_fancy() +
@@ -1148,6 +1455,16 @@ plot(p2mnv)
   y <- as.vector(TRM_3_seqFootprintSpectralonNDVI$TRM_3_SEQ_2lines_SPE_index_ndvi)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
   
   MADval <- mean(abs(x-y))
   MADrel <- MADval/mean(x)*100
@@ -1159,6 +1476,8 @@ plot(p2mnv)
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
     #theme(text = element_text(size=20))+
     scale_color_identity() +
     theme_fancy() +
@@ -1190,6 +1509,16 @@ x <- as.vector(SecondRunBkdMREresampBlue)
 y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$blue)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -1201,6 +1530,8 @@ p3mb <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -1220,6 +1551,16 @@ x <- as.vector(SecondRunBkdMREresampGreen)
 y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -1231,6 +1572,8 @@ p3mg <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -1250,6 +1593,16 @@ x <- as.vector(SecondRunBkdMREresampRed)
 y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -1261,6 +1614,8 @@ p3mr <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -1280,6 +1635,16 @@ x <- as.vector(SecondRunBkdMREresampRedEdge)
 y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -1291,6 +1656,8 @@ p3mre <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -1310,6 +1677,16 @@ x <- as.vector(SecondRunBkdMREresampNIR)
 y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -1321,6 +1698,8 @@ p3mni <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -1340,6 +1719,16 @@ x <- as.vector(SecondRunBkdMREresampNDVI)
 y <- as.vector(TRM_3_MREFootprintNDVI$TRM_3_MRE_SPE_2lines_index_ndvi)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -1351,6 +1740,8 @@ p3mnv <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -1382,6 +1773,16 @@ x <- as.vector(FirstRunBkdSeqresampGreen)
 y <- as.vector(ARE_1_seqFootprintSpectralonReflectance$green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -1393,6 +1794,8 @@ pasg <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -1412,6 +1815,16 @@ x <- as.vector(FirstRunBkdSeqresampRed)
 y <- as.vector(ARE_1_seqFootprintSpectralonReflectance$red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -1423,6 +1836,8 @@ pasr <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -1442,6 +1857,16 @@ x <- as.vector(FirstRunBkdSeqresampRedEdge)
 y <- as.vector(ARE_1_seqFootprintSpectralonReflectance$redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -1453,6 +1878,8 @@ pasre <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -1472,6 +1899,16 @@ x <- as.vector(FirstRunBkdSeqresampNIR)
 y <- as.vector(ARE_1_seqFootprintSpectralonReflectance$NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -1483,6 +1920,8 @@ pasni <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -1502,6 +1941,16 @@ x <- as.vector(FirstRunBkdSeqresampNDVI)
 y <- as.vector(ARE_1_seqFootprintSpectralonNDVI$ARE_1_SEQ_2lines_SPE_index_ndvi)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -1513,6 +1962,8 @@ pasnv <- ggplot(df) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -1543,6 +1994,16 @@ pasnv <- ggplot(df) +
   y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$blue)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
   
   MADval <- mean(abs(x-y))
   MADrel <- MADval/mean(x)*100
@@ -1554,6 +2015,8 @@ pasnv <- ggplot(df) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
     #theme(text = element_text(size=20))+
     scale_color_identity() +
     theme_fancy() +
@@ -1573,6 +2036,16 @@ pasnv <- ggplot(df) +
   y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$green)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
   
   MADval <- mean(abs(x-y))
   MADrel <- MADval/mean(x)*100
@@ -1584,6 +2057,8 @@ pasnv <- ggplot(df) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
     #theme(text = element_text(size=20))+
     scale_color_identity() +
     theme_fancy() +
@@ -1603,6 +2078,16 @@ pasnv <- ggplot(df) +
   y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$red)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
   
   MADval <- mean(abs(x-y))
   MADrel <- MADval/mean(x)*100
@@ -1614,6 +2099,8 @@ pasnv <- ggplot(df) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
     #theme(text = element_text(size=20))+
     scale_color_identity() +
     theme_fancy() +
@@ -1633,6 +2120,16 @@ pasnv <- ggplot(df) +
   y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$redEdge)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
   
   MADval <- mean(abs(x-y))
   MADrel <- MADval/mean(x)*100
@@ -1644,6 +2141,8 @@ pasnv <- ggplot(df) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
     #theme(text = element_text(size=20))+
     scale_color_identity() +
     theme_fancy() +
@@ -1663,6 +2162,16 @@ pasnv <- ggplot(df) +
   y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$NIR)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
   
   MADval <- mean(abs(x-y))
   MADrel <- MADval/mean(x)*100
@@ -1674,6 +2183,8 @@ pasnv <- ggplot(df) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
     #theme(text = element_text(size=20))+
     scale_color_identity() +
     theme_fancy() +
@@ -1693,6 +2204,16 @@ pasnv <- ggplot(df) +
   y <- as.vector(ARE_1_MREFootprintNDVI$ARE_1_MRE_2lines_SPE_index_ndvi)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
   
   MADval <- mean(abs(x-y))
   MADrel <- MADval/mean(x)*100
@@ -1704,6 +2225,8 @@ pasnv <- ggplot(df) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
     #theme(text = element_text(size=20))+
     scale_color_identity() +
     theme_fancy() +
