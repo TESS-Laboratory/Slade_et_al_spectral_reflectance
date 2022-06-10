@@ -110,6 +110,16 @@ x <- as.vector(Sentinel_Grid_Reflectance$blue)
 y <- as.vector(TRM_1_MRE_Grid_Reflectance$blue)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -119,8 +129,10 @@ r2val <- summary(lmres)$r.squTRMd
 senmb <- ggplot(df) +
   geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
-  geom_text(aes(x=0.0,y=0.2),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.5)+
-  geom_text(aes(x=0.0,y=0.17),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.5)+
+  geom_text(aes(x=0.0,y=0.2),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.17),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.13),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.11),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -139,6 +151,16 @@ x <- as.vector(Sentinel_Grid_Reflectance$green)
 y <- as.vector(TRM_1_MRE_Grid_Reflectance$green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -148,8 +170,10 @@ r2val <- summary(lmres)$r.squTRMd
 senmg <- ggplot(df) +
   geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
-  geom_text(aes(x=0.0,y=0.2),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.5)+
-  geom_text(aes(x=0.0,y=0.17),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.5)+
+  geom_text(aes(x=0.0,y=0.2),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.17),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.13),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.11),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -168,6 +192,17 @@ x <- as.vector(Sentinel_Grid_Reflectance$red)
 y <- as.vector(TRM_1_MRE_Grid_Reflectance$red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -177,8 +212,10 @@ r2val <- summary(lmres)$r.squTRMd
 senmr <- ggplot(df) +
   geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
-  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.5)+
-  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.5)+
+  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.23),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.21),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -197,6 +234,16 @@ x <- as.vector(Sentinel_Grid_Reflectance$NIR)
 y <- as.vector(TRM_1_MRE_Grid_Reflectance$NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -206,8 +253,10 @@ r2val <- summary(lmres)$r.squTRMd
 senmni <- ggplot(df) +
   geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
-  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.5)+
-  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.5)+
+  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.23),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.21),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -226,6 +275,16 @@ x <- as.vector(Sentinel_Grid_Reflectance$NIR)
 y <- as.vector(TRM_1_SEQ_Grid_Reflectance$NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -235,8 +294,10 @@ r2val <- summary(lmres)$r.squTRMd
 sensni <- ggplot(df) +
   geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
-  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.5)+
-  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.5)+
+  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.23),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.21),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -255,6 +316,16 @@ x <- as.vector(Sentinel_Grid_Reflectance$red)
 y <- as.vector(TRM_1_SEQ_Grid_Reflectance$red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -264,8 +335,10 @@ r2val <- summary(lmres)$r.squTRMd
 sensr <- ggplot(df) +
   geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
-  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.5)+
-  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.5)+
+  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.23),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.21),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -284,6 +357,16 @@ x <- as.vector(Sentinel_Grid_Reflectance$green)
 y <- as.vector(TRM_1_SEQ_Grid_Reflectance$green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -293,8 +376,10 @@ r2val <- summary(lmres)$r.squTRMd
 sensg <- ggplot(df) +
   geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
-  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.5)+
-  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.5)+
+  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.23),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.21),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -313,6 +398,16 @@ x <- as.vector(Sentinel_Grid_Reflectance_NDVI)
 y <- as.vector(TRM_1_SEQ_Grid_Reflectance_NDVI)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
@@ -322,8 +417,10 @@ r2val <- summary(lmres)$r.squTRMd
 sensvi <- ggplot(df) +
   geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
-  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.5)+
-  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.5)+
+  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.23),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.21),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -343,6 +440,16 @@ y <- as.vector(TRM_1_MRE_Grid_Reflectance_NDVI)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 
+
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
 lmres <- lm(y~x)
@@ -351,8 +458,10 @@ r2val <- summary(lmres)$r.squTRMd
 senmvi <- ggplot(df) +
   geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
-  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.5)+
-  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.5)+
+  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.23),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.21),label=equation,hjust='left', size=2.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +

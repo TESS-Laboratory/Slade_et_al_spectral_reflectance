@@ -307,33 +307,33 @@ lines(1:110, MeanFwdMREresampNDVI,col='black')
 lines(1:110, MeanFwdSeqresampNDVI,col='red')
 legend(20, 0.4, legend=c("Mean FWd Runs MRE", "Mean FWd Runs SEQ"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
-title("Tramway Mean Forward Runs NDVI comparison of resampling for Sequoia and MRE")
+title("Tramway Mean Forward Runs NDVI comparison of resampling for Sequoia and MRE band wavelengths")
 
-#-----9. TRM 1 SEQ Drone Survey and Tramway Data Plots (Second run Backwards) --------
+#-----9. TRM 1 SEQ Drone Survey and Tramway Data Plots Mean Forward Runs --------
 
 #SEQ NDVI VS TRAMWAY NDVI PLOT
-plot(1:110, SecondRunBkdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
-lines(1:110, SecondRunBkdSeqresampNDVI,col='black')
+plot(1:110, MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, MeanFwdSeqresampNDVI,col='black')
 lines(1:110, TRM_1_seqFootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi,col='red')
 legend(20, 0.4, legend=c("Tramway Spectrometer NDVI", "Sequoia NDVI"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
-title("TRM1 SEQ Spectralon - Tramway Second Run Backwards")
+title("TRM1 SEQ Spectralon - Tramway Data Mean")
 
 
 
 #TRM 1 SEQ NDVI VS TRM 1 MRE NDVI PLOT
-plot(1:110, SecondRunFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+plot(1:110, MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
 lines(1:110, TRM_1_MREFootprintNDVI$TRM_1_MRE_2lines_SPE_index_ndvi ,col= 'black')
 lines(1:110, TRM_1_seqFootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi,col='red')
 #lines(1:110, SecondRunFwdSeqresampNDVI,col='green')
 legend(20, 0.4, legend=c("MRE NDVI", "Sequoia NDVI"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
-title("TRM1 SEQ Spectralon TRM1 MRE Spectralon")
+title("TRM1 SEQ Drone Survey and  TRM1 MRE Drone Survey")
 
 
-# Plot Tramway Run 2 Bkd Sequoia TRM1 Green Band
+# Plot Tramway Mean Fwd Sequoia TRM1 Green Band
 
-x <- as.vector(SecondRunBkdSeqresampGreen)
+x <- as.vector(MeanFwdSeqresampGreen)
 y <- as.vector(TRM_1_seqFootprintSpectralonReflectance$green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -364,7 +364,7 @@ p1sg <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with Sequoia \n Survey TRM1 Green Band")+
+  ggtitle("Comparison of Mean Tramway Data with Sequoia \n Survey TRM1 Green Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia Green band')+
   ylab('Reflectance Sequioa Green Band')+
@@ -372,9 +372,9 @@ p1sg <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-# Plot Tramway Run 2 Bkd Sequoia TRM1 Red Band
+# Plot Tramway Mean Data against Sequoia TRM1 Red Band
 
-x <- as.vector(SecondRunBkdSeqresampRed)
+x <- as.vector(MeanFwdSeqresampRed)
 y <- as.vector(TRM_1_seqFootprintSpectralonReflectance$red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -405,7 +405,7 @@ p1sr <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with Sequoia Survey \n TRM1 Red Band")+
+  ggtitle("Comparison of Tramway Mean Data with Sequoia Survey \n TRM1 Red Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia Red band')+
   ylab('Reflectance Sequioa Red Band')+
@@ -413,9 +413,9 @@ p1sr <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-# Plot Tramway Run 2 Bkd Sequoia TRM1 RedEdge Band
+# Plot Tramway Meant data compared Sequoia TRM1 RedEdge Band
 
-x <- as.vector(SecondRunBkdSeqresampRedEdge)
+x <- as.vector(MeanFwdSeqresampRedEdge)
 y <- as.vector(TRM_1_seqFootprintSpectralonReflectance$redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -446,17 +446,17 @@ p1sre <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with Sequoia Survey \n TRM1 RedEdge Band")+
+  ggtitle("Comparison of Tramway Mean Data with Sequoia Survey \n TRM1 RedEdge Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia RedEdge band')+
   ylab('Reflectance Sequioa RedEdge Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
 
-#Plot Tramway Run 2 Bkd Sequoia TRM1 NIR Band
 
-x <- as.vector(SecondRunBkdSeqresampNIR)
+#Plot Tramway Mean Data Compared with Sequoia TRM1 NIR Band
+
+x <- as.vector(MeanFwdSeqresampNIR)
 y <- as.vector(TRM_1_seqFootprintSpectralonReflectance$NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -487,7 +487,7 @@ p1sni <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with Sequoia \n Survey TRM1 NIR Band")+
+  ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey TRM1 NIR Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia NIR band')+
   ylab('Reflectance Sequioa NIR Band')+
@@ -495,9 +495,9 @@ p1sni <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-#Plot Tramway Run 2 Bkd Sequoia TRM1 NDVI
+#Plot Tramway Mean Data compared with Sequoia TRM1 NDVI
 
-x <- as.vector(SecondRunBkdSeqresampNDVI)
+x <- as.vector(MeanFwdSeqresampNDVI)
 y <- as.vector(TRM_1_seqFootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -529,26 +529,26 @@ p1snv <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward \n with Sequoia Survey TRM1 NDVI")+
+  ggtitle("Comparison of Tramway Mean Data \n with Sequoia Survey TRM1 NDVI")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia NDVI')+
   ylab('Sequoia NDVI')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
-#----10. TRM 1 MRE Drone Survey and Tramway (Second run backwards)------
+#----10. TRM 1 MRE Drone Survey and Tramway Mean Forward Runs------
 {
 #MRE NDVI VS TRAMWAY NDVI PLOT (2nd run fwd)
-plot(1:110, SecondRunBkdMREresampNDVI,ylim=c(0,0.6),type='n',xlab='[m]',ylab='NDVI')
-lines(1:110, SecondRunBkdMREresampNDVI,col='black')
+plot(1:110, MeanFwdMREresampNDVI,ylim=c(0,0.6),type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, MeanFwdMREresampNDVI,col='black')
 lines(1:110, TRM_1_MREFootprintNDVI$TRM_1_MRE_2lines_SPE_index_ndvi ,col='red')
 legend(20, 0.6, legend=c("Tramway Spectrometer NDVI", "MRE NDVI"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
-title("TRM1 MRE Spectralon - Tramway Second Run Backwards")
+title("TRM1 MRE Drone Survey - Tramway Mean Data")
 
-# Plot Tramway Run 2 Bkd MRE TRM1 Blue Band
+# Plot Tramway Mean Data compared with MRE TRM1 Blue Band
 
-x <- as.vector(SecondRunBkdMREresampBlue)
+x <- as.vector(MeanFwdMREresampBlue)
 y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$blue)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -580,7 +580,7 @@ p1mb <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with MRE \n Survey TRM1 Blue Band")+
+  ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM1 Blue Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE Blue band')+
   ylab('Reflectance MRE Blue Band')+
@@ -588,9 +588,9 @@ p1mb <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-# Plot Tramway Run 2 Bkd MRE TRM1 Green Band
+# Plot Tramway Mean Data Compared with  MRE TRM1 Green Band
 
-x <- as.vector(SecondRunBkdMREresampGreen)
+x <- as.vector(MeanFwdMREresampGreen)
 y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -622,7 +622,7 @@ p1mg <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with MRE \n Survey TRM1 Green Band")+
+  ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM1 Green Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE Green band')+
   ylab('Reflectance MRE Green Band')+
@@ -630,9 +630,9 @@ p1mg <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-# Plot Tramway Run 2 Bkd MRE TRM1 Red Band
+# Plot Tramway Mean Data compared with MRE TRM1 Red Band
 
-x <- as.vector(SecondRunBkdMREresampRed)
+x <- as.vector(MeanFwdMREresampRed)
 y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -663,7 +663,7 @@ p1mr <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with MRE Survey \n TRM1 Red Band")+
+  ggtitle("Comparison of Tramway Mean Data with MRE Survey \n TRM1 Red Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE Red band')+
   ylab('Reflectance MRE Red Band')+
@@ -671,9 +671,9 @@ p1mr <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-# Plot Tramway Run 2 Bkd MRE TRM1 RedEdge Band
+# Plot Tramway Mean Data compared with MRE TRM1 RedEdge Band
 
-x <- as.vector(SecondRunBkdMREresampRedEdge)
+x <- as.vector(MeanFwdMREresampRedEdge)
 y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -705,7 +705,7 @@ p1mre <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with MRE Survey \n TRM1 RedEdge Band")+
+  ggtitle("Comparison of Tramway Mean Data with MRE Survey \n TRM1 RedEdge Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE RedEdge band')+
   ylab('Reflectance MRE RedEdge Band')+
@@ -713,9 +713,9 @@ p1mre <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-#Plot Tramway Run 2 Bkd MRE TRM1 NIR Band
+#Plot Tramway Mean Data Compared with MRE TRM1 NIR Band
 
-x <- as.vector(SecondRunBkdMREresampNIR)
+x <- as.vector(MeanFwdMREresampNIR)
 y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -747,7 +747,7 @@ p1mni <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with MRE \n Survey TRM1 NIR Band")+
+  ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM1 NIR Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE NIR band')+
   ylab('Reflectance MRE NIR Band')+
@@ -755,9 +755,9 @@ p1mni <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-#Plot Tramway Run 2 Bkd MRE TRM1 NDVI
+#Plot Tramway Mean Data compared with MRE TRM1 NDVI
 
-x <- as.vector(SecondRunBkdMREresampNDVI)
+x <- as.vector(MeanFwdMREresampNDVI)
 y <- as.vector(TRM_1_MREFootprintNDVI$TRM_1_MRE_2lines_SPE_index_ndvi)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -789,7 +789,7 @@ p1mnv <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward \n with MRE Survey TRM1 NDVI")+
+  ggtitle("Comparison of Tramway Mean Data \n with MRE Survey TRM1 NDVI")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE NDVI')+
   ylab('MRE NDVI')+
@@ -798,29 +798,29 @@ p1mnv <- ggplot(df) +
 #plot(pmnv)
 }
 
-#-----11. TRM 2 Sequoia Drone Survey and Tramway (Second Run Backwards) Data Plots--------
+#-----11. TRM 2 Sequoia Drone Survey and Tramway Mean Data Plots--------
 {
 #TRM 2 SEQ NDVI VS TRM 2 MRE PLOT
-plot(1:110, SecondRunFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+plot(1:110, MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
 lines(1:110, TRM_2_MREFootprintNDVI$TRM_2_MRE_proj2lines_index_ndvi ,col= 'black')
 lines(1:110, TRM_2_seqFootprintSpectralonNDVI$TRM_2_SEQ_proj2lines_index_ndvi,col='red')
 #lines(1:110, SecondRunFwdSeqresampNDVI,col='green')
 legend(20, 0.4, legend=c("MRE NDVI", "Sequoia NDVI"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
-title("TRM2 SEQ Spectralon TRM2 MRE Spectralon")
+title("TRM2 SEQ compared with TRM2 MRE ")
 
-#TRM 2 SEQ Spectralon 2nd run Bk
-plot(1:110, SecondRunBkdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
-lines(1:110, SecondRunBkdSeqresampNDVI,col='black')
+#TRM 2 SEQ Spectralon Mean Forward Tramway
+plot(1:110, MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, MeanFwdSeqresampNDVI,col='black')
 lines(1:110, TRM_2_seqFootprintSpectralonNDVI$TRM_2_SEQ_proj2lines_index_ndvi,col='red')
 legend(20, 0.4, legend=c("Tramway Spectrometer NDVI", "Sequoia NDVI"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
-title("TRM2 Sequioa Spectralon - Tramway Second Run Back")
+title("TRM2 Sequioa Drone Survey - Tramway Mean Data")
 
 
-# Plot Tramway Run 2 Bkd Sequoia TRM2 Green Band
+# Plot Tramway Mean Data compared with Sequoia TRM2 Green Band
 
-x <- as.vector(SecondRunBkdSeqresampGreen)
+x <- as.vector(MeanFwdSeqresampGreen)
 y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -852,7 +852,7 @@ p2sg <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with Sequoia \n Survey TRM2 Green Band")+
+  ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey TRM2 Green Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia Green band')+
   ylab('Reflectance Sequioa Green Band')+
@@ -860,9 +860,9 @@ p2sg <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-# Plot Tramway Run 2 Bkd Sequoia TRM2 Red Band
+# Plot Tramway Mean Data compared with Sequoia TRM2 Red Band
 
-x <- as.vector(SecondRunBkdSeqresampRed)
+x <- as.vector(MeanFwdSeqresampRed)
 y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -894,7 +894,7 @@ p2sr <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with Sequoia Survey \n TRM2 Red Band")+
+  ggtitle("Comparison of Tramway Mean Data with Sequoia Survey \n TRM2 Red Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia Red band')+
   ylab('Reflectance Sequioa Red Band')+
@@ -902,9 +902,9 @@ p2sr <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-# Plot Tramway Run 2 Bkd Sequoia TRM2 RedEdge Band
+# Plot Tramway Mean Data compared with Sequoia TRM2 RedEdge Band
 
-x <- as.vector(SecondRunBkdSeqresampRedEdge)
+x <- as.vector(MeanFwdSeqresampRedEdge)
 y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -936,7 +936,7 @@ p2sre <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with Sequoia Survey \n TRM2 RedEdge Band")+
+  ggtitle("Comparison of Tramway Mean Data with Sequoia Survey \n TRM2 RedEdge Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia RedEdge band')+
   ylab('Reflectance Sequioa RedEdge Band')+
@@ -944,9 +944,9 @@ p2sre <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-#Plot Tramway Run 2 Bkd Sequoia TRM2 NIR Band
+#Plot Tramway Mean Data compared with Sequoia TRM2 NIR Band
 
-x <- as.vector(SecondRunBkdSeqresampNIR)
+x <- as.vector(MeanFwdSeqresampNIR)
 y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -978,7 +978,7 @@ p2sni <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with Sequoia \n Survey TRM2 NIR Band")+
+  ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey TRM2 NIR Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia NIR band')+
   ylab('Reflectance Sequioa NIR Band')+
@@ -986,9 +986,9 @@ p2sni <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-#Plot Tramway Run 2 Bkd Sequoia TRM2 NDVI
+#Plot Tramway Mean Data with Sequoia TRM2 NDVI
 
-x <- as.vector(SecondRunBkdSeqresampNDVI)
+x <- as.vector(MeanFwdSeqresampNDVI)
 y <- as.vector(TRM_2_seqFootprintSpectralonNDVI$TRM_2_SEQ_proj2lines_index_ndvi)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1020,7 +1020,7 @@ p2snv <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward \n with Sequoia Survey TRM2 NDVI")+
+  ggtitle("Comparison of Tramway Mean Data \n with Sequoia Survey TRM2 NDVI")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia NDVI')+
   ylab('Sequoia NDVI')+
@@ -1029,19 +1029,19 @@ p2snv <- ggplot(df) +
 #plot(p)
 }
 
-#-----12. TRM 2 MRE survey and Tramway (Second Run Backwards ) data plots-----
+#-----12. TRM 2 MRE survey and Tramway Mean Data plots-----
 {
-#TRM 2 MRE Spectralon 2nd run Bk
-plot(1:110, SecondRunBkdMREresampNDVI,type='n',xlab='[m]',ylab='NDVI')
-lines(1:110, SecondRunBkdMREresampNDVI,col='black')
+#TRM 2 MRE Spectralon vs Mean Tramway Data
+plot(1:110, MeanFwdMREresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, MeanFwdMREresampNDVI,col='black')
 lines(1:110, TRM_2_MREFootprintNDVI$TRM_2_MRE_proj2lines_index_ndvi,col='red')
 legend(20, 0.4, legend=c("Tramway Spectrometer NDVI", "MRE NDVI"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
-title("TRM2 MRE Spectralon - Tramway Second Run Back")
+title("TRM2 MRE Compared with Tramway Mean Data")
 
-# Plot Tramway Run 2 Bkd MRE TRM2 Blue Band
+# Plot Tramway Mean Data MRE TRM2 Blue Band
 
-x <- as.vector(SecondRunBkdMREresampBlue)
+x <- as.vector(MeanFwdMREresampBlue)
 y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$blue)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1073,7 +1073,7 @@ p2mb <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with MRE \n Survey TRM2 Blue Band")+
+  ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM2 Blue Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE Blue band')+
   ylab('Reflectance MRE Blue Band')+
@@ -1081,9 +1081,9 @@ p2mb <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-# Plot Tramway Run 2 Bkd MRE TRM2 Green Band
+# Plot Tramway Mean Data vs MRE TRM2 Green Band
 
-x <- as.vector(SecondRunBkdMREresampGreen)
+x <- as.vector(MeanFwdMREresampGreen)
 y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1115,7 +1115,7 @@ p2mg <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with MRE \n Survey TRM2 Green Band")+
+  ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM2 Green Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE Green band')+
   ylab('Reflectance MRE Green Band')+
@@ -1123,9 +1123,9 @@ p2mg <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-# Plot Tramway Run 2 Bkd MRE TRM2 Red Band
+# Plot Tramway Mean Data vs MRE TRM2 Red Band
 
-x <- as.vector(SecondRunBkdMREresampRed)
+x <- as.vector(MeanFwdMREresampRed)
 y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1157,7 +1157,7 @@ p2mr <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with MRE Survey \n TRM2 Red Band")+
+  ggtitle("Comparison of Tramway Mean Data with MRE Survey \n TRM2 Red Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE Red band')+
   ylab('Reflectance MRE Red Band')+
@@ -1165,9 +1165,9 @@ p2mr <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-# Plot Tramway Run 2 Bkd MRE TRM2 RedEdge Band
+# Plot Tramway Mean Data vs MRE TRM2 RedEdge Band
 
-x <- as.vector(SecondRunBkdMREresampRedEdge)
+x <- as.vector(MeanFwdMREresampRedEdge)
 y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1199,7 +1199,7 @@ p2mre <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with MRE Survey \n TRM2 RedEdge Band")+
+  ggtitle("Comparison of Tramway Mean Data with MRE Survey \n TRM2 RedEdge Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE RedEdge band')+
   ylab('Reflectance MRE RedEdge Band')+
@@ -1207,9 +1207,9 @@ p2mre <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-#Plot Tramway Run 2 Bkd MRE TRM2 NIR Band
+#Plot Tramway Mean Data vs MRE TRM2 NIR Band
 
-x <- as.vector(SecondRunBkdMREresampNIR)
+x <- as.vector(MeanFwdMREresampNIR)
 y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1241,7 +1241,7 @@ p2mni <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with MRE \n Survey TRM2 NIR Band")+
+  ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM2 NIR Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE NIR band')+
   ylab('Reflectance MRE NIR Band')+
@@ -1249,9 +1249,9 @@ p2mni <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-#Plot Tramway Run 2 Bkd MRE TRM2 NDVI
+#Plot Tramway Mean Data vs MRE TRM2 NDVI
 
-x <- as.vector(SecondRunBkdMREresampNDVI)
+x <- as.vector(MeanFwdMREresampNDVI)
 y <- as.vector(TRM_2_MREFootprintNDVI$TRM_2_MRE_proj2lines_index_ndvi)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1283,7 +1283,7 @@ p2mnv <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward \n with MRE Survey TRM2 NDVI")+
+  ggtitle("Comparison of Tramway Mean Data \n with MRE Survey TRM2 NDVI")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE NDVI')+
   ylab('MRE NDVI')+
@@ -1291,20 +1291,20 @@ p2mnv <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 plot(p2mnv)
 }
-#----13. TRM 3 Sequoia Drone Survey and Tramway (Second Run Backwards) data plots -----
+#----13. TRM 3 Sequoia Drone Survey and Tramway Mean Data plots -----
 {
   #TRM 3 SEQ Spectralon 2nd run Bk
-  plot(1:110, SecondRunBkdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
-  lines(1:110, SecondRunBkdSeqresampNDVI,col='black')
+  plot(1:110, MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+  lines(1:110, MeanFwdSeqresampNDVI,col='black')
   lines(1:110, TRM_3_seqFootprintSpectralonNDVI$TRM_3_SEQ_2lines_SPE_index_ndvi,col='red')
   legend(20, 0.4, legend=c("Tramway Spectrometer NDVI", "Sequoia NDVI"),
          lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
-  title("TRM3 Sequioa Spectralon - Tramway Second Run Back")
+  title("TRM3 Sequioa Drone Survey - Tramway Mean Data")
   
   
-  # Plot Tramway Run 2 Bkd Sequoia TRM3 Green Band
+  # Plot Tramway Mean data vs Sequoia TRM3 Green Band
   
-  x <- as.vector(SecondRunBkdSeqresampGreen)
+  x <- as.vector(MeanFwdSeqresampGreen)
   y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$green)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1336,7 +1336,7 @@ plot(p2mnv)
     theme_fancy() +
     
     geom_abline(intercept = 0, slope = 1) +
-    ggtitle("Comparison of Tramway Run 2 Backward with Sequoia \n Survey TRM3 Green Band")+
+    ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey TRM3 Green Band")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for Sequoia Green band')+
     ylab('Reflectance Sequioa Green Band')+
@@ -1344,9 +1344,9 @@ plot(p2mnv)
     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
   #plot(p)
   
-  # Plot Tramway Run 2 Bkd Sequoia TRM3 Red Band
+  # Plot Tramway Mean data vs Sequoia TRM3 Red Band
   
-  x <- as.vector(SecondRunBkdSeqresampRed)
+  x <- as.vector(MeanFwdSeqresampRed)
   y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$red)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1378,7 +1378,7 @@ plot(p2mnv)
     theme_fancy() +
     
     geom_abline(intercept = 0, slope = 1) +
-    ggtitle("Comparison of Tramway Run 2 Backward with Sequoia Survey \n TRM3 Red Band")+
+    ggtitle("Comparison of Tramway Run Mean Data with Sequoia Survey \n TRM3 Red Band")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for Sequoia Red band')+
     ylab('Reflectance Sequioa Red Band')+
@@ -1386,9 +1386,9 @@ plot(p2mnv)
     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
   #plot(p)
   
-  # Plot Tramway Run 2 Bkd Sequoia TRM3 RedEdge Band
+  # Plot Tramway Mean Data vs Sequoia TRM3 RedEdge Band
   
-  x <- as.vector(SecondRunBkdSeqresampRedEdge)
+  x <- as.vector(MeanFwdSeqresampRedEdge)
   y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$redEdge)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1420,7 +1420,7 @@ plot(p2mnv)
     theme_fancy() +
     
     geom_abline(intercept = 0, slope = 1) +
-    ggtitle("Comparison of Tramway Run 2 Backward with Sequoia Survey \n TRM3 RedEdge Band")+
+    ggtitle("Comparison of Tramway Mean Data with Sequoia Survey \n TRM3 RedEdge Band")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for Sequoia RedEdge band')+
     ylab('Reflectance Sequioa RedEdge Band')+
@@ -1428,9 +1428,9 @@ plot(p2mnv)
     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
   #plot(p)
   
-  #Plot Tramway Run 2 Bkd Sequoia TRM3 NIR Band
+  #Plot Tramway Mean data vs Sequoia TRM3 NIR Band
   
-  x <- as.vector(SecondRunBkdSeqresampNIR)
+  x <- as.vector(MeanFwdSeqresampNIR)
   y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$NIR)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1462,7 +1462,7 @@ plot(p2mnv)
     theme_fancy() +
     
     geom_abline(intercept = 0, slope = 1) +
-    ggtitle("Comparison of Tramway Run 2 Backward with Sequoia \n Survey TRM3 NIR Band")+
+    ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey TRM3 NIR Band")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for Sequoia NIR band')+
     ylab('Reflectance Sequioa NIR Band')+
@@ -1470,9 +1470,9 @@ plot(p2mnv)
     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
   #plot(p)
   
-  #Plot Tramway Run 2 Bkd Sequoia TRM3 NDVI
+  #Plot Tramway Mean Data vs Sequoia TRM3 NDVI
   
-  x <- as.vector(SecondRunBkdSeqresampNDVI)
+  x <- as.vector(MeanFwdSeqresampNDVI)
   y <- as.vector(TRM_3_seqFootprintSpectralonNDVI$TRM_3_SEQ_2lines_SPE_index_ndvi)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1504,7 +1504,7 @@ plot(p2mnv)
     theme_fancy() +
     
     geom_abline(intercept = 0, slope = 1) +
-    ggtitle("Comparison of Tramway Run 2 Backward \n with Sequoia Survey TRM3 NDVI")+
+    ggtitle("Comparison of Tramway Mean Data \n with Sequoia Survey TRM3 NDVI")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for Sequoia NDVI')+
     ylab('Sequoia NDVI')+
@@ -1513,20 +1513,20 @@ plot(p2mnv)
 plot(p3snv)
 }
 
-#----14. TRM 3 MRE Drone Survey and Tramway (Second Run Backwards) data plots -----
+#----14. TRM 3 MRE Drone Survey and Tramway Mean data plots -----
 
 {
 #TRM 3 MRE Spectralon 2nd run Bk
-plot(1:110, SecondRunBkdMREresampNDVI,type='n',xlab='[m]',ylab='NDVI')
-lines(1:110, SecondRunBkdMREresampNDVI,col='black')
+plot(1:110, MeanFwdMREresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, MeanFwdMREresampNDVI,col='black')
 lines(1:110, TRM_3_MREFootprintNDVI$TRM_3_MRE_SPE_2lines_index_ndvi,col='red')
 legend(20, 0.4, legend=c("Tramway Spectrometer NDVI", "MRE NDVI"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
-title("TRM3 MRE Spectralon - Tramway Second Run Back")
+title("TRM3 MRE Spectralon - Tramway Mean Data")
 
-# Plot Tramway Run 2 Bkd MRE TRM3 Blue Band
+# Plot Tramway Mean data MRE TRM3 Blue Band
 
-x <- as.vector(SecondRunBkdMREresampBlue)
+x <- as.vector(MeanFwdMREresampBlue)
 y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$blue)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1558,7 +1558,7 @@ p3mb <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with MRE \n Survey TRM3 Blue Band")+
+  ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM3 Blue Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE Blue band')+
   ylab('Reflectance MRE Blue Band')+
@@ -1566,9 +1566,9 @@ p3mb <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-# Plot Tramway Run 2 Bkd MRE TRM3 Green Band
+# Plot Tramway Mean data vs MRE TRM3 Green Band
 
-x <- as.vector(SecondRunBkdMREresampGreen)
+x <- as.vector(MeanFwdMREresampGreen)
 y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1600,7 +1600,7 @@ p3mg <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with MRE \n Survey TRM3 Green Band")+
+  ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM3 Green Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE Green band')+
   ylab('Reflectance MRE Green Band')+
@@ -1608,9 +1608,9 @@ p3mg <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-# Plot Tramway Run 2 Bkd MRE TRM3 Red Band
+# Plot Tramway Mean Data vs MRE TRM3 Red Band
 
-x <- as.vector(SecondRunBkdMREresampRed)
+x <- as.vector(MeanFwdMREresampRed)
 y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1642,7 +1642,7 @@ p3mr <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with MRE Survey \n TRM3 Red Band")+
+  ggtitle("Comparison of Tramway Mean Data with MRE Survey \n TRM3 Red Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE Red band')+
   ylab('Reflectance MRE Red Band')+
@@ -1650,9 +1650,9 @@ p3mr <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-# Plot Tramway Run 2 Bkd MRE TRM3 RedEdge Band
+# Plot Tramway Mean data vs MRE TRM3 RedEdge Band
 
-x <- as.vector(SecondRunBkdMREresampRedEdge)
+x <- as.vector(MeanFwdMREresampRedEdge)
 y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1684,7 +1684,7 @@ p3mre <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with MRE Survey \n TRM3 RedEdge Band")+
+  ggtitle("Comparison of Tramway Mean data with MRE Survey \n TRM3 RedEdge Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE RedEdge band')+
   ylab('Reflectance MRE RedEdge Band')+
@@ -1692,9 +1692,9 @@ p3mre <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-#Plot Tramway Run 2 Bkd MRE TRM3 NIR Band
+#Plot Tramway Mean data vs MRE TRM3 NIR Band
 
-x <- as.vector(SecondRunBkdMREresampNIR)
+x <- as.vector(MeanFwdMREresampNIR)
 y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1726,7 +1726,7 @@ p3mni <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward with MRE \n Survey TRM3 NIR Band")+
+  ggtitle("Comparison of Tramway Mean data with MRE \n Survey TRM3 NIR Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE NIR band')+
   ylab('Reflectance MRE NIR Band')+
@@ -1734,9 +1734,9 @@ p3mni <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-#Plot Tramway Run 2 Bkd MRE TRM3 NDVI
+#Plot Tramway Mean data vs MRE TRM3 NDVI
 
-x <- as.vector(SecondRunBkdMREresampNDVI)
+x <- as.vector(MeanFwdMREresampNDVI)
 y <- as.vector(TRM_3_MREFootprintNDVI$TRM_3_MRE_SPE_2lines_index_ndvi)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1768,7 +1768,7 @@ p3mnv <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Backward \n with MRE Survey TRM3 NDVI")+
+  ggtitle("Comparison of Tramway Mean Data \n with MRE Survey TRM3 NDVI")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE NDVI')+
   ylab('MRE NDVI')+
@@ -1777,20 +1777,20 @@ p3mnv <- ggplot(df) +
 plot(p3mnv)
 }
 
-#----15. ARE 1 Sequoia Drone Survey and Tramway (First Run Backwards) data plots -----
-#ARE 1 SEQ Spectralon First run Bk
+#----15. ARE 1 Sequoia Drone Survey and Tramway Mean Data plots -----
+#ARE 1 SEQ vs Mean Data
 {
-plot(1:110, FirstRunBkdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
-lines(1:110, FirstRunBkdSeqresampNDVI,col='black')
+plot(1:110, MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, MeanFwdSeqresampNDVI,col='black')
 lines(1:110, ARE_1_seqFootprintSpectralonNDVI$ARE_1_SEQ_2lines_SPE_index_ndvi,col='red')
 legend(20, 0.4, legend=c("Tramway Spectrometer NDVI", "Sequoia NDVI"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
-title("ARE1 Sequoia Spectralon - Tramway First Run Back")
+title("ARE1 Sequoia Drone Survey - Tramway Mean Data")
 
 
-# Plot Tramway Run 1 Bkd Sequoia ARE1 Green Band
+# Plot Tramway Mean Data vs Sequoia ARE1 Green Band
 
-x <- as.vector(FirstRunBkdSeqresampGreen)
+x <- as.vector(MeanFwdSeqresampGreen)
 y <- as.vector(ARE_1_seqFootprintSpectralonReflectance$green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1822,7 +1822,7 @@ pasg <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 1 Backward with Sequoia \n Survey ARE1 Green Band")+
+  ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey ARE1 Green Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia Green band')+
   ylab('Reflectance Sequioa Green Band')+
@@ -1830,9 +1830,9 @@ pasg <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-# Plot Tramway Run 1 Bkd Sequoia ARE1 Red Band
+# Plot Tramway Mean data vs Sequoia ARE1 Red Band
 
-x <- as.vector(FirstRunBkdSeqresampRed)
+x <- as.vector(MeanFwdSeqresampRed)
 y <- as.vector(ARE_1_seqFootprintSpectralonReflectance$red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1864,7 +1864,7 @@ pasr <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 1 Backward with Sequoia Survey \n ARE1 Red Band")+
+  ggtitle("Comparison of Tramway Mean Data with Sequoia Survey \n ARE1 Red Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia Red band')+
   ylab('Reflectance Sequioa Red Band')+
@@ -1874,7 +1874,7 @@ pasr <- ggplot(df) +
 
 # Plot Tramway Run 1 Bkd Sequoia ARE1 RedEdge Band
 
-x <- as.vector(FirstRunBkdSeqresampRedEdge)
+x <- as.vector(MeanFwdSeqresampRedEdge)
 y <- as.vector(ARE_1_seqFootprintSpectralonReflectance$redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1906,7 +1906,7 @@ pasre <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 1 Backward with Sequoia Survey \n ARE1 RedEdge Band")+
+  ggtitle("Comparison of Tramway Mean Data with Sequoia Survey \n ARE1 RedEdge Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia RedEdge band')+
   ylab('Reflectance Sequioa RedEdge Band')+
@@ -1914,9 +1914,9 @@ pasre <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-#Plot Tramway Run 1 Bkd Sequoia ARE1 NIR Band
+#Plot Tramway Mean data vs Sequoia ARE1 NIR Band
 
-x <- as.vector(FirstRunBkdSeqresampNIR)
+x <- as.vector(MeanFwdSeqresampNIR)
 y <- as.vector(ARE_1_seqFootprintSpectralonReflectance$NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1948,7 +1948,7 @@ pasni <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 1 Backward with Sequoia \n Survey ARE1 NIR Band")+
+  ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey ARE1 NIR Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia NIR band')+
   ylab('Reflectance Sequioa NIR Band')+
@@ -1956,9 +1956,9 @@ pasni <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 #plot(p)
 
-#Plot Tramway Run 1 Bkd Sequoia ARE1 NDVI
+#Plot Tramway Mean Data vs Sequoia ARE1 NDVI
 
-x <- as.vector(FirstRunBkdSeqresampNDVI)
+x <- as.vector(MeanFwdSeqresampNDVI)
 y <- as.vector(ARE_1_seqFootprintSpectralonNDVI$ARE_1_SEQ_2lines_SPE_index_ndvi)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1990,7 +1990,7 @@ pasnv <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 1 Backward \n with Sequoia Survey ARE1 NDVI")+
+  ggtitle("Comparison of Tramway Mean data \n with Sequoia Survey ARE1 NDVI")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia NDVI')+
   ylab('Sequoia NDVI')+
@@ -1999,19 +1999,19 @@ pasnv <- ggplot(df) +
 #plot(p)
 }
 
-#----16. ARE 1 MRE Drone Survey and Tramway (First Run Backwards) data plots -----
+#----16. ARE 1 MRE Drone Survey and Tramway Mean Data plots -----
 {
   
-  plot(1:110, FirstRunBkdMREresampNDVI,ylim=c(0,0.6),type='n',xlab='[m]',ylab='NDVI')
-  lines(1:110, FirstRunBkdMREresampNDVI,col='black')
+  plot(1:110, MeanFwdMREresampNDVI,ylim=c(0,0.6),type='n',xlab='[m]',ylab='NDVI')
+  lines(1:110, MeanFwdMREresampNDVI,col='black')
   lines(1:110, ARE_1_MREFootprintNDVI$ARE_1_MRE_2lines_SPE_index_ndvi ,col='red')
   legend(20, 0.6, legend=c("Tramway Spectrometer NDVI", "MRE NDVI"),
          lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
-  title("ARE1 MRE Spectralon - Tramway First Run Backwards")
+  title("ARE1 MRE Spectralon - Tramway Mean Data")
   
   # Plot Tramway Run 1 Bkd MRE ARE1 Blue Band
   
-  x <- as.vector(FirstRunBkdMREresampBlue)
+  x <- as.vector(MeanFwdMREresampBlue)
   y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$blue)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -2043,7 +2043,7 @@ pasnv <- ggplot(df) +
     theme_fancy() +
     
     geom_abline(intercept = 0, slope = 1) +
-    ggtitle("Comparison of Tramway Run 1 Backward with MRE \n Survey ARE1 Blue Band")+
+    ggtitle("Comparison of Tramway Mean Data with MRE \n Survey ARE1 Blue Band")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for MRE Blue band')+
     ylab('Reflectance MRE Blue Band')+
@@ -2051,9 +2051,9 @@ pasnv <- ggplot(df) +
     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
   #plot(p)
   
-  # Plot Tramway Run 1 Bkd MRE ARE1 Green Band
+  # Plot Tramway Mean Data vs MRE ARE1 Green Band
   
-  x <- as.vector(FirstRunBkdMREresampGreen)
+  x <- as.vector(MeanFwdMREresampGreen)
   y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$green)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -2085,7 +2085,7 @@ pasnv <- ggplot(df) +
     theme_fancy() +
     
     geom_abline(intercept = 0, slope = 1) +
-    ggtitle("Comparison of Tramway Run 1 Backward with MRE \n Survey ARE1 Green Band")+
+    ggtitle("Comparison of Tramway Mean Data with MRE \n Survey ARE1 Green Band")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for MRE Green band')+
     ylab('Reflectance MRE Green Band')+
@@ -2093,9 +2093,9 @@ pasnv <- ggplot(df) +
     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
   #plot(p)
   
-  # Plot Tramway Run 1 Bkd MRE ARE1 Red Band
+  # Plot Tramway Mean data vs MRE ARE1 Red Band
   
-  x <- as.vector(FirstRunBkdMREresampRed)
+  x <- as.vector(MeanFwdMREresampRed)
   y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$red)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -2127,7 +2127,7 @@ pasnv <- ggplot(df) +
     theme_fancy() +
     
     geom_abline(intercept = 0, slope = 1) +
-    ggtitle("Comparison of Tramway Run 1 Backward with MRE Survey \n ARE1 Red Band")+
+    ggtitle("Comparison of Tramway Mean Data with MRE Survey \n ARE1 Red Band")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for MRE Red band')+
     ylab('Reflectance MRE Red Band')+
@@ -2135,9 +2135,9 @@ pasnv <- ggplot(df) +
     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
   #plot(p)
   
-  # Plot Tramway Run 1 Bkd MRE ARE1 RedEdge Band
+  # Plot Tramway Mean Data vs MRE ARE1 RedEdge Band
   
-  x <- as.vector(FirstRunBkdMREresampRedEdge)
+  x <- as.vector(MeanFwdMREresampRedEdge)
   y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$redEdge)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -2169,7 +2169,7 @@ pasnv <- ggplot(df) +
     theme_fancy() +
     
     geom_abline(intercept = 0, slope = 1) +
-    ggtitle("Comparison of Tramway Run 1 Backward with MRE Survey \n ARE1 RedEdge Band")+
+    ggtitle("Comparison of Tramway Mean Data with MRE Survey \n ARE1 RedEdge Band")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for MRE RedEdge band')+
     ylab('Reflectance MRE RedEdge Band')+
@@ -2177,9 +2177,9 @@ pasnv <- ggplot(df) +
     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
   #plot(p)
   
-  #Plot Tramway Run 1 Bkd MRE ARE1 NIR Band
+  #Plot Tramway Mean Data vs MRE ARE1 NIR Band
   
-  x <- as.vector(FirstRunBkdMREresampNIR)
+  x <- as.vector(MeanFwdMREresampNIR)
   y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$NIR)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -2211,7 +2211,7 @@ pasnv <- ggplot(df) +
     theme_fancy() +
     
     geom_abline(intercept = 0, slope = 1) +
-    ggtitle("Comparison of Tramway Run 1 Backward with MRE \n Survey ARE1 NIR Band")+
+    ggtitle("Comparison of Tramway Mean Data with MRE \n Survey ARE1 NIR Band")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for MRE NIR band')+
     ylab('Reflectance MRE NIR Band')+
@@ -2219,9 +2219,9 @@ pasnv <- ggplot(df) +
     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
   #plot(p)
   
-  #Plot Tramway Run 1 Bkd MRE ARE1 NDVI
+  #Plot Tramway Mean data vs  MRE ARE1 NDVI
   
-  x <- as.vector(FirstRunBkdMREresampNDVI)
+  x <- as.vector(MeanFwdMREresampNDVI)
   y <- as.vector(ARE_1_MREFootprintNDVI$ARE_1_MRE_2lines_SPE_index_ndvi)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -2253,7 +2253,7 @@ pasnv <- ggplot(df) +
     theme_fancy() +
     
     geom_abline(intercept = 0, slope = 1) +
-    ggtitle("Comparison of Tramway Run 1 Backward \n with MRE Survey ARE1 NDVI")+
+    ggtitle("Comparison of Tramway Mean Data \n with MRE Survey ARE1 NDVI")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for MRE NDVI')+
     ylab('MRE NDVI')+
@@ -2263,14 +2263,14 @@ pasnv <- ggplot(df) +
 }
 
 #----17. Panel arrangement of Plots-----
-grid.arrange(p1sg, p1sr, p1sre, p1sni,p1snv, nrow = 3)#Plots of TRM1 Sequoia survey
-grid.arrange(p1mb,p1mg, p1mr, p1mre, p1mni,p1mnv, nrow = 3)#Plots of TRM1 MRE Survey
-grid.arrange(p2sg, p2sr, p2sre, p2sni,p2snv, nrow = 3)#Plots of TRM2 Sequoia survey
-grid.arrange(p2mb,p2mg, p2mr, p2mre, p2mni,p2mnv, nrow = 3)#Plots of TRM2 MRE Survey
-grid.arrange(p3sg, p3sr, p3sre, p3sni,p3snv, nrow = 3)#Plots of TRM3 Sequoia survey
-grid.arrange(p3mb,p3mg, p3mr, p3mre, p3mni,p3mnv, nrow = 3)#Plots of TRM3 MRE Survey
-grid.arrange(pasg, pasr, pasre, pasni,pasnv, row = 3)#Plots of ARE1 Sequoia survey
-grid.arrange(pamb,pamg, pamr, pamre, pamni,pamnv, nrow = 3)#Plots of ARE1 MRE Survey
+PlotTRM1_SEQ <- grid.arrange(p1sg, p1sr, p1sre, p1sni,p1snv, nrow = 3)#Plots of TRM1 Sequoia survey
+PlotTRM1_MRE <-grid.arrange(p1mb,p1mg, p1mr, p1mre, p1mni,p1mnv, nrow = 3)#Plots of TRM1 MRE Survey
+PlotTRM2_SEQ <-grid.arrange(p2sg, p2sr, p2sre, p2sni,p2snv, nrow = 3)#Plots of TRM2 Sequoia survey
+PlotTRM2_MRE <-grid.arrange(p2mb,p2mg, p2mr, p2mre, p2mni,p2mnv, nrow = 3)#Plots of TRM2 MRE Survey
+PlotTRM3_SEQ <- grid.arrange(p3sg, p3sr, p3sre, p3sni,p3snv, nrow = 3)#Plots of TRM3 Sequoia survey
+PlotTRM3_MRE <-grid.arrange(p3mb,p3mg, p3mr, p3mre, p3mni,p3mnv, nrow = 3)#Plots of TRM3 MRE Survey
+PlotARE1_SEQ <-grid.arrange(pasg, pasr, pasre, pasni,pasnv, nrow = 3)#Plots of ARE1 Sequoia survey
+PlotARE1_MRE <-grid.arrange(pamb,pamg, pamr, pamre, pamni,pamnv, nrow = 3)#Plots of ARE1 MRE Survey
 PlotNDVI <-grid.arrange(p1snv,p1mnv,p2snv, p2mnv, p3snv,p3mnv,pasnv,pamnv, nrow = 4)#Plots of NDVI all Surveys
 PlotGreen<-grid.arrange(p1sg,p1mg,p2sg, p2mg, p3sg,p3mg,pasg,pamg, nrow = 4)#Plots of Green Band all Surveys
 PlotRed<-grid.arrange(p1sr,p1mr,p2sr, p2mr, p3sr,p3mr,pasr,pamr, nrow = 4)#Plots of Red Band all Surveys
@@ -2278,25 +2278,25 @@ PlotRedEdge<-grid.arrange(p1sre,p1mre,p2sre, p2mre, p3sre,p3mre,pasre,pamre, nro
 PlotNIR<-grid.arrange(p1sni,p1mni,p2sni, p2mni, p3sni,p3mni,pasni,pamni, nrow = 4)#Plots of NIR Band all Surveys
 PlotBlue<-grid.arrange(p1mb,p2mb,p3mb,pamb, nrow = 2)#Plots of Blue Band all Surveys
 
-plot(1:110, SecondRunBkdMREresampNDVI,ylim=c(0,0.6),type='n',xlab='[m]',ylab='NDVI')
-lines(1:110, SecondRunBkdMREresampNDVI,col='black')
+plot(1:110, MeanFwdMREresampNDVI,ylim=c(0,0.6),type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, MeanFwdMREresampNDVI,col='black')
 lines(1:110, TRM_1_MREFootprintNDVI$TRM_1_MRE_2lines_SPE_index_ndvi ,col='red')
 lines(1:110, TRM_2_MREFootprintNDVI$TRM_2_MRE_proj2lines_index_ndvi ,col='green')
 lines(1:110, TRM_3_MREFootprintNDVI$TRM_3_MRE_SPE_2lines_index_ndvi ,col='blue')
 lines(1:110, ARE_1_MREFootprintNDVI$ARE_1_MRE_2lines_SPE_index_ndvi ,col='orange')
 
-legend(20, 0.6, legend=c("Tramway Run2 BK Spectrometer NDVI", "TRM_1 NDVI", "TRM_2 NDVI","TRM_3 NDVI", "ARE_1 NDVI"),
+legend(20, 0.6, legend=c("Tramway Mean Data NDVI", "TRM_1 NDVI", "TRM_2 NDVI","TRM_3 NDVI", "ARE_1 NDVI"),
        lty=c(1,1),col=c('black','red', 'green','blue','orange'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
 title("NDVI MRE Surveys")
 
-plot(1:110, SecondRunBkdSeqresampNDVI,ylim=c(0,0.6),type='n',xlab='[m]',ylab='NDVI')
-lines(1:110, SecondRunBkdSeqresampNDVI,col='black')
+plot(1:110, MeanFwdSeqresampNDVI,ylim=c(0,0.6),type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, MeanFwdSeqresampNDVI,col='black')
 lines(1:110, TRM_1_seqFootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi ,col='red')
 lines(1:110, TRM_2_seqFootprintSpectralonNDVI$TRM_2_SEQ_proj2lines_index_ndvi ,col='green')
 lines(1:110, TRM_3_seqFootprintSpectralonNDVI$TRM_3_SEQ_2lines_SPE_index_ndvi ,col='blue')
 lines(1:110, ARE_1_seqFootprintSpectralonNDVI$ARE_1_SEQ_2lines_SPE_index_ndvi ,col='orange')
 
-legend(20, 0.6, legend=c("Tramway Run2 BK Spectrometer NDVI", "TRM_1 NDVI", "TRM_2 NDVI","TRM_3 NDVI", "ARE_1 NDVI"),
+legend(20, 0.6, legend=c("Tramway Mean Data NDVI", "TRM_1 NDVI", "TRM_2 NDVI","TRM_3 NDVI", "ARE_1 NDVI"),
        lty=c(1,1),col=c('black','red', 'green','blue','orange'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
 title("NDVI Sequoia Surveys")
 
@@ -2305,7 +2305,7 @@ title("NDVI Sequoia Surveys")
 ggsave(
   PlotNDVI,
   # filename = "/plots/test.png",
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/NDVI_all_surveys_2.png",
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/NDVI_all_surveys_M.png",
   width = 16,
   height = 25,
   units = "cm"
@@ -2313,7 +2313,7 @@ ggsave(
 ggsave(
   PlotBlue,
   # filename = "/plots/test.png",
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/Blue_all_surveys.png",
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/Blue_all_surveys_M.png",
   width = 16,
   height = 25,
   units = "cm"
@@ -2321,7 +2321,7 @@ ggsave(
 ggsave(
   PlotGreen,
   # filename = "/plots/test.png",
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/Green_all_surveys.png",
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/Green_all_surveys_M.png",
   width = 16,
   height = 25,
   units = "cm"
@@ -2329,7 +2329,7 @@ ggsave(
 ggsave(
   PlotRed,
   # filename = "/plots/test.png",
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/Red_all_surveys.png",
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/Red_all_surveys_M.png",
   width = 16,
   height = 25,
   units = "cm"
@@ -2338,7 +2338,7 @@ ggsave(
 ggsave(
   PlotRedEdge,
   # filename = "/plots/test.png",
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/RedEdge_all_surveys.png",
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/RedEdge_all_surveys_M.png",
   width = 16,
   height = 25,
   units = "cm"
@@ -2347,9 +2347,65 @@ ggsave(
 ggsave(
   PlotNIR,
   # filename = "/plots/test.png",
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/NIR_all_surveys.png",
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/NIR_all_surveys_M.png",
   width = 16,
   height = 25,
   units = "cm"
 )
 
+ggsave(
+  PlotTRM1_SEQ,
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/TRM1_SEQ_All bands_M.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+ggsave(
+  PlotTRM2_SEQ,
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/TRM2_SEQ_All bands_M.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+ggsave(
+  PlotTRM3_SEQ,
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/TRM3_SEQ_All bands_M.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+ggsave(
+  PlotTRM1_MRE,
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/TRM1_MRE_All bands_M.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+ggsave(
+  PlotTRM2_MRE,
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/TRM2_MRE_All bands_M.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+ggsave(
+  PlotTRM3_MRE,
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/TRM3_MRE_All bands_M.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+ggsave(
+  PlotARE1_MRE,
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/ARE1_MRE_All bands_M.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+ggsave(
+  PlotARE1_SEQ,
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/ARE1_SEQ_All bands_M.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)

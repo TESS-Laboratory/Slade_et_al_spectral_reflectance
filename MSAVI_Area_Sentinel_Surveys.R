@@ -1,4 +1,4 @@
-##Script for calculating MSAVI
+##Script for calculating MSAVI and other vegetation indices
 
 
 # Library
@@ -17,6 +17,7 @@
   library(rasterVis)  # raster visualisation  
   library(sp)         # Spatial data processing           
   library(RStoolbox)  # Image analysis
+  library(DescTools)
 
   
 }
@@ -424,10 +425,10 @@ r2val <- summary(lmres)$r.squared
 FVCSENMSAVI2 <- ggplot(df) +
   geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
-  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.5)+
-  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.5)+
-  geom_text(aes(x=0.0,y=0.23),label=ccc,hjust='left', size=3.5)+
-  geom_text(aes(x=0.0,y=0.21),label=equation,hjust='left', size=3.5)+
+  geom_text(aes(x=-0.4,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.5)+
+  geom_text(aes(x=-0.4,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.5)+
+  geom_text(aes(x=-0.4,y=0.23),label=ccc,hjust='left', size=3.5)+
+  geom_text(aes(x=-0.4,y=0.21),label=equation,hjust='left', size=3.5)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
