@@ -92,6 +92,19 @@ ggR(SEQmtvi, geom_raster = TRUE) +
 
 writeRaster(SEQmtvi,"E:/Glenn/Tramway Experiment/Processed/DroneData/ReflStacks/TRM_1_SEQ_3lines/Spectralon/TRM_1_SEQ_3lines_MTVI.tif", overwrite=TRUE)
 
+
+#SEQ Normalised Difference Vegetation Index 2 (NDVI) Calculation
+
+SEQndvi =  (NIR - RED) / ( NIR + RED)
+ggR(SEQndvi, geom_raster = TRUE) +
+  scale_fill_gradientn("NDVI", colours = c("red", "yellow", "green", "green4"))+
+  ggtitle("Sequoia Normalised Difference Vegetation Index 2 (NDVI)")
+
+writeRaster(SEQndvi,"E:/Glenn/Tramway Experiment/Processed/DroneData/ReflStacks/TRM_1_SEQ_3lines/Spectralon/TRM_1_SEQ_3lines_NDVI_Rscript.tif", overwrite=TRUE)
+
+
+
+
 ####--------MRE--------
 
 #MRE MSAVI Calculation
@@ -135,6 +148,15 @@ ggR(MREmtvi, geom_raster = TRUE) +
 
 writeRaster(MREmtvi,"E:/Glenn/Tramway Experiment/Processed/DroneData/ReflStacks/TRM_1_MRE_2lines/Spectralon/TRM_1_MRE_2lines_MTVI.tif", overwrite=TRUE)
 
+#MRE Normalised Difference Vegetation Index 2 (NDVI) Calculation
+
+MREndvi = (MRENIR - MRERED) / (MRENIR + MRERED)
+ggR(MREndvi, geom_raster = TRUE) +
+  scale_fill_gradientn("NDVI", colours = c("red", "yellow", "green", "green4"))+
+  ggtitle("MRE Normalised Difference Vegetation Index (NDVI)")
+
+writeRaster(MREndvi,"E:/Glenn/Tramway Experiment/Processed/DroneData/ReflStacks/TRM_1_MRE_2lines/Spectralon/TRM_1_MRE_2lines_NDVI_Rscript.tif", overwrite=TRUE)
+
 
 #----4.Read in tramway data----
 {
@@ -150,38 +172,54 @@ writeRaster(MREmtvi,"E:/Glenn/Tramway Experiment/Processed/DroneData/ReflStacks/
   ThirdRunBkdMREresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-ThirdRunBackward_REMResamp.csv")
   ThirdRunFwdSeqresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-ThirdRunForward_SeqResamp.csv")
   ThirdRunBkdSeqresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-ThirdRunBackward_SeqResamp.csv")
-}
 
+  MeanFwdSeqresampSpectra <- (FirstRunFwdSeqresampSpectra+SecondRunFwdSeqresampSpectra+ThirdRunFwdSeqresampSpectra)/3
+  MeanFwdMREresampSpectra <-  (FirstRunFwdMREresampSpectra+SecondRunFwdMREresampSpectra+ThirdRunFwdMREresampSpectra)/3
+  
+  }
 
-#Second run forwards SEQ
-SecondRunFwdSeqresampGreen <- SecondRunFwdSeqresampSpectra$refl[SecondRunFwdSeqresampSpectra$wvl==550] 
-SecondRunFwdSeqresampRed <- SecondRunFwdSeqresampSpectra$refl[SecondRunFwdSeqresampSpectra$wvl==660] 
-SecondRunFwdSeqresampRedEdge <- SecondRunFwdSeqresampSpectra$refl[SecondRunFwdSeqresampSpectra$wvl==735] 
-SecondRunFwdSeqresampNIR <- SecondRunFwdSeqresampSpectra$refl[SecondRunFwdSeqresampSpectra$wvl==790] 
-SecondRunFwdSeqresampdf <- data.frame(SecondRunFwdSeqresampGreen,SecondRunFwdSeqresampRed,SecondRunFwdSeqresampRedEdge,SecondRunFwdSeqresampNIR)
-SecondRunFwdSeqresampNDVI <- (SecondRunFwdSeqresampNIR-SecondRunFwdSeqresampRed)/(SecondRunFwdSeqresampNIR+SecondRunFwdSeqresampRed)
-SecondRunFwdSeqresampMSAVI2 <- (2 * SecondRunFwdSeqresampNIR + 1 - sqrt( (2 * SecondRunFwdSeqresampNIR + 1)^2 - 8 * (SecondRunFwdSeqresampNIR - SecondRunFwdSeqresampRed) )) / 2 
-SecondRunFwdSeqresampMTVI <- 1.5 * (1.2 * (SecondRunFwdSeqresampNIR - SecondRunFwdSeqresampGreen) - 2.5 * (SecondRunFwdSeqresampRed - SecondRunFwdSeqresampGreen)) /  sqrt( (2 * SecondRunFwdSeqresampNIR + 1)^2 - (6 * SecondRunFwdSeqresampNIR - 5 * sqrt(SecondRunFwdSeqresampRed) - 0.5) )
-SecondRunFwdSeqresampSAVI <- (1 + 0.5)*(SecondRunFwdSeqresampNIR - SecondRunFwdSeqresampRed)/(SecondRunFwdSeqresampNIR + SecondRunFwdSeqresampRed + 0.5)
-SecondRunFwdSeqresampMSAVI <- SecondRunFwdSeqresampNIR + 0.5 - (0.5 * sqrt((2 * SecondRunFwdSeqresampNIR + 1)^2 - 8 * (SecondRunFwdSeqresampNIR - (2 * SecondRunFwdSeqresampRed))))
+#Mean forwards SEQ
+MeanFwdSeqresampGreen <- MeanFwdSeqresampSpectra$refl[MeanFwdSeqresampSpectra$wvl==550] 
+MeanFwdSeqresampRed <- MeanFwdSeqresampSpectra$refl[MeanFwdSeqresampSpectra$wvl==660] 
+MeanFwdSeqresampRedEdge <- MeanFwdSeqresampSpectra$refl[MeanFwdSeqresampSpectra$wvl==735] 
+MeanFwdSeqresampNIR <- MeanFwdSeqresampSpectra$refl[MeanFwdSeqresampSpectra$wvl==790] 
+MeanFwdSeqresampdf <- data.frame(MeanFwdSeqresampGreen,MeanFwdSeqresampRed,MeanFwdSeqresampRedEdge,MeanFwdSeqresampNIR)
+MeanFwdSeqresampNDVI <- (MeanFwdSeqresampNIR-MeanFwdSeqresampRed)/(MeanFwdSeqresampNIR+MeanFwdSeqresampRed)
+MeanFwdSeqresampMSAVI2 <- (2 * MeanFwdSeqresampNIR + 1 - sqrt( (2 * MeanFwdSeqresampNIR + 1)^2 - 8 * (MeanFwdSeqresampNIR - MeanFwdSeqresampRed) )) / 2 
+MeanFwdSeqresampMTVI <- 1.5 * (1.2 * (MeanFwdSeqresampNIR - MeanFwdSeqresampGreen) - 2.5 * (MeanFwdSeqresampRed - MeanFwdSeqresampGreen)) /  sqrt( (2 * MeanFwdSeqresampNIR + 1)^2 - (6 * MeanFwdSeqresampNIR - 5 * sqrt(MeanFwdSeqresampRed) - 0.5) )
+MeanFwdSeqresampSAVI <- (1 + 0.5)*(MeanFwdSeqresampNIR - MeanFwdSeqresampRed)/(MeanFwdSeqresampNIR + MeanFwdSeqresampRed + 0.5)
+MeanFwdSeqresampMSAVI <- MeanFwdSeqresampNIR + 0.5 - (0.5 * sqrt((2 * MeanFwdSeqresampNIR + 1)^2 - 8 * (MeanFwdSeqresampNIR - (2 * MeanFwdSeqresampRed))))
 
-#Second run forwards MRE
-SecondRunFwdMREresampBlue <- SecondRunFwdMREresampSpectra$refl[SecondRunFwdMREresampSpectra$wvl==475] 
-SecondRunFwdMREresampGreen <- SecondRunFwdMREresampSpectra$refl[SecondRunFwdMREresampSpectra$wvl==560] 
-SecondRunFwdMREresampRed <- SecondRunFwdMREresampSpectra$refl[SecondRunFwdMREresampSpectra$wvl==668] 
-SecondRunFwdMREresampRedEdge <- SecondRunFwdMREresampSpectra$refl[SecondRunFwdMREresampSpectra$wvl==717] 
-SecondRunFwdMREresampNIR <- SecondRunFwdMREresampSpectra$refl[SecondRunFwdMREresampSpectra$wvl==840] 
-SecondRunFwdMREresampdf <- data.frame(SecondRunFwdMREresampBlue,SecondRunFwdMREresampGreen,SecondRunFwdMREresampRed,SecondRunFwdMREresampRedEdge,SecondRunFwdMREresampNIR)
-SecondRunFwdMREresampNDVI <- (SecondRunFwdMREresampNIR-SecondRunFwdMREresampRed)/(SecondRunFwdMREresampNIR+SecondRunFwdMREresampRed)
-SecondRunFwdMREresampMSAVI2 <- (2 * SecondRunFwdMREresampNIR + 1 - sqrt( (2 * SecondRunFwdMREresampNIR + 1)^2 - 8 * (SecondRunFwdMREresampNIR - SecondRunFwdMREresampRed) )) / 2 
-SecondRunFwdMREresampMTVI <- 1.5 * (1.2 * (SecondRunFwdMREresampNIR - SecondRunFwdMREresampGreen) - 2.5 * (SecondRunFwdMREresampRed - SecondRunFwdMREresampGreen)) /  sqrt( (2 * SecondRunFwdMREresampNIR + 1)^2 - (6 * SecondRunFwdMREresampNIR - 5 * sqrt(SecondRunFwdMREresampRed) - 0.5) )
-SecondRunFwdMREresampSAVI <- (1 + 0.5)*(SecondRunFwdMREresampNIR - SecondRunFwdMREresampRed)/(SecondRunFwdMREresampNIR + SecondRunFwdMREresampRed + 0.5)
-SecondRunFwdMREresampMSAVI <- SecondRunFwdMREresampNIR + 0.5 - (0.5 * sqrt((2 * SecondRunFwdMREresampNIR + 1)^2 - 8 * (SecondRunFwdMREresampNIR - (2 * SecondRunFwdMREresampRed))))
+#Mean forwards MRE
+MeanFwdMREresampBlue <- MeanFwdMREresampSpectra$refl[MeanFwdMREresampSpectra$wvl==475] 
+MeanFwdMREresampGreen <- MeanFwdMREresampSpectra$refl[MeanFwdMREresampSpectra$wvl==560] 
+MeanFwdMREresampRed <- MeanFwdMREresampSpectra$refl[MeanFwdMREresampSpectra$wvl==668] 
+MeanFwdMREresampRedEdge <- MeanFwdMREresampSpectra$refl[MeanFwdMREresampSpectra$wvl==717] 
+MeanFwdMREresampNIR <- MeanFwdMREresampSpectra$refl[MeanFwdMREresampSpectra$wvl==840] 
+MeanFwdMREresampdf <- data.frame(MeanFwdMREresampBlue,MeanFwdMREresampGreen,MeanFwdMREresampRed,MeanFwdMREresampRedEdge,MeanFwdMREresampNIR)
+MeanFwdMREresampNDVI <- (MeanFwdMREresampNIR-MeanFwdMREresampRed)/(MeanFwdMREresampNIR+MeanFwdMREresampRed)
+MeanFwdMREresampMSAVI2 <- (2 * MeanFwdMREresampNIR + 1 - sqrt( (2 * MeanFwdMREresampNIR + 1)^2 - 8 * (MeanFwdMREresampNIR - MeanFwdMREresampRed) )) / 2 
+MeanFwdMREresampMTVI <- 1.5 * (1.2 * (MeanFwdMREresampNIR - MeanFwdMREresampGreen) - 2.5 * (MeanFwdMREresampRed - MeanFwdMREresampGreen)) /  sqrt( (2 * MeanFwdMREresampNIR + 1)^2 - (6 * MeanFwdMREresampNIR - 5 * sqrt(MeanFwdMREresampRed) - 0.5) )
+MeanFwdMREresampSAVI <- (1 + 0.5)*(MeanFwdMREresampNIR - MeanFwdMREresampRed)/(MeanFwdMREresampNIR + MeanFwdMREresampRed + 0.5)
+MeanFwdMREresampMSAVI <- MeanFwdMREresampNIR + 0.5 - (0.5 * sqrt((2 * MeanFwdMREresampNIR + 1)^2 - 8 * (MeanFwdMREresampNIR - (2 * MeanFwdMREresampRed))))
 
 #----5. Extract Image Data ------
 
 TRM_1_SEQFootprintMSAVI2 <- extract(SEQmsavi2,tramwayFootprintsShapes,fun=mean,df=TRUE)
 TRM_1_MREFootprintMSAVI2 <- extract(MREmsavi2,tramwayFootprintsShapes,fun=mean,df=TRUE)
+
+TRM_1_SEQFootprintMSAVI <- extract(SEQMSAVI,tramwayFootprintsShapes,fun=mean,df=TRUE)
+TRM_1_MREFootprintMSAVI <- extract(MREMSAVI,tramwayFootprintsShapes,fun=mean,df=TRUE)
+
+TRM_1_SEQFootprintSAVI <- extract(SEQSAVI,tramwayFootprintsShapes,fun=mean,df=TRUE)
+TRM_1_MREFootprintSAVI <- extract(MRESAVI,tramwayFootprintsShapes,fun=mean,df=TRUE)
+
+TRM_1_SEQFootprintMTVI <- extract(SEQmtvi,tramwayFootprintsShapes,fun=mean,df=TRUE)
+TRM_1_MREFootprintMTVI <- extract(MREmtvi,tramwayFootprintsShapes,fun=mean,df=TRUE)
+
+TRM_1_SEQFootprintNDVI <- extract(SEQndvi,tramwayFootprintsShapes,fun=mean,df=TRUE)
+TRM_1_MREFootprintNDVI <- extract(MREndvi,tramwayFootprintsShapes,fun=mean,df=TRUE)
+
 
 #-----6. Plots--------
 ## Plotting theme
@@ -222,18 +260,19 @@ windowsFonts("Helvetica" = windowsFont("Helvetica")) # Ensure font is mapped cor
 
 
 
-#-----6a Plot Tramway Run 2 FWd Sequoia TRM1 MSAVI2-------
+#-----6a Plot Tramway Mean data Sequoia TRM1 MSAVI2-------
 
-# Compute the Lin's  correlation concordance coefficient
-ccc_result <- CCC(SecondRunFwdSeqresampMSAVI2, TRM_1_SEQFootprintMSAVI2$layer, ci = "z-transform",conf.level = 0.95)
-ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
 
 # Assign axis
-x <- as.vector(SecondRunFwdSeqresampMSAVI2)
+x <- as.vector(MeanFwdSeqresampMSAVI2)
 y <- as.vector(TRM_1_SEQFootprintMSAVI2$layer)
 # Make Data Frame
 df <- data.frame(x = x, y = y,
-                d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
 
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
 pca <- prcomp(~x+y,df)
@@ -248,39 +287,36 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 # Plot
-p <- ggplot(df) +
+psmsavi2 <- ggplot(df) +
   geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
-
+  
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Forwards with Sequoia \n Survey TRM1 MSAVI2")+
+  ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey TRM1 MSAVI2")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance (resampled for Sequoia) MSAVI2')+
   ylab('Sequioa MSAVI2')+
-    #coord_equal(ratio=1)
+  #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-plot(p)
+plot(psmsavi2)
 
-#-----6b Plot Tramway Run 2 FWd MRE TRM1 MSAVI2-------
+#-----6b Plot Tramway Mean data MRE TRM1 MSAVI2-------
 
-# Compute the Lin's  correlation concordance coefficient
-ccc_result <- CCC(SecondRunFwdMREresampMSAVI2, TRM_1_MREFootprintMSAVI2$layer, ci = "z-transform",conf.level = 0.95)
-ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
 
 # Assign axis
-x <- as.vector(SecondRunFwdMREresampMSAVI2)
+x <- as.vector(MeanFwdMREresampMSAVI2)
 y <- as.vector(TRM_1_MREFootprintMSAVI2$layer)
 # Make Data Frame
 df2 <- data.frame(x = x, y = y,
-                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
 pca <- prcomp(~x+y,df2)
@@ -299,7 +335,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 # Plot
-p2 <- ggplot(df2) +
+pmmsavi2 <- ggplot(df2) +
   geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
@@ -312,10 +348,416 @@ p2 <- ggplot(df2) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of Tramway Run 2 Forwards with MRE \n Survey TRM1 MSAVI2")+
+  ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM1 MSAVI2")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance (resampled for MRE) MSAVI2')+
   ylab('MRE MSAVI2')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-plot(p2)
+plot(pmmsavi2)
+
+#-----6c Plot Tramway Mean data MRE TRM1 SAVI-------
+
+
+# Assign axis
+x <- as.vector(MeanFwdMREresampSAVI)
+y <- as.vector(TRM_1_MREFootprintSAVI$layer)
+# Make Data Frame
+df3 <- data.frame(x = x, y = y,
+                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df2)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+# Calculate OLS
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+# Plot
+pmsavi <- ggplot(df3) +
+  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
+  
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1) +
+  ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM1 SAVI")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Relectance (resampled for MRE) SAVI')+
+  ylab('MRE SAVI')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pmsavi)
+
+#-----6d Plot Tramway Mean data MRE TRM1 MSAVI-------
+
+
+# Assign axis
+x <- as.vector(MeanFwdMREresampMSAVI)
+y <- as.vector(TRM_1_MREFootprintMSAVI$layer)
+# Make Data Frame
+df4 <- data.frame(x = x, y = y,
+                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df2)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+# Calculate OLS
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+# Plot
+pmmsavi <- ggplot(df4) +
+  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
+  
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1) +
+  ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM1 MSAVI")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Relectance (resampled for MRE) MSAVI')+
+  ylab('MRE MSAVI')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(-0.5,0.1),ylim=c(0,0.5))
+plot(pmmsavi)
+
+#-----6e Plot Tramway Mean data MRE TRM1 NDVI-------
+
+
+# Assign axis
+x <- as.vector(MeanFwdMREresampNDVI)
+y <- as.vector(TRM_1_MREFootprintNDVI$layer)
+# Make Data Frame
+df2 <- data.frame(x = x, y = y,
+                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df2)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+# Calculate OLS
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+# Plot
+pmndvi <- ggplot(df2) +
+  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
+  
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1) +
+  ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM1 NDVI")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Relectance (resampled for MRE) NDVI')+
+  ylab('MRE NDVI')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pmndvi)
+
+#-----6f Plot Tramway Mean data MRE TRM1 MTVI-------
+
+
+# Assign axis
+x <- as.vector(MeanFwdMREresampMTVI)
+y <- as.vector(TRM_1_MREFootprintMTVI$layer)
+# Make Data Frame
+df2 <- data.frame(x = x, y = y,
+                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df2)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+# Calculate OLS
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+# Plot
+pmmtvi <- ggplot(df2) +
+  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
+  
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1) +
+  ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM1 MTVI")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Relectance (resampled for MRE) MTVI')+
+  ylab('MRE MTVI')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(-0.1,0.5),ylim=c(-0.1,0.5))
+plot(pmmtvi)
+
+#-----6g Plot Tramway Mean data SEQ TRM1 MTVI-------
+
+
+# Assign axis
+x <- as.vector(MeanFwdSeqresampMTVI)
+y <- as.vector(TRM_1_SEQFootprintMTVI$layer)
+# Make Data Frame
+df2 <- data.frame(x = x, y = y,
+                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df2)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+# Calculate OLS
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+# Plot
+psmtvi <- ggplot(df2) +
+  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
+  
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1) +
+  ggtitle("Comparison of Tramway Mean Data with SEQ \n Survey TRM1 MTVI")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Relectance (resampled for SEQ) MTVI')+
+  ylab('SEQ MTVI')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(-0.1,0.5),ylim=c(-0.1,0.5))
+plot(psmtvi)
+
+#-----6h Plot Tramway Mean data SEQ TRM1 NDVI-------
+
+
+# Assign axis
+x <- as.vector(MeanFwdSeqresampNDVI)
+y <- as.vector(TRM_1_SEQFootprintNDVI$layer)
+# Make Data Frame
+df2 <- data.frame(x = x, y = y,
+                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df2)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+# Calculate OLS
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+# Plot
+psndvi <- ggplot(df2) +
+  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
+  
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1) +
+  ggtitle("Comparison of Tramway Mean Data with SEQ \n Survey TRM1 NDVI")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Relectance (resampled for SEQ) NDVI')+
+  ylab('SEQ NDVI')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(psndvi)
+#-----6i Plot Tramway Mean data SEQ TRM1 MSAVI-------
+
+
+# Assign axis
+x <- as.vector(MeanFwdSeqresampMSAVI)
+y <- as.vector(TRM_1_SEQFootprintMSAVI$layer)
+# Make Data Frame
+df2 <- data.frame(x = x, y = y,
+                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df2)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+# Calculate OLS
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+# Plot
+psmsavi <- ggplot(df2) +
+  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
+  
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1) +
+  ggtitle("Comparison of Tramway Mean Data with SEQ \n Survey TRM1 MSAVI")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Relectance (resampled for SEQ) MSAVI')+
+  ylab('SEQ MSAVI')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(-0.40,0.1),ylim=c(-0.2,0.5))
+plot(psmsavi)
+
+#-----6j Plot Tramway Mean data SEQ TRM1 SAVI-------
+
+
+# Assign axis
+x <- as.vector(MeanFwdSeqresampSAVI)
+y <- as.vector(TRM_1_SEQFootprintSAVI$layer)
+# Make Data Frame
+df2 <- data.frame(x = x, y = y,
+                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df2)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+# Calculate OLS
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+# Plot
+pssavi <- ggplot(df2) +
+  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.5)+
+  
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1) +
+  ggtitle("Comparison of Tramway Mean Data with SEQ \n Survey TRM1 SAVI")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Relectance (resampled for SEQ) SAVI')+
+  ylab('SEQ SAVI')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pssavi)
+
+#----7. Panel arranged plots------
+
+PlotTRM1_SEQ <- grid.arrange(psndvi, pssavi, psmsavi2, psmtvi, nrow = 2)#Plots of TRM1 Sequoia survey
+PlotTRM1_MRE <-grid.arrange(pmndvi, pmsavi, pmmsavi2, pmmtvi, nrow = 2)#Plots of TRM1 MRE Survey
+
+#----8. Save Panel Plots
+
+ggsave(
+  PlotTRM1_SEQ,
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/SEQ_all_VI_M.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+
+ggsave(
+  PlotTRM1_MRE,
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/MRE_all_VI_M.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
