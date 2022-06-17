@@ -3463,7 +3463,7 @@ pseq1v3green <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 plot(pseq1v3green)
 
-
+#TRM2 SEQ vs TRM3 SEQ Green
 x <- as.vector(TRM_2_seqFootprintSpectralonReflectance$green)
 y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$green)
 df <- data.frame(x = x, y = y,
