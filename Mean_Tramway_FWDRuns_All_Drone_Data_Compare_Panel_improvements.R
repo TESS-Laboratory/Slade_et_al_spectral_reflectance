@@ -13,6 +13,7 @@ library(MASS)
 library(splines)
 library(rgeos)
 library(gridExtra)
+library(DescTools)  
 }
 #----------1.Theme--------
 
@@ -97,16 +98,16 @@ ARE_1_MRESpectralonNDVICrop <- crop(ARE_1_MRESpectralonNDVI,tramwayROI)
 }
 #----5.Read in tramway data----
 {
-SecondRunFwdMREresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-SecondRunForward_REMResamp.csv")
-SecondRunBkdMREresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-SecondRunBackward_REMResamp.csv")
+SecondRunFwdMREresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-SecondRunForward_REMResampSRF.csv")
+SecondRunBkdMREresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-SecondRunBackward_REMResampSRF.csv")
 SecondRunFwdSeqresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-SecondRunForward_SeqResamp.csv")
 SecondRunBkdSeqresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-SecondRunBackward_SeqResamp.csv")
-FirstRunFwdMREresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-FirstRunForward_REMResamp.csv")
-FirstRunBkdMREresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-FirstRunBackward_REMResamp.csv")
+FirstRunFwdMREresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-FirstRunForward_REMResampSRF.csv")
+FirstRunBkdMREresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-FirstRunBackward_REMResampSRF.csv")
 FirstRunFwdSeqresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-FirstRunForward_SeqResamp.csv")
 FirstRunBkdSeqresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-FirstRunBackward_SeqResamp.csv")
-ThirdRunFwdMREresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-ThirdRunForward_REMResamp.csv")
-ThirdRunBkdMREresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-ThirdRunBackward_REMResamp.csv")
+ThirdRunFwdMREresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-ThirdRunForward_REMResampSRF.csv")
+ThirdRunBkdMREresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-ThirdRunBackward_REMResampSRF.csv")
 ThirdRunFwdSeqresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-ThirdRunForward_SeqResamp.csv")
 ThirdRunBkdSeqresampSpectra <- read.csv("E:/Glenn/Tramway Experiment/Processed/TramwayData/Resamp_reflectance/eventdata-2020-02-24-ThirdRunBackward_SeqResamp.csv")
 
@@ -257,6 +258,11 @@ ARE_1_seqFootprintSpectralonReflectance <- extract(ARE_1_seqSpectralonReflStackC
 names(ARE_1_seqFootprintSpectralonReflectance) <- c('location','green','red','redEdge','NIR')
 ARE_1_seqFootprintSpectralonNDVI <- extract(ARE_1_seqSpectralonNDVICrop,tramwayFootprintsShapes,fun=mean,df=TRUE)
 
+# Average Sequoia reflectance for Footprint
+
+TRM_Mean_SEQ_FootprintSpectralonReflectance <- (TRM_1_seqFootprintSpectralonReflectance+TRM_2_seqFootprintSpectralonReflectance+TRM_3_seqFootprintSpectralonReflectance)/3
+TRM_Mean_SEQ_FootprintSpectralonNDVI <- (TRM_1_seqFootprintSpectralonNDVI+TRM_2_seqFootprintSpectralonNDVI+TRM_3_seqFootprintSpectralonNDVI)/3
+
 #MRE Extract
 
 ARE_1_MREFootprintSpectralonReflectance <- extract(ARE_1_MRESpectralonReflStackCrop,tramwayFootprintsShapes,fun=mean,df=TRUE)
@@ -274,6 +280,12 @@ TRM_2_MREFootprintNDVI <- extract(TRM_2_MRESpectralonNDVICrop,tramwayFootprintsS
 TRM_3_MREFootprintSpectralonReflectance <- extract(TRM_3_MRESpectralonReflStackCrop,tramwayFootprintsShapes,fun=mean,df=TRUE)
 names(TRM_3_MREFootprintSpectralonReflectance) <- c('location','blue','green','red','redEdge','NIR')
 TRM_3_MREFootprintNDVI <- extract(TRM_3_MRESpectralonNDVICrop,tramwayFootprintsShapes,fun=mean,df=TRUE)
+
+#Average MRE Reflectance for Footprint
+
+TRM_Mean_MRE_FootprintSpectralonReflectance <- (TRM_1_MREFootprintSpectralonReflectance+TRM_2_MREFootprintSpectralonReflectance+TRM_3_MREFootprintSpectralonReflectance)/3
+TRM_Mean_MRE_FootprintSpectralonNDVI <- (TRM_1_MREFootprintNDVI+TRM_2_MREFootprintNDVI+TRM_3_MREFootprintNDVI)/3
+
 
 #-----8. Tramway Data Only Plots--------
 
@@ -309,16 +321,25 @@ legend(20, 0.4, legend=c("Mean FWd Runs MRE", "Mean FWd Runs SEQ"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
 title("Tramway Mean Forward Runs NDVI comparison of resampling for Sequoia and MRE band wavelengths")
 
+
+
 #-----9. TRM 1 SEQ Drone Survey and Tramway Data Plots Mean Forward Runs --------
 
 #SEQ NDVI VS TRAMWAY NDVI PLOT
 plot(1:110, MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
 lines(1:110, MeanFwdSeqresampNDVI,col='black')
 lines(1:110, TRM_1_seqFootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi,col='red')
-legend(20, 0.4, legend=c("Tramway Spectrometer NDVI", "Sequoia NDVI"),
+legend(0, 0.4, legend=c("Tramway Spectrometer NDVI (resampled for Sequoia bandwidth)", "Sequoia NDVI"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
-title("TRM1 SEQ Spectralon - Tramway Data Mean")
+title("Parrot Sequoia NDVI and Tramway Data Mean NDVI")
 
+#MRE NDVI VS TRAMWAY NDVI PLOT
+plot(1:110, MeanFwdMREresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, MeanFwdMREresampNDVI,col='black')
+lines(1:110, TRM_1_MREFootprintNDVI$TRM_1_MRE_2lines_SPE_index_ndvi, col='blue')
+legend(0, 0.45, legend=c("Tramway Spectrometer NDVI (resampled for MRE bandwidth)", "MRE NDVI"),
+       lty=c(1,1),col=c('black','blue'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
+title("MicaSense RedEdge NDVI and Tramway Data Mean NDVI")
 
 
 #TRM 1 SEQ NDVI VS TRM 1 MRE NDVI PLOT
@@ -329,6 +350,7 @@ lines(1:110, TRM_1_seqFootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi,co
 legend(20, 0.4, legend=c("MRE NDVI", "Sequoia NDVI"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
 title("TRM1 SEQ Drone Survey and  TRM1 MRE Drone Survey")
+
 
 
 # Plot Tramway Mean Fwd Sequoia TRM1 Green Band
@@ -353,7 +375,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p1sg <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -363,14 +385,14 @@ p1sg <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Mean Tramway Data with Sequoia \n Survey TRM1 Green Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia Green band')+
   ylab('Reflectance Sequioa Green Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p1sg)
 
 # Plot Tramway Mean Data against Sequoia TRM1 Red Band
 
@@ -394,7 +416,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p1sr <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -404,7 +426,7 @@ p1sr <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with Sequoia Survey \n TRM1 Red Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia Red band')+
@@ -435,7 +457,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p1sre <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -445,7 +467,7 @@ p1sre <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with Sequoia Survey \n TRM1 RedEdge Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia RedEdge band')+
@@ -476,7 +498,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p1sni <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -486,7 +508,7 @@ p1sni <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey TRM1 NIR Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia NIR band')+
@@ -518,7 +540,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p1snv <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -528,7 +550,7 @@ p1snv <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data \n with Sequoia Survey TRM1 NDVI")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia NDVI')+
@@ -569,7 +591,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p1mb <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -579,7 +601,7 @@ p1mb <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM1 Blue Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE Blue band')+
@@ -611,7 +633,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p1mg <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -621,7 +643,7 @@ p1mg <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM1 Green Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE Green band')+
@@ -652,7 +674,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p1mr <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -662,7 +684,7 @@ p1mr <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with MRE Survey \n TRM1 Red Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE Red band')+
@@ -694,7 +716,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p1mre <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -704,7 +726,7 @@ p1mre <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with MRE Survey \n TRM1 RedEdge Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE RedEdge band')+
@@ -736,7 +758,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p1mni <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -746,7 +768,7 @@ p1mni <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM1 NIR Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE NIR band')+
@@ -778,7 +800,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p1mnv <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -788,14 +810,14 @@ p1mnv <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data \n with MRE Survey TRM1 NDVI")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE NDVI')+
   ylab('MRE NDVI')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(pmnv)
+plot(p1mnv)
 }
 
 #-----11. TRM 2 Sequoia Drone Survey and Tramway Mean Data Plots--------
@@ -841,7 +863,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p2sg <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -851,7 +873,7 @@ p2sg <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey TRM2 Green Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia Green band')+
@@ -883,7 +905,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p2sr <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -893,7 +915,7 @@ p2sr <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with Sequoia Survey \n TRM2 Red Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia Red band')+
@@ -925,7 +947,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p2sre <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -935,7 +957,7 @@ p2sre <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with Sequoia Survey \n TRM2 RedEdge Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia RedEdge band')+
@@ -967,7 +989,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p2sni <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -977,7 +999,7 @@ p2sni <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey TRM2 NIR Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia NIR band')+
@@ -1009,7 +1031,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p2snv <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1019,7 +1041,7 @@ p2snv <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data \n with Sequoia Survey TRM2 NDVI")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia NDVI')+
@@ -1062,7 +1084,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p2mb <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1072,7 +1094,7 @@ p2mb <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM2 Blue Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE Blue band')+
@@ -1104,7 +1126,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p2mg <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1114,7 +1136,7 @@ p2mg <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM2 Green Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE Green band')+
@@ -1146,7 +1168,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p2mr <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1156,7 +1178,7 @@ p2mr <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with MRE Survey \n TRM2 Red Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE Red band')+
@@ -1188,7 +1210,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p2mre <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1198,7 +1220,7 @@ p2mre <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with MRE Survey \n TRM2 RedEdge Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE RedEdge band')+
@@ -1230,7 +1252,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p2mni <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1240,7 +1262,7 @@ p2mni <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM2 NIR Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE NIR band')+
@@ -1272,7 +1294,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p2mnv <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1282,7 +1304,7 @@ p2mnv <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data \n with MRE Survey TRM2 NDVI")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE NDVI')+
@@ -1325,7 +1347,7 @@ plot(p2mnv)
   r2val <- summary(lmres)$r.squared
   
   p3sg <- ggplot(df) +
-    geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1335,7 +1357,7 @@ plot(p2mnv)
     scale_color_identity() +
     theme_fancy() +
     
-    geom_abline(intercept = 0, slope = 1) +
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
     ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey TRM3 Green Band")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for Sequoia Green band')+
@@ -1367,7 +1389,7 @@ plot(p2mnv)
   r2val <- summary(lmres)$r.squared
   
   p3sr <- ggplot(df) +
-    geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1377,7 +1399,7 @@ plot(p2mnv)
     scale_color_identity() +
     theme_fancy() +
     
-    geom_abline(intercept = 0, slope = 1) +
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
     ggtitle("Comparison of Tramway Run Mean Data with Sequoia Survey \n TRM3 Red Band")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for Sequoia Red band')+
@@ -1409,7 +1431,7 @@ plot(p2mnv)
   r2val <- summary(lmres)$r.squared
   
   p3sre <- ggplot(df) +
-    geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1419,7 +1441,7 @@ plot(p2mnv)
     scale_color_identity() +
     theme_fancy() +
     
-    geom_abline(intercept = 0, slope = 1) +
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
     ggtitle("Comparison of Tramway Mean Data with Sequoia Survey \n TRM3 RedEdge Band")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for Sequoia RedEdge band')+
@@ -1451,7 +1473,7 @@ plot(p2mnv)
   r2val <- summary(lmres)$r.squared
   
   p3sni <- ggplot(df) +
-    geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1461,7 +1483,7 @@ plot(p2mnv)
     scale_color_identity() +
     theme_fancy() +
     
-    geom_abline(intercept = 0, slope = 1) +
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
     ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey TRM3 NIR Band")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for Sequoia NIR band')+
@@ -1493,7 +1515,7 @@ plot(p2mnv)
   r2val <- summary(lmres)$r.squared
   
   p3snv <- ggplot(df) +
-    geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1503,7 +1525,7 @@ plot(p2mnv)
     scale_color_identity() +
     theme_fancy() +
     
-    geom_abline(intercept = 0, slope = 1) +
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
     ggtitle("Comparison of Tramway Mean Data \n with Sequoia Survey TRM3 NDVI")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for Sequoia NDVI')+
@@ -1547,7 +1569,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p3mb <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1557,7 +1579,7 @@ p3mb <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM3 Blue Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE Blue band')+
@@ -1589,7 +1611,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p3mg <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1599,7 +1621,7 @@ p3mg <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with MRE \n Survey TRM3 Green Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE Green band')+
@@ -1631,7 +1653,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p3mr <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1641,7 +1663,7 @@ p3mr <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with MRE Survey \n TRM3 Red Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE Red band')+
@@ -1673,7 +1695,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p3mre <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1683,7 +1705,7 @@ p3mre <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean data with MRE Survey \n TRM3 RedEdge Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE RedEdge band')+
@@ -1715,7 +1737,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p3mni <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1725,7 +1747,7 @@ p3mni <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean data with MRE \n Survey TRM3 NIR Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE NIR band')+
@@ -1757,7 +1779,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 p3mnv <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1767,7 +1789,7 @@ p3mnv <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data \n with MRE Survey TRM3 NDVI")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for MRE NDVI')+
@@ -1811,7 +1833,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 pasg <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1821,7 +1843,7 @@ pasg <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey ARE1 Green Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia Green band')+
@@ -1853,7 +1875,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 pasr <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1863,7 +1885,7 @@ pasr <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with Sequoia Survey \n ARE1 Red Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia Red band')+
@@ -1895,7 +1917,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 pasre <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1905,7 +1927,7 @@ pasre <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with Sequoia Survey \n ARE1 RedEdge Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia RedEdge band')+
@@ -1937,7 +1959,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 pasni <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1947,7 +1969,7 @@ pasni <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
   ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey ARE1 NIR Band")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia NIR band')+
@@ -1979,7 +2001,7 @@ lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 pasnv <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -1989,14 +2011,14 @@ pasnv <- ggplot(df) +
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1,col='grey' ) +
   ggtitle("Comparison of Tramway Mean data \n with Sequoia Survey ARE1 NDVI")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia NDVI')+
   ylab('Sequoia NDVI')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(pasnv)
 }
 
 #----16. ARE 1 MRE Drone Survey and Tramway Mean Data plots -----
@@ -2032,7 +2054,7 @@ pasnv <- ggplot(df) +
   r2val <- summary(lmres)$r.squared
   
   pamb <- ggplot(df) +
-    geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -2042,7 +2064,7 @@ pasnv <- ggplot(df) +
     scale_color_identity() +
     theme_fancy() +
     
-    geom_abline(intercept = 0, slope = 1) +
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
     ggtitle("Comparison of Tramway Mean Data with MRE \n Survey ARE1 Blue Band")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for MRE Blue band')+
@@ -2074,7 +2096,7 @@ pasnv <- ggplot(df) +
   r2val <- summary(lmres)$r.squared
   
   pamg <- ggplot(df) +
-    geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -2084,7 +2106,7 @@ pasnv <- ggplot(df) +
     scale_color_identity() +
     theme_fancy() +
     
-    geom_abline(intercept = 0, slope = 1) +
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
     ggtitle("Comparison of Tramway Mean Data with MRE \n Survey ARE1 Green Band")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for MRE Green band')+
@@ -2116,7 +2138,7 @@ pasnv <- ggplot(df) +
   r2val <- summary(lmres)$r.squared
   
   pamr <- ggplot(df) +
-    geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -2126,7 +2148,7 @@ pasnv <- ggplot(df) +
     scale_color_identity() +
     theme_fancy() +
     
-    geom_abline(intercept = 0, slope = 1) +
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
     ggtitle("Comparison of Tramway Mean Data with MRE Survey \n ARE1 Red Band")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for MRE Red band')+
@@ -2158,7 +2180,7 @@ pasnv <- ggplot(df) +
   r2val <- summary(lmres)$r.squared
   
   pamre <- ggplot(df) +
-    geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -2168,7 +2190,7 @@ pasnv <- ggplot(df) +
     scale_color_identity() +
     theme_fancy() +
     
-    geom_abline(intercept = 0, slope = 1) +
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
     ggtitle("Comparison of Tramway Mean Data with MRE Survey \n ARE1 RedEdge Band")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for MRE RedEdge band')+
@@ -2200,7 +2222,7 @@ pasnv <- ggplot(df) +
   r2val <- summary(lmres)$r.squared
   
   pamni <- ggplot(df) +
-    geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -2210,7 +2232,7 @@ pasnv <- ggplot(df) +
     scale_color_identity() +
     theme_fancy() +
     
-    geom_abline(intercept = 0, slope = 1) +
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
     ggtitle("Comparison of Tramway Mean Data with MRE \n Survey ARE1 NIR Band")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for MRE NIR band')+
@@ -2242,7 +2264,7 @@ pasnv <- ggplot(df) +
   r2val <- summary(lmres)$r.squared
   
   pamnv <- ggplot(df) +
-    geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
@@ -2252,14 +2274,14 @@ pasnv <- ggplot(df) +
     scale_color_identity() +
     theme_fancy() +
     
-    geom_abline(intercept = 0, slope = 1) +
+    geom_abline(intercept = 0, slope = 1,col='grey' ) +
     ggtitle("Comparison of Tramway Mean Data \n with MRE Survey ARE1 NDVI")+
     #theme(aspect.ratio=1)+
     xlab('Tramway Relectance resampled for MRE NDVI')+
     ylab('MRE NDVI')+
     #coord_equal(ratio=1)
     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-  #plot(pmnv)
+  plot(pamnv)
 }
 
 #----17. Panel arrangement of Plots-----
@@ -2305,7 +2327,7 @@ title("NDVI Sequoia Surveys")
 ggsave(
   PlotNDVI,
   # filename = "/plots/test.png",
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/NDVI_all_surveys_M.png",
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/NDVI_all_surveys_M_SRF.png",
   width = 16,
   height = 25,
   units = "cm"
@@ -2313,7 +2335,7 @@ ggsave(
 ggsave(
   PlotBlue,
   # filename = "/plots/test.png",
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/Blue_all_surveys_M.png",
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/Blue_all_surveys_M_SRF.png",
   width = 16,
   height = 25,
   units = "cm"
@@ -2321,7 +2343,7 @@ ggsave(
 ggsave(
   PlotGreen,
   # filename = "/plots/test.png",
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/Green_all_surveys_M.png",
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/Green_all_surveys_M_SRF.png",
   width = 16,
   height = 25,
   units = "cm"
@@ -2329,7 +2351,7 @@ ggsave(
 ggsave(
   PlotRed,
   # filename = "/plots/test.png",
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/Red_all_surveys_M.png",
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/Red_all_surveys_M_SRF.png",
   width = 16,
   height = 25,
   units = "cm"
@@ -2338,7 +2360,7 @@ ggsave(
 ggsave(
   PlotRedEdge,
   # filename = "/plots/test.png",
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/RedEdge_all_surveys_M.png",
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/RedEdge_all_surveys_M_SRF.png",
   width = 16,
   height = 25,
   units = "cm"
@@ -2347,7 +2369,7 @@ ggsave(
 ggsave(
   PlotNIR,
   # filename = "/plots/test.png",
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/NIR_all_surveys_M.png",
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/NIR_all_surveys_M_SRF.png",
   width = 16,
   height = 25,
   units = "cm"
@@ -2355,14 +2377,14 @@ ggsave(
 
 ggsave(
   PlotTRM1_SEQ,
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/TRM1_SEQ_All bands_M.png",
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/TRM1_SEQ_All bands_M_SRF.png",
   width = 16,
   height = 25,
   units = "cm"
 )
 ggsave(
   PlotTRM2_SEQ,
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/TRM2_SEQ_All bands_M.png",
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/TRM2_SEQ_All bands_M_SRF.png",
   width = 16,
   height = 25,
   units = "cm"
@@ -2383,29 +2405,1100 @@ ggsave(
 )
 ggsave(
   PlotTRM2_MRE,
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/TRM2_MRE_All bands_M.png",
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/TRM2_MRE_All bands_M_SRF.png",
   width = 16,
   height = 25,
   units = "cm"
 )
 ggsave(
   PlotTRM3_MRE,
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/TRM3_MRE_All bands_M.png",
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/TRM3_MRE_All bands_M_SRF.png",
   width = 16,
   height = 25,
   units = "cm"
 )
 ggsave(
   PlotARE1_MRE,
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/ARE1_MRE_All bands_M.png",
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/ARE1_MRE_All bands_M_SRF.png",
   width = 16,
   height = 25,
   units = "cm"
 )
 ggsave(
   PlotARE1_SEQ,
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/ARE1_SEQ_All bands_M.png",
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/ARE1_SEQ_All bands_M_SRF.png",
   width = 16,
   height = 25,
   units = "cm"
 )
+
+#----19. SEQ Vs MRE TRM1 Survey----
+# Plot SEQ TRM1 vs MRE TRM1 Green
+{
+x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$green)
+y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$green)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pGreenTRM1 <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  Sequoia \n Survey TRM1 with MRE TRM1 Green")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance (Green) Sequoia')+
+  ylab('Reflectance (Green) MRE')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pGreenTRM1)
+}
+# Plot SEQ TRM1 vs MRE TRM1 Red
+{
+  x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$red)
+  y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$red)
+  df <- data.frame(x = x, y = y,
+                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
+  MADval <- mean(abs(x-y))
+  MADrel <- MADval/mean(x)*100
+  lmres <- lm(y~x)
+  r2val <- summary(lmres)$r.squared
+  
+  pRedTRM1 <- ggplot(df) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_point(aes(x, y), alpha=0.3, size = 1) +
+    geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+    #theme(text = element_text(size=20))+
+    scale_color_identity() +
+    theme_fancy() +
+    
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
+    ggtitle("Comparison of  Sequoia \n Survey TRM1 with MRE TRM1 Red")+
+    #theme(aspect.ratio=1)+
+    xlab('Reflectance (Red) Sequoia')+
+    ylab('Reflectance (Red) MRE')+
+    #coord_equal(ratio=1)
+    coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+  plot(pRedTRM1)
+}
+# Plot SEQ TRM1 vs MRE TRM1 RedEdge
+{
+  x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$redEdge)
+  y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$redEdge)
+  df <- data.frame(x = x, y = y,
+                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
+  MADval <- mean(abs(x-y))
+  MADrel <- MADval/mean(x)*100
+  lmres <- lm(y~x)
+  r2val <- summary(lmres)$r.squared
+  
+  pRedEdgeTRM1 <- ggplot(df) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_point(aes(x, y), alpha=0.3, size = 1) +
+    geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+    #theme(text = element_text(size=20))+
+    scale_color_identity() +
+    theme_fancy() +
+    
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
+    ggtitle("Comparison of  Sequoia \n Survey TRM1 with MRE TRM1 RedEdge")+
+    #theme(aspect.ratio=1)+
+    xlab('Reflectance (RedEdge) Sequoia')+
+    ylab('Reflectance (RedEdge) MRE')+
+    #coord_equal(ratio=1)
+    coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+  plot(pRedEdgeTRM1)
+}
+# Plot SEQ TRM1 vs MRE TRM1 NIR
+{
+  x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$NIR)
+  y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$NIR)
+  df <- data.frame(x = x, y = y,
+                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
+  MADval <- mean(abs(x-y))
+  MADrel <- MADval/mean(x)*100
+  lmres <- lm(y~x)
+  r2val <- summary(lmres)$r.squared
+  
+  pNIRTRM1 <- ggplot(df) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_point(aes(x, y), alpha=0.3, size = 1) +
+    geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+    #theme(text = element_text(size=20))+
+    scale_color_identity() +
+    theme_fancy() +
+    
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
+    ggtitle("Comparison of  Sequoia \n Survey TRM1 with MRE TRM1 NIR")+
+    #theme(aspect.ratio=1)+
+    xlab('Reflectance (NIR) Sequoia')+
+    ylab('Reflectance (NIR) MRE')+
+    #coord_equal(ratio=1)
+    coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+  plot(pNIRTRM1)
+}
+# Plot SEQ TRM1 vs MRE TRM1 NDVI
+{
+  x <- as.vector(TRM_1_seqFootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi)
+  y <- as.vector(TRM_1_MREFootprintNDVI$TRM_1_MRE_2lines_SPE_index_ndvi)
+  df <- data.frame(x = x, y = y,
+                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
+  MADval <- mean(abs(x-y))
+  MADrel <- MADval/mean(x)*100
+  lmres <- lm(y~x)
+  r2val <- summary(lmres)$r.squared
+  
+  pNDVITRM1 <- ggplot(df) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_point(aes(x, y), alpha=0.3, size = 1) +
+    geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+    #theme(text = element_text(size=20))+
+    scale_color_identity() +
+    theme_fancy() +
+    
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
+    ggtitle("Comparison of  Sequoia \n Survey TRM1 with MRE TRM1 NDVI")+
+    #theme(aspect.ratio=1)+
+    xlab('NDVI Sequoia')+
+    ylab('NDVI MRE')+
+    #coord_equal(ratio=1)
+    coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+  plot(pNDVITRM1)
+}
+
+PlotTRM1SEQvMRE <-grid.arrange(pGreenTRM1, pRedTRM1, pRedEdgeTRM1, pNIRTRM1,pNDVITRM1, nrow = 3)#Plots of TRM1 SEQ vs MRE
+
+ggsave(
+  PlotTRM1SEQvMRE,
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/TRM1_SEQvsMRE_M_SRF.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+
+
+-# ----20 Mean MRE reflectance vs Mean Tramway Data-----
+
+#MRE Blue
+x <- as.vector(MeanFwdMREresampBlue)
+y <- as.vector(TRM_Mean_MRE_FootprintSpectralonReflectance$blue)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMMB <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of Tramway Mean Data with MRE \n Survey Mean Data Blue Band")+
+#theme(aspect.ratio=1)+
+xlab('Tramway Relectance resampled for MRE Blue band')+
+  ylab('Reflectance MRE Blue Band')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+
+plot(pMMB)
+
+
+#MRE Green
+x <- as.vector(MeanFwdMREresampGreen)
+y <- as.vector(TRM_Mean_MRE_FootprintSpectralonReflectance$green)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMMG <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of Tramway Mean Data with MRE \n Survey Mean Data Green Band")+
+#theme(aspect.ratio=1)+
+xlab('Tramway Relectance resampled for MRE Green band')+
+ylab('Reflectance MRE Green Band')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMMG)
+
+#MRE Red
+x <- as.vector(MeanFwdMREresampRed)
+y <- as.vector(TRM_Mean_MRE_FootprintSpectralonReflectance$red)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMMR <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of Tramway Mean Data with MRE \n Survey Mean Data Red Band")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Relectance resampled for MRE Red band')+
+  ylab('Reflectance MRE Red Band')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMMR)
+
+#MRE RedEdge
+x <- as.vector(MeanFwdMREresampRedEdge)
+y <- as.vector(TRM_Mean_MRE_FootprintSpectralonReflectance$redEdge)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMMRE <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of Tramway Mean Data with MRE \n Survey Mean Data RedEdge Band")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Relectance resampled for MRE RedEdge band')+
+  ylab('Reflectance MRE RedEdge Band')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMMRE)
+
+#MRE NIR
+x <- as.vector(MeanFwdMREresampNIR)
+y <- as.vector(TRM_Mean_MRE_FootprintSpectralonReflectance$NIR)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMMN <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of Tramway Mean Data with MRE \n Survey Mean Data NIR Band")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Relectance resampled for MRE NIR band')+
+  ylab('Reflectance MRE NIR Band')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMMN)
+
+#MRE NDVI
+x <- as.vector(MeanFwdMREresampNDVI)
+y <- as.vector(TRM_Mean_MRE_FootprintSpectralonNDVI$TRM_1_MRE_2lines_SPE_index_ndvi)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMMVI <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of Tramway Mean Data with MRE \n Survey Mean Data NDVI")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Relectance resampled for MRE NDVI band')+
+  ylab('Reflectance MRE NDVI Band')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMMVI)
+
+ggsave(
+  pMMVI,
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/MRE_Mean_NDVI.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+
+#----21 Mean Sequoia Reflectance vs Mean Tramway data------
+
+#SEq Green
+
+x <- as.vector(MeanFwdSeqresampGreen)
+y <- as.vector(TRM_Mean_SEQ_FootprintSpectralonReflectance$green)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMSG <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey Mean Data Green Band")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Relectance resampled for Sequoia Green band')+
+  ylab('Reflectance Sequoia Green Band')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMSG)
+
+#SEq Red
+
+x <- as.vector(MeanFwdSeqresampRed)
+y <- as.vector(TRM_Mean_SEQ_FootprintSpectralonReflectance$red)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMSR <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey Mean Data Red Band")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Relectance resampled for Sequoia Red band')+
+  ylab('Reflectance Sequoia Red Band')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMSR)
+
+#SEq RedEdge
+
+x <- as.vector(MeanFwdSeqresampRedEdge)
+y <- as.vector(TRM_Mean_SEQ_FootprintSpectralonReflectance$redEdge)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMSRE <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey Mean Data RedEdge Band")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Relectance resampled for Sequoia RedEdge band')+
+  ylab('Reflectance Sequoia RedEdge Band')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMSRE)
+
+#SEq NIR
+
+x <- as.vector(MeanFwdSeqresampNIR)
+y <- as.vector(TRM_Mean_SEQ_FootprintSpectralonReflectance$NIR)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMSN <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey Mean Data NIR Band")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Relectance resampled for Sequoia NIR band')+
+  ylab('Reflectance Sequoia NIR Band')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMSN)
+
+#SEq NDVI
+
+x <- as.vector(MeanFwdSeqresampNDVI)
+y <- as.vector(TRM_Mean_SEQ_FootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMSVI <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey Mean Data NDVI")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Relectance resampled for Sequoia NDVI')+
+  ylab('Reflectance Sequoia NIR NDVI')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMSVI)
+
+ggsave(
+  pMSVI,
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/SEQ_Mean_NDVI.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+
+#----22 Panel arrangements of Plots----
+
+
+PlotMREMEAN <-grid.arrange(pMMB, pMMG, pMMR, pMMRE,pMMN,pMMVI, nrow = 3)#Plots of  MRE Surveys Mean Data 
+
+ggsave(
+  PlotMREMEAN,
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/MRE_Mean_Surveys_all bands.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+
+PlotSEQMEAN <-grid.arrange(pMSG, pMSR, pMSRE,pMSN,pMSVI, nrow = 3)#Plots of  MRE Surveys Mean Data 
+
+ggsave(
+  PlotSEQMEAN,
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/SEQ_Mean_Surveys_all bands.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+
+#----23 SEQ vs MRE Mean Data-------
+
+# Plot SEQ Mean vs MRE Mean Green
+{
+  x <- as.vector(TRM_Mean_SEQ_FootprintSpectralonReflectance$green)
+  y <- as.vector(TRM_Mean_MRE_FootprintSpectralonReflectance$green)
+  df <- data.frame(x = x, y = y,
+                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
+  MADval <- mean(abs(x-y))
+  MADrel <- MADval/mean(x)*100
+  lmres <- lm(y~x)
+  r2val <- summary(lmres)$r.squared
+  
+  pGreen <- ggplot(df) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_point(aes(x, y), alpha=0.3, size = 1) +
+    geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+    #theme(text = element_text(size=20))+
+    scale_color_identity() +
+    theme_fancy() +
+    
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
+    ggtitle("Comparison of  Sequoia \n  with MRE  Green")+
+    #theme(aspect.ratio=1)+
+    xlab('Reflectance (Green) Sequoia')+
+    ylab('Reflectance (Green) MRE')+
+    #coord_equal(ratio=1)
+    coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+  plot(pGreen)
+}
+# Plot SEQ vs MRE  Red
+{
+  x <- as.vector(TRM_Mean_SEQ_FootprintSpectralonReflectance$red)
+  y <- as.vector(TRM_Mean_MRE_FootprintSpectralonReflectance$red)
+  df <- data.frame(x = x, y = y,
+                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
+  MADval <- mean(abs(x-y))
+  MADrel <- MADval/mean(x)*100
+  lmres <- lm(y~x)
+  r2val <- summary(lmres)$r.squared
+  
+  pRed <- ggplot(df) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_point(aes(x, y), alpha=0.3, size = 1) +
+    geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+    #theme(text = element_text(size=20))+
+    scale_color_identity() +
+    theme_fancy() +
+    
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
+    ggtitle("Comparison of  Sequoia \n  with MRE Red")+
+    #theme(aspect.ratio=1)+
+    xlab('Reflectance (Red) Sequoia')+
+    ylab('Reflectance (Red) MRE')+
+    #coord_equal(ratio=1)
+    coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+  plot(pRed)
+}
+
+# Plot SEQ vs MRE  RedEdge
+{
+  x <- as.vector(TRM_Mean_SEQ_FootprintSpectralonReflectance$redEdge)
+  y <- as.vector(TRM_Mean_MRE_FootprintSpectralonReflectance$redEdge)
+  df <- data.frame(x = x, y = y,
+                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
+  MADval <- mean(abs(x-y))
+  MADrel <- MADval/mean(x)*100
+  lmres <- lm(y~x)
+  r2val <- summary(lmres)$r.squared
+  
+  pRedEdge <- ggplot(df) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_point(aes(x, y), alpha=0.3, size = 1) +
+    geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+    #theme(text = element_text(size=20))+
+    scale_color_identity() +
+    theme_fancy() +
+    
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
+    ggtitle("Comparison of  Sequoia \n  with MRE Rededge")+
+    #theme(aspect.ratio=1)+
+    xlab('Reflectance (RedEdge) Sequoia')+
+    ylab('Reflectance (RedEdge) MRE')+
+    #coord_equal(ratio=1)
+    coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+  plot(pRedEdge)
+}
+
+# Plot SEQ vs MRE  NIR
+{
+  x <- as.vector(TRM_Mean_SEQ_FootprintSpectralonReflectance$NIR)
+  y <- as.vector(TRM_Mean_MRE_FootprintSpectralonReflectance$NIR)
+  df <- data.frame(x = x, y = y,
+                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
+  MADval <- mean(abs(x-y))
+  MADrel <- MADval/mean(x)*100
+  lmres <- lm(y~x)
+  r2val <- summary(lmres)$r.squared
+  
+  pNIR <- ggplot(df) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_point(aes(x, y), alpha=0.3, size = 1) +
+    geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+    #theme(text = element_text(size=20))+
+    scale_color_identity() +
+    theme_fancy() +
+    
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
+    ggtitle("Comparison of  Sequoia \n  with MRE NIR")+
+    #theme(aspect.ratio=1)+
+    xlab('Reflectance (NIR) Sequoia')+
+    ylab('Reflectance (NIR) MRE')+
+    #coord_equal(ratio=1)
+    coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+  plot(pNIR)
+}
+# Plot SEQ vs MRE  NDVI
+{
+  x <- as.vector(TRM_Mean_SEQ_FootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi)
+  y <- as.vector(TRM_Mean_MRE_FootprintSpectralonNDVI$TRM_1_MRE_2lines_SPE_index_ndvi)
+  df <- data.frame(x = x, y = y,
+                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
+  MADval <- mean(abs(x-y))
+  MADrel <- MADval/mean(x)*100
+  lmres <- lm(y~x)
+  r2val <- summary(lmres)$r.squared
+  
+  pNDVI <- ggplot(df) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_point(aes(x, y), alpha=0.3, size = 1) +
+    geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+    #theme(text = element_text(size=20))+
+    scale_color_identity() +
+    theme_fancy() +
+    
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
+    ggtitle("Comparison of  Sequoia \n  with MRE NDVI")+
+    #theme(aspect.ratio=1)+
+    xlab('NDVI Sequoia')+
+    ylab('NDVI MRE')+
+    #coord_equal(ratio=1)
+    coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+  plot(pNDVI)
+}
+PlotSEQvsMRE <-grid.arrange(pGreen, pRed, pRedEdge,pNIR,pNDVI, nrow = 3)#Plots of  MRE Surveys Mean Data 
+
+ggsave(
+  PlotSEQvsMRE,
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/SEQ_VS_MRE_Mean_Surveys_all bands_V2.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+
+ggsave(
+  pNDVI,
+  filename = "E:/glenn/Tramway Experiment/Processed/Plots/SEQ_VS_MRE_Mean_Surveys_NDVI.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+
+#24----Seq vs Seq Reproducibility ------
+
+#TRM1 SEQ vs TRM2 SEQ Green
+
+x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$green)
+y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$green)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pseq1v2green <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  Sequoia TRM1 \n  with Sequoia TRM2 Green")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance Sequoia TRM 1')+
+  ylab('Reflectance Sequoia TRM 2')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pseq1v2green)
+
+
+#TRM1 SEQ vs TRM3 SEQ Green
+
+x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$green)
+y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$green)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pseq1v3green <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  Sequoia TRM1 \n  with Sequoia TRM3 Green")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance Sequoia TRM 1')+
+  ylab('Reflectance Sequoia TRM 3')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pseq1v3green)
+
+
+x <- as.vector(TRM_2_seqFootprintSpectralonReflectance$green)
+y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$green)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pseq2v3green <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  Sequoia TRM2 \n  with Sequoia TRM3 Green")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance Sequoia TRM 2')+
+  ylab('Reflectance Sequoia TRM 3')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pseq2v3green)

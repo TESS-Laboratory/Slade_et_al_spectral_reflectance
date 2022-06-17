@@ -1,4 +1,4 @@
-##Script for comparing Sentinel 2 and drone reflectance data
+##Script for comparing Sentinel 2 and drone reflectance data + REDEDGE Bands at 20m resolution
 
 
 # Library
@@ -435,22 +435,34 @@ y <- as.vector(ARE_1_SEQ_Grid_20$redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
 lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 sensrededge <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
-  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.5)+
-  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.5)+
+  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.23),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.20),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of SEQ ARE_1 Survey \n with Sentinel 2 RedEdge (20m) Band")+
+  geom_abline(intercept = 0, slope = 1,col='grey' ) +
+  ggtitle("Comparison of SEQ ARE_1 Survey \n with Sentinel 2 RedEdge (20m) Band 6")+
   #theme(aspect.ratio=1)+
   xlab('Sentinel 2 RedEdge band')+
   ylab('Reflectance SEQ RedEdge Band 6')+
@@ -463,22 +475,32 @@ x <- as.vector(Sentinel_RedEdge_Grid$S2_2020_02_23_B6_RedEdge_Reflectance)
 y <- as.vector(ARE_1_MRE_Grid_20$redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
 
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
 lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 senmrededge <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
-  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.5)+
-  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.5)+
+  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.23),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.20),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1,col='grey' ) +
   ggtitle("Comparison of MRE ARE_1 Survey \n with Sentinel 2 RedEdge (20m) Band 6")+
   #theme(aspect.ratio=1)+
   xlab('Sentinel 2 RedEdge Band 6')+
@@ -492,22 +514,32 @@ x <- as.vector(Sentinel_RedEdge_Grid_B5$S2_2020_02_23_B5_RedEdge_Reflectance)
 y <- as.vector(ARE_1_MRE_Grid_20$redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
 
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
 MADval <- mean(abs(x-y))
 MADrel <- MADval/mean(x)*100
 lmres <- lm(y~x)
 r2val <- summary(lmres)$r.squared
 
 senmrededge5 <- ggplot(df) +
-  geom_smooth(aes(x, y,col='grey',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
-  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.5)+
-  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.5)+
+  geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.23),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.20),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
   
-  geom_abline(intercept = 0, slope = 1) +
+  geom_abline(intercept = 0, slope = 1,col='grey' ) +
   ggtitle("Comparison of MRE ARE_1 Survey \n with Sentinel 2 RedEdge (20m) Band 5")+
   #theme(aspect.ratio=1)+
   xlab('Sentinel 2 RedEdge Band 5')+
@@ -516,31 +548,3 @@ senmrededge5 <- ggplot(df) +
   coord_fixed(xlim=c(0,0.4),ylim=c(0,0.4))
 plot(senmrededge5)
 
-
-#----7. Panel arrangement of Plots-----
-
-grid.arrange(sensg,sensr,sensni,sensvi, nrow = 2)#Plots of ARE1 Sequoia survey
-grid.arrange(senmb,senmg,senmr,senmni,senmvi, nrow = 3)#Plots of ARE1 MRE Survey
-
-PlotARE_1_SEQ <-grid.arrange(sensg,sensr,sensni,sensvi, nrow = 2)#Plots of ARE1 Sequoia survey
-PlotARE_1_MRE <-grid.arrange(senmb,senmg,senmr,senmni,senmvi, nrow = 3)#Plots of ARE1 MRE Survey
-
-
-#----8. Save Plots------
-
-ggsave(
-  PlotARE_1_MRE,
-  # filename = "/plots/test.png",
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/Sentinel/ARE_1_MRE.png",
-  width = 16,
-  height = 25,
-  units = "cm"
-)
-ggsave(
-  PlotARE_1_SEQ,
-  # filename = "/plots/test.png",
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/Sentinel/ARE_1_SEQ.png",
-  width = 16,
-  height = 25,
-  units = "cm"
-)
