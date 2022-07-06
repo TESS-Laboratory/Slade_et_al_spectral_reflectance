@@ -25,8 +25,8 @@ theme_fancy <- function() {
   theme_bw() +
     theme(
       text = element_text(family = "Helvetica"),
-      axis.text = element_text(size = 8, color = "black"),
-      axis.title = element_text(size = 8, color = "black"),
+      axis.text = element_text(size = 7, color = "black"),
+      axis.title = element_text(size = 7, color = "black"),
       axis.line.x = element_line(size = 0.3, color = "black"),
       axis.line.y = element_line(size = 0.3, color = "black"),
       axis.ticks = element_line(size = 0.3, color = "black"),
@@ -57,7 +57,7 @@ theme_fancy <- function() {
 windowsFonts("Helvetica" = windowsFont("Helvetica")) # Ensure font is mapped correctly
 #----2. Read in Data-------
 
-SEQ_Response_Curve <- read_csv("E:/Glenn/Tramway Experiment/Raw data/DroneData/sequoiaRespApprox.csv")
+SEQ_Response_Curve <- read_csv("E:/Glenn/Tramway Experiment/Raw data/DroneData/Sequoia_Response_2nm.csv")
 MRE_Response_Curve <- read_csv("E:/Glenn/Tramway Experiment/Raw data/DroneData/M_RSRs_normalized_2nm.csv")
 Combined_Response_Curve <- read_csv("E:/Glenn/Tramway Experiment/Raw data/DroneData/Sequoia_MRE_Response.csv")
 Combined_Response_Curve_Sen <- read_csv("E:/Glenn/Tramway Experiment/Raw data/DroneData/Sequoia_MRE_Sentinel_Response.csv")
@@ -66,7 +66,7 @@ Response_Curve_Sen <- read_csv("E:/Glenn/Tramway Experiment/Raw data/Satellite_D
 #-----3. Plots-----------
 
 
-df <- melt(SEQ_Response_Curve ,  id.vars = 'sequoiaTransSens.wvl', variable.name = 'series')
+df <- melt(SEQ_Response_Curve ,  id.vars = 'Wavelength', variable.name = 'series')
 df2 <- melt (MRE_Response_Curve ,  id.vars = 'Wavelength', variable.name = 'series')
 df3 <- melt (Combined_Response_Curve ,  id.vars = 'Wavelength', variable.name = 'series')
 df4 <- melt (Combined_Response_Curve_Sen ,  id.vars = 'Wavelength', variable.name = 'series')
@@ -81,18 +81,26 @@ P1 <-ggplot(df, aes(sequoiaTransSens.wvl, value)) +
 plot (P1)
 
 # Sequoia Spectral Response Curve - all black
-P2 <-ggplot(df, aes(sequoiaTransSens.wvl, value)) +
-  geom_line(aes(colour = series))+ theme_fancy ()+scale_color_manual(values = c(green= 'black',
-                                                                                red = 'black', redge = 'black', NIR = 'black'))+
-  ylab ('Reflectance [HCRF] Response')+ xlab('Wavelength nm')+labs(colour='Sequoia Sensor')
+P2 <-ggplot(df, aes(Wavelength, value)) +
+  geom_line(aes(colour = series))+ theme_fancy ()+scale_color_manual(values = c(SEQ_Green = 'red',
+                                                                                SEQ_Red = 'red', SEQ_RedEdge = 'red', SEQ_NIR = 'red'))+
+  ylab ('Reflectance [HCRF] Response')+ xlab('Wavelength nm')+labs(colour='Sequoia Sensor')+
+  scale_y_continuous(breaks = seq(0, 1, by = .2))+   scale_x_continuous(breaks = seq(400, 900, by = 50))+
+    theme(legend.position="none")+
+  annotate ("text",  x = 405, y = 0.9, label = "Sequoia", size=2.5)+
+  annotate("segment", x =430, xend = 455, y = 0.89, yend = 0.89, colour = "red", size=0.35)
 
 plot (P2)
 
 # MRE Spectral Response Curve
 P3 <-ggplot(df2, aes(Wavelength, value)) +
-  geom_line(aes(colour = series))+ theme_fancy ()+scale_color_manual(values = c(MRE_Blue='blue',MRE_Green= 'green',
-                                                                                 MRE_Red = 'red', MRE_RedEdge = 'orange', MRE_NIR = 'black'))+
-  ylab ('Reflectance [HCRF] Response')+ xlab('Wavelength nm')+labs(colour='MicaSense Red Edge Sensor')
+  geom_line(aes(colour = series))+ theme_fancy ()+scale_color_manual(values = c(MRE_Blue='black',MRE_Green= 'black',
+                                                                                 MRE_Red = 'black', MRE_RedEdge = 'black', MRE_NIR = 'black'))+
+  ylab ('Reflectance[HCRF] Response')+ xlab('Wavelength nm')+labs(colour='MicaSense Red Edge Sensor')+
+  scale_y_continuous(breaks = seq(0, 1, by = .2))+   scale_x_continuous(breaks = seq(400, 900, by = 50))+
+  theme(legend.position="none")+
+  annotate ("text",  x = 405, y = 0.9, label = "MicaSense \n RedEdge", size=2.5)+
+  annotate("segment", x =430, xend = 455, y = .89, yend = .89, colour = "black", size=0.35)
 
 plot (P3)
 
@@ -100,7 +108,7 @@ plot (P3)
 P4 <-ggplot(df3, aes(Wavelength, value)) +
   geom_line(aes(colour = series))+ theme_fancy ()+scale_color_manual(values = c(MRE_Blue='black',MRE_Green= 'black',
                                                                                 MRE_Red = 'black', MRE_RedEdge = 'black', MRE_NIR = 'black', SEQ_Green='red', SEQ_Red= 'red',SEQ_RedEdge='red',SEQ_NIR='red'))+
-  ylab ('Reflectance [HCRF] Response')+ xlab('Wavelength nm')+labs(colour='MicaSense Red Edge Sensor')+theme(legend.position="none")
+  ylab ('Reflectance[HCRF] Response')+ xlab('Wavelength nm')+labs(colour='MicaSense Red Edge Sensor')+theme(legend.position="none")
 
 plot (P4)
 
@@ -180,7 +188,7 @@ P6 <-ggplot(df3, aes(Wavelength, value)) +
 
 plot (P6)
 
-# Combined Spectral Response Curves for Sequoia, MRE and Sentinel 2
+# Combined Spectral Response Curves for Sequoia, MRE and Sentinel-2
 {
 P7 <-ggplot(df4, aes(Wavelength, value)) +
   geom_line(aes(colour = series), size =0.55)+ theme_fancy ()+scale_color_manual(values = c(MRE_Blue='black',MRE_Green= 'black',
@@ -210,7 +218,7 @@ P7 <-ggplot(df4, aes(Wavelength, value)) +
   annotate ("text",  x = 415, y = -0.19, label = "Sequoia", size=3)+
   annotate ("text",  x = 405, y = 1, label = "MicaSense \n RedEdge", size=3)+
   annotate ("text",  x = 405, y = 0.9, label = "Sequoia", size=3)+
-  annotate ("text",  x = 405, y = 0.8, label = "Sentinel 2", size=3)+
+  annotate ("text",  x = 405, y = 0.8, label = "Sentinel-2", size=3)+
   annotate("segment", x =425, xend = 455, y = 1, yend = 1, colour = "black", size=0.55)+
   annotate("segment", x =425, xend = 455, y = 0.89, yend = 0.89, colour = "red", size=0.55)+
   annotate("segment", x =425, xend = 455, y = 0.79, yend = 0.79, colour = "blue", size=0.55)+
@@ -230,8 +238,8 @@ P7 <-ggplot(df4, aes(Wavelength, value)) +
     annotate ("text",  x = 780, y = -0.4, label = "S2 RE B7", size=2)+
     annotate("rect", xmin = 780, xmax = 886, ymin = -0.38, ymax = -0.3,colour ='blue' ,size =0.35 ,fill ='black',  alpha = .2)+
     annotate ("text",  x = 833, y = -0.4, label = "S2 NIR", size=2)+
-    annotate ("text",  x = 415, y = -0.34, label = "Sentinel 2", size=3)+
-  theme(legend.position="none")+ ggtitle("Sensor Response Curves for Sentinel 2, Sequoia and MicaSense RedEdge") + 
+    annotate ("text",  x = 415, y = -0.34, label = "Sentinel-2", size=3)+
+  theme(legend.position="none")+ ggtitle("Sensor Response Curves for Sentinel-2, Sequoia and MicaSense RedEdge") + 
   theme(plot.title = element_text(lineheight=1, size =12, face="bold"))
 }
 plot (P7)
@@ -284,13 +292,13 @@ P8 <-ggplot(df3, aes(Wavelength, value)) +
     annotate ("text",  x = 780, y = -0.4, label = "S2 RE B7", size=2)+
     annotate("rect", xmin = 780, xmax = 886, ymin = -0.38, ymax = -0.3,colour ='blue' ,size =0.35 ,fill ='black',  alpha = .2)+
     annotate ("text",  x = 833, y = -0.4, label = "S2 NIR", size=2)+
-  annotate ("text",  x = 415, y = -0.34, label = "Sentinel 2", size=3)+
+  annotate ("text",  x = 415, y = -0.34, label = "Sentinel-2", size=3)+
   theme(legend.position="none")+ ggtitle("Sensor Response Curves for Sequoia and MicaSense RedEdge") + 
   theme(plot.title = element_text(lineheight=1, size =12, face="bold"))
 }
   plot (P8)
   
-# Combined  Sentinel 2 Sensor response 
+# Combined  Sentinel-2 Sensor response 
   {
     P9 <-ggplot(df5, aes(Wavelength, value)) +
       geom_line(aes(colour = series), size =0.55)+ theme_fancy ()+scale_color_manual(values = c(S2_Blue = 'blue', S2_Green = 'blue', S2_Red ='blue',S2_NIR='blue', S2_B5 = 'blue', S2_B6 = 'blue', S2_B7 = 'blue', Footprint_10='green'))+
@@ -317,7 +325,7 @@ P8 <-ggplot(df3, aes(Wavelength, value)) +
       annotate ("text",  x = 790, y = -0.27, label = "SEQ NIR", size=2)+
       annotate ("text",  x = 415, y = -0.07, label = "MicaSense \n RedEdge", size=3)+
       annotate ("text",  x = 415, y = -0.19, label = "Sequoia", size=3)+
-      annotate ("text",  x = 405, y = 0.8, label = "Sentinel 2", size=3)+
+      annotate ("text",  x = 405, y = 0.8, label = "Sentinel-2", size=3)+
       annotate("segment", x =425, xend = 455, y = 0.79, yend = 0.79, colour = "blue", size=0.55)+
       annotate ("text",  x = 405, y = 0.7, label = "Creosote \n Bush", size=3)+
       annotate("segment", x =425, xend = 455, y = 0.69, yend = 0.69, colour = "green", size=0.55)+
@@ -335,15 +343,15 @@ P8 <-ggplot(df3, aes(Wavelength, value)) +
       annotate ("text",  x = 780, y = -0.4, label = "S2 RE B7", size=2)+
       annotate("rect", xmin = 780, xmax = 886, ymin = -0.38, ymax = -0.3,colour ='blue' ,size =0.35 ,fill ='black',  alpha = .2)+
       annotate ("text",  x = 833, y = -0.4, label = "S2 NIR", size=2)+
-      annotate ("text",  x = 415, y = -0.34, label = "Sentinel 2", size=3)+
-      theme(legend.position="none")+ ggtitle("Sensor Response Curve for Sentinel 2") + 
+      annotate ("text",  x = 415, y = -0.34, label = "Sentinel-2", size=3)+
+      theme(legend.position="none")+ ggtitle("Sensor Response Curve for Sentinel-2") + 
       theme(plot.title = element_text(lineheight=1, size =12, face="bold"))
   }
   plot (P9) 
  
   
   
-  # Revised Sentinel 2 Sensor response 
+  # Revised Sentinel-2 Sensor response 
   {
     P10 <-ggplot(df5, aes(Wavelength, value)) +
       geom_line(aes(colour = series), size =0.35)+ theme_fancy ()+scale_color_manual(values = c(S2_Blue = 'blue', S2_Green = 'blue', S2_Red ='blue',S2_NIR='blue', S2_B5 = 'blue', S2_B6 = 'blue', S2_B7 = 'blue'))+
@@ -370,7 +378,7 @@ P8 <-ggplot(df3, aes(Wavelength, value)) +
       annotate ("text",  x = 790, y = -0.27, label = "SEQ NIR", size=2)+
       annotate ("text",  x = 415, y = -0.07, label = "MicaSense \n RedEdge", size=2.5)+
       annotate ("text",  x = 415, y = -0.19, label = "Sequoia", size=2.5)+
-      annotate ("text",  x = 405, y = 0.8, label = "Sentinel 2", size=2.5)+
+      annotate ("text",  x = 405, y = 0.8, label = "Sentinel-2", size=2.5)+
       annotate("segment", x =430, xend = 455, y = 0.79, yend = 0.79, colour = "blue", size=0.35)+
 #      annotate ("text",  x = 405, y = 0.7, label = "Creosote \n Bush", size=2.5)+
 #      annotate("segment", x =425, xend = 455, y = 0.69, yend = 0.69, colour = "green", size=0.55)+
@@ -388,7 +396,7 @@ P8 <-ggplot(df3, aes(Wavelength, value)) +
       annotate ("text",  x = 780, y = -0.4, label = "S2 RE B7", size=2)+
       annotate("rect", xmin = 780, xmax = 886, ymin = -0.38, ymax = -0.3,colour ='blue' ,size =0.35 ,fill ='black',  alpha = .2)+
       annotate ("text",  x = 833, y = -0.4, label = "S2 NIR", size=2)+
-      annotate ("text",  x = 415, y = -0.34, label = "Sentinel 2", size=2.5)+
+      annotate ("text",  x = 415, y = -0.34, label = "Sentinel-2", size=2.5)+
       theme(legend.position="none")
   }
   plot (P10) 
@@ -409,6 +417,70 @@ P8 <-ggplot(df3, aes(Wavelength, value)) +
   
   }
   plot (P11)
+  {
+    
+    #Annotation only
+  P12 <-ggplot(df5, aes(Wavelength, value)) + theme_fancy ()+
+  scale_y_continuous(breaks = seq(-0.5, 0, by = 1))+   
+    scale_x_continuous(breaks = seq(400, 900, by = 50))+
+    annotate("rect", xmin = 465, xmax = 485, ymin = -0.1, ymax = -0.02,colour ='black' ,size =0.35 ,fill ='blue',  alpha = .2)+
+    annotate ("text",  x = 475, y = -0.12, label = "MRE Blue", size=2)+
+    annotate("rect", xmin = 550, xmax = 570, ymin = -0.1, ymax = -0.02,colour ='black' ,size =0.35 ,fill ='green',  alpha = .2)+
+    annotate ("text",  x = 560, y = -0.12, label = "MRE Green", size=2)+
+    annotate("rect", xmin = 658, xmax = 678, ymin = -0.1, ymax = -0.02,colour ='black' ,size =0.35 ,fill ='red',  alpha = .2)+
+    annotate ("text",  x = 668, y = -0.12, label = "MRE Red", size=2)+
+    annotate("rect", xmin = 707, xmax = 727, ymin = -0.1, ymax = -0.02,colour ='black' ,size =0.35 ,fill ='orange',  alpha = .2)+
+    annotate ("text",  x = 717, y = -0.12, label = "MRE RedEdge", size=2)+
+    annotate("rect", xmin = 820, xmax = 860, ymin = -0.1, ymax = -0.02,colour ='black' ,size =0.35 ,fill ='black',  alpha = .2)+
+    annotate ("text",  x = 840, y = -0.12, label = "MRE NIR", size=2)+
+    annotate("rect", xmin = 530, xmax = 570, ymin = -0.25, ymax = -0.17,colour ='red' ,size =0.35 ,fill ='green',  alpha = .2)+
+    annotate ("text",  x = 550, y = -0.27, label = "SEQ Green", size=2)+
+    annotate("rect", xmin = 640, xmax = 680, ymin = -0.25, ymax = -0.17,colour ='red' ,size =0.35 ,fill ='red',  alpha = .2)+
+    annotate ("text",  x = 660, y = -0.27, label = "SEQ Red", size=2)+
+    annotate("rect", xmin = 730, xmax = 740, ymin = -0.25, ymax = -0.17,colour ='red' ,size =0.35 ,fill ='orange',  alpha = .2)+
+    annotate ("text",  x = 735, y = -0.27, label = "SEQ RedEdge", size=2)+
+    annotate("rect", xmin = 770, xmax = 810, ymin = -0.25, ymax = -0.17,colour ='red' ,size =0.35 ,fill ='black',  alpha = .2)+
+    annotate ("text",  x = 790, y = -0.27, label = "SEQ NIR", size=2)+
+    annotate ("text",  x = 415, y = -0.07, label = "MicaSense \n RedEdge", size=2.5)+
+    annotate ("text",  x = 415, y = -0.19, label = "Sequoia", size=2.5)+
+    #annotate ("text",  x = 405, y = 0.8, label = "Sentinel-2", size=2.5)+
+   # annotate("segment", x =430, xend = 455, y = 0.79, yend = 0.79, colour = "blue", size=0.35)+
+    #      annotate ("text",  x = 405, y = 0.7, label = "Creosote \n Bush", size=2.5)+
+    #      annotate("segment", x =425, xend = 455, y = 0.69, yend = 0.69, colour = "green", size=0.55)+
+    annotate("rect", xmin = 459, xmax = 524, ymin = -0.38, ymax = -0.3,colour ='blue' ,size =0.35 ,fill ='blue',  alpha = .2)+
+    annotate ("text",  x = 492, y = -0.4, label = "S2 Blue", size=2)+
+    annotate("rect", xmin = 541, xmax = 577, ymin = -0.38, ymax = -0.3,colour ='blue' ,size =0.35 ,fill ='green',  alpha = .2)+
+    annotate ("text",  x = 560, y = -0.4, label = "S2 Green", size=2)+
+    annotate("rect", xmin = 649, xmax = 680, ymin = -0.38, ymax = -0.3,colour ='blue' ,size =0.35 ,fill ='red',  alpha = .2)+
+    annotate ("text",  x = 665, y = -0.4, label = "S2 Red", size=2)+ 
+    annotate("rect", xmin = 695, xmax = 711, ymin = -0.38, ymax = -0.3,colour ='blue' ,size =0.35 ,fill ='orange',  alpha = .2)+
+    annotate ("text",  x = 702, y = -0.4, label = "S2 RE B5", size=2)+   
+    annotate("rect", xmin = 731, xmax = 746, ymin = -0.38, ymax = -0.3,colour ='blue' ,size =0.35 ,fill ='orange',  alpha = .2)+
+    annotate ("text",  x = 739, y = -0.4, label = "S2 RE B6", size=2)+   
+    annotate("rect", xmin = 770, xmax = 790, ymin = -0.38, ymax = -0.3,colour ='blue' ,size =0.35 ,fill ='orange',  alpha = .2)+
+    annotate ("text",  x = 780, y = -0.4, label = "S2 RE B7", size=2)+
+    annotate("rect", xmin = 780, xmax = 886, ymin = -0.38, ymax = -0.3,colour ='blue' ,size =0.35 ,fill ='black',  alpha = .2)+
+    annotate ("text",  x = 833, y = -0.4, label = "S2 NIR", size=2)+
+    annotate ("text",  x = 415, y = -0.34, label = "Sentinel-2", size=2.5)+
+    theme(legend.position="none")+
+     theme(
+        plot.title = element_blank(),
+        axis.title.y = element_blank())
+  }
+  plot (P12)
+  
+  # Revised Sentinel-2 Sensor response V2
+  {
+    P13 <-ggplot(df5, aes(Wavelength, value)) +
+      geom_line(aes(colour = series), size =0.35)+ theme_fancy ()+scale_color_manual(values = c(S2_Blue = 'blue', S2_Green = 'blue', S2_Red ='blue',S2_NIR='blue', S2_B5 = 'blue', S2_B6 = 'blue', S2_B7 = 'blue'))+
+      ylab ('Reflectance[HCRF] Response')+ xlab('Wavelength nm')+labs(colour='Sensors')+
+      #ylim (-0.3,1)+ 
+      scale_y_continuous(breaks = seq(0, 1, by = .2))+   scale_x_continuous(breaks = seq(400, 900, by = 50))+
+      annotate ("text",  x = 405, y = 0.8, label = "Sentinel-2", size=2.5)+
+      annotate("segment", x =430, xend = 455, y = 0.79, yend = 0.79, colour = "blue", size=0.35)+
+        theme(legend.position="none")
+  }
+  plot (P13) 
   
    
   ggsave(
@@ -502,4 +574,45 @@ P8 <-ggplot(df3, aes(Wavelength, value)) +
     units = "cm",
   )
   
+  ggsave(
+    PlotRESponse2,
+    filename = "E:/glenn/Tramway_Rcode/figures/plots/sensor_response_curves/Combined_panel_response2.png",
+    width = 17,
+    height = 20,
+    units = "cm",
+  )
   
+  PlotRESponse3 <-  plot_grid(P2,P3, P10, align = "v", nrow = 3, rel_heights = c(0.3,0.3,0.4))
+  ggsave(
+    PlotRESponse3,
+    filename = "E:/glenn/Tramway_Rcode/figures/plots/sensor_response_curves/Combined_panel_response3.png",
+    width = 17,
+    height = 18,
+    units = "cm",
+  )
+  
+  PlotRESponse4 <-  plot_grid(P2,P3,P13,P12, align = "v", nrow = 4, rel_heights = c(0.25,0.25,0.25,0.25))
+  ggsave(
+    PlotRESponse4,
+    filename = "E:/glenn/Tramway_Rcode/figures/plots/sensor_response_curves/Combined_panel_response3.png",
+    width = 17,
+    height = 17,
+    units = "cm",
+  )
+  
+  PlotRESponse5 <-  plot_grid(P2,P3,P13, align = "v", nrow = 3, rel_heights = c(0.33,0.33,0.33))
+  ggsave(
+    PlotRESponse5,
+    filename = "E:/glenn/Tramway_Rcode/figures/plots/sensor_response_curves/Combined_panel_response4.png",
+    width = 16,
+    height = 12,
+    units = "cm",
+  )
+  
+  ggsave(
+    P12,
+    filename = "E:/glenn/Tramway_Rcode/figures/plots/sensor_response_curves/Annotated.png",
+    width = 16,
+    height = 4,
+    units = "cm",
+  )

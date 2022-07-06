@@ -1,6 +1,6 @@
 ###Analyse All Drone data from Are1, TRM1, TRM2, TRM3 and all Tramway passes
 
-# Library
+#----0. Library-----
 {
 library(tidyverse)
 library(viridis)
@@ -239,6 +239,7 @@ MeanFwdSeqresampdf <- data.frame(MeanFwdSeqresampGreen,MeanFwdSeqresampRed,MeanF
 MeanFwdSeqresampNDVI <- (MeanFwdSeqresampNIR-MeanFwdSeqresampRed)/(MeanFwdSeqresampNIR+MeanFwdSeqresampRed)
 
 }
+
 
 #----7.Extract reflectance data from Stacked image data for Tramway footprints----
 #SEQ Extract
@@ -3115,7 +3116,7 @@ pMSVI <- ggplot(df) +
   ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey Mean Data NDVI")+
   #theme(aspect.ratio=1)+
   xlab('Tramway Relectance resampled for Sequoia NDVI')+
-  ylab('Reflectance Sequoia NIR NDVI')+
+  ylab('Reflectance Sequoia NDVI')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 plot(pMSVI)
@@ -3378,7 +3379,7 @@ ggsave(
   units = "cm"
 )
 
-#24----Seq vs Seq Reproducibility ------
+#----24 Seq vs Seq Reproducibility ------
 
 #TRM1 SEQ vs TRM2 SEQ Green
 
@@ -3502,3 +3503,1303 @@ pseq2v3green <- ggplot(df) +
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 plot(pseq2v3green)
+
+#TRM1 SEQ vs TRM2 SEQ red
+
+x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$red)
+y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$red)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pseq1v2red <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  Sequoia TRM1 \n  with Sequoia TRM2 red")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance Sequoia TRM 1')+
+  ylab('Reflectance Sequoia TRM 2')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pseq1v2red)
+
+
+#TRM1 SEQ vs TRM3 SEQ red
+
+x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$red)
+y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$red)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pseq1v3red <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  Sequoia TRM1 \n  with Sequoia TRM3 red")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance Sequoia TRM 1')+
+  ylab('Reflectance Sequoia TRM 3')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pseq1v3red)
+
+#TRM2 SEQ vs TRM3 SEQ red
+x <- as.vector(TRM_2_seqFootprintSpectralonReflectance$red)
+y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$red)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pseq2v3red <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  Sequoia TRM2 \n  with Sequoia TRM3 red")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance Sequoia TRM 2')+
+  ylab('Reflectance Sequoia TRM 3')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pseq2v3red)
+
+
+#TRM1 SEQ vs TRM2 SEQ RedEdge
+
+x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$redEdge)
+y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$redEdge)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pseq1v2redEdge <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  Sequoia TRM1 \n  with Sequoia TRM2 RedEdge")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance Sequoia TRM 1')+
+  ylab('Reflectance Sequoia TRM 2')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pseq1v2redEdge)
+
+
+#TRM1 SEQ vs TRM3 SEQ RedEdge
+
+x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$redEdge)
+y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$redEdge)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pseq1v3redEdge <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  Sequoia TRM1 \n  with Sequoia TRM3 RedEdge")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance Sequoia TRM 1')+
+  ylab('Reflectance Sequoia TRM 3')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pseq1v3redEdge)
+
+#TRM2 SEQ vs TRM3 SEQ redEdge
+x <- as.vector(TRM_2_seqFootprintSpectralonReflectance$redEdge)
+y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$redEdge)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pseq2v3redEdge <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  Sequoia TRM2 \n  with Sequoia TRM3 RedEdge")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance Sequoia TRM 2')+
+  ylab('Reflectance Sequoia TRM 3')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pseq2v3redEdge)
+
+
+#TRM1 SEQ vs TRM2 SEQ NIR
+
+x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$NIR)
+y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$NIR)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pseq1v2NIR <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  Sequoia TRM1 \n  with Sequoia TRM2 NIR")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance Sequoia TRM 1')+
+  ylab('Reflectance Sequoia TRM 2')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pseq1v2NIR)
+
+
+#TRM1 SEQ vs TRM3 SEQ NIR
+
+x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$NIR)
+y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$NIR)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pseq1v3NIR <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  Sequoia TRM1 \n  with Sequoia TRM3 NIR")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance Sequoia TRM 1')+
+  ylab('Reflectance Sequoia TRM 3')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pseq1v3NIR)
+
+#TRM2 SEQ vs TRM3 SEQ NIR
+x <- as.vector(TRM_2_seqFootprintSpectralonReflectance$NIR)
+y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$NIR)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pseq2v3NIR <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  Sequoia TRM2 \n  with Sequoia TRM3 NIR")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance Sequoia TRM 2')+
+  ylab('Reflectance Sequoia TRM 3')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pseq2v3NIR)
+
+#------panel arrangments and save-------
+PlotSEQvSEQgr <-grid.arrange(pseq1v2green, pseq1v2red, pseq2v3green, pseq2v3red,pseq1v3green,pseq1v3red, nrow = 3)#Plots of  MRE Surveys Mean Data 
+
+ggsave(
+  PlotSEQvSEQgr,
+  filename = "E:/glenn/Tramway_Rcode/figures/plots/PlotSEQvSEQgreen_red.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+
+PlotSEQvSEQreNIR <-grid.arrange(pseq1v2redEdge, pseq1v2NIR, pseq2v3redEdge, pseq2v3NIR,pseq1v3redEdge,pseq1v3NIR, nrow = 3)#Plots of  MRE Surveys Mean Data 
+
+ggsave(
+  PlotSEQvSEQreNIR,
+  filename = "E:/glenn/Tramway_Rcode/figures/plots/PlotSEQvSEQredEdge_NIR.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+
+#----25 MRE vs MRE Reproducibility ------
+
+#TRM1 MRE vs TRM2 MRE blue
+
+x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$blue)
+y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$blue)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMRE1v2blue <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  MRE TRM1 \n  with MRE TRM2 blue")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance MRE TRM 1')+
+  ylab('Reflectance MRE TRM 2')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMRE1v2blue)
+
+
+#TRM1 MRE vs TRM3 MRE blue
+
+x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$blue)
+y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$blue)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMRE1v3blue <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  MRE TRM1 \n  with MRE TRM3 blue")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance MRE TRM 1')+
+  ylab('Reflectance MRE TRM 3')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMRE1v3blue)
+
+#TRM2 MRE vs TRM3 MRE blue
+x <- as.vector(TRM_2_MREFootprintSpectralonReflectance$blue)
+y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$blue)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMRE2v3blue <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  MRE TRM2 \n  with MRE TRM3 blue")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance MRE TRM 2')+
+  ylab('Reflectance MRE TRM 3')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMRE2v3blue)
+
+
+#TRM1 MRE vs TRM2 MRE Green
+
+x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$green)
+y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$green)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMRE1v2green <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  MRE TRM1 \n  with MRE TRM2 Green")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance MRE TRM 1')+
+  ylab('Reflectance MRE TRM 2')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMRE1v2green)
+
+
+#TRM1 MRE vs TRM3 MRE Green
+
+x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$green)
+y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$green)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMRE1v3green <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  MRE TRM1 \n  with MRE TRM3 Green")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance MRE TRM 1')+
+  ylab('Reflectance MRE TRM 3')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMRE1v3green)
+
+#TRM2 MRE vs TRM3 MRE Green
+x <- as.vector(TRM_2_MREFootprintSpectralonReflectance$green)
+y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$green)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMRE2v3green <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  MRE TRM2 \n  with MRE TRM3 Green")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance MRE TRM 2')+
+  ylab('Reflectance MRE TRM 3')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMRE2v3green)
+
+#TRM1 MRE vs TRM2 MRE red
+
+x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$red)
+y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$red)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMRE1v2red <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  MRE TRM1 \n  with MRE TRM2 red")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance MRE TRM 1')+
+  ylab('Reflectance MRE TRM 2')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMRE1v2red)
+
+
+#TRM1 MRE vs TRM3 MRE red
+
+x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$red)
+y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$red)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMRE1v3red <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  MRE TRM1 \n  with MRE TRM3 red")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance MRE TRM 1')+
+  ylab('Reflectance MRE TRM 3')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMRE1v3red)
+
+#TRM2 MRE vs TRM3 MRE red
+x <- as.vector(TRM_2_MREFootprintSpectralonReflectance$red)
+y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$red)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMRE2v3red <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  MRE TRM2 \n  with MRE TRM3 red")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance MRE TRM 2')+
+  ylab('Reflectance MRE TRM 3')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMRE2v3red)
+
+
+#TRM1 MRE vs TRM2 MRE RedEdge
+
+x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$redEdge)
+y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$redEdge)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMRE1v2redEdge <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  MRE TRM1 \n  with MRE TRM2 RedEdge")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance MRE TRM 1')+
+  ylab('Reflectance MRE TRM 2')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMRE1v2redEdge)
+
+
+#TRM1 MRE vs TRM3 MRE RedEdge
+
+x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$redEdge)
+y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$redEdge)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMRE1v3redEdge <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  MRE TRM1 \n  with MRE TRM3 RedEdge")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance MRE TRM 1')+
+  ylab('Reflectance MRE TRM 3')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMRE1v3redEdge)
+
+#TRM2 MRE vs TRM3 MRE redEdge
+x <- as.vector(TRM_2_MREFootprintSpectralonReflectance$redEdge)
+y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$redEdge)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMRE2v3redEdge <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  MRE TRM2 \n  with MRE TRM3 RedEdge")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance MRE TRM 2')+
+  ylab('Reflectance MRE TRM 3')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMRE2v3redEdge)
+
+
+#TRM1 MRE vs TRM2 MRE NIR
+
+x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$NIR)
+y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$NIR)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMRE1v2NIR <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  MRE TRM1 \n  with MRE TRM2 NIR")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance MRE TRM 1')+
+  ylab('Reflectance MRE TRM 2')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMRE1v2NIR)
+
+
+#TRM1 MRE vs TRM3 MRE NIR
+
+x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$NIR)
+y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$NIR)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMRE1v3NIR <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  MRE TRM1 \n  with MRE TRM3 NIR")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance MRE TRM 1')+
+  ylab('Reflectance MRE TRM 3')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMRE1v3NIR)
+
+#TRM2 MRE vs TRM3 MRE NIR
+x <- as.vector(TRM_2_MREFootprintSpectralonReflectance$NIR)
+y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$NIR)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMRE2v3NIR <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of  MRE TRM2 \n  with MRE TRM3 NIR")+
+  #theme(aspect.ratio=1)+
+  xlab('Reflectance MRE TRM 2')+
+  ylab('Reflectance MRE TRM 3')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMRE2v3NIR)
+
+#------panel arrangments and save-------
+PlotMREvMREgr <-grid.arrange(pMRE1v2green, pMRE1v2red, pMRE2v3green, pMRE2v3red,pMRE1v3green,pMRE1v3red, nrow = 3)#Plots of  MRE Surveys Mean Data 
+
+ggsave(
+  PlotMREvMREgr,
+  filename = "E:/glenn/Tramway_Rcode/figures/plots/PlotMREvMREgreen_red.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+
+PlotMREvMREreNIR <-grid.arrange(pMRE1v2redEdge, pMRE1v2NIR, pMRE2v3redEdge, pMRE2v3NIR,pMRE1v3redEdge,pMRE1v3NIR, nrow = 3)#Plots of  MRE Surveys Mean Data 
+
+ggsave(
+  PlotMREvMREreNIR,
+  filename = "E:/glenn/Tramway_Rcode/figures/plots/PlotMREvMREredEdge_NIR.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+
+PlotMREvMREblue <-grid.arrange(pMRE1v2blue, pMRE2v3blue, pMRE1v3blue, nrow = 3)#Plots of  MRE Surveys Mean Data 
+
+ggsave(
+  PlotMREvMREblue,
+  filename = "E:/glenn/Tramway_Rcode/figures/plots/PlotMREvMREblue.png",
+  width = 16,
+  height = 25,
+  units = "cm"
+)
+
+#----26. NDVI plot TRM1 SEQ vs MRE for Figure 4----
+
+# Plot SEQ TRM1 vs MRE TRM1 NDVI
+{
+  x <- as.vector(TRM_1_seqFootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi)
+  y <- as.vector(TRM_1_MREFootprintNDVI$TRM_1_MRE_2lines_SPE_index_ndvi)
+  df <- data.frame(x = x, y = y,
+                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
+  MADval <- mean(abs(x-y))
+  MADrel <- MADval/mean(x)*100
+  lmres <- lm(y~x)
+  r2val <- summary(lmres)$r.squared
+  
+  pNDVITRM1b <- ggplot(df) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_point(aes(x, y), alpha=0.3, size = 1) +
+    geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+    #theme(text = element_text(size=20))+
+    scale_color_identity() +
+    theme_fancy() +
+    
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
+    ggtitle("Comparison of  Sequoia \n Survey TRM1 with MRE TRM1 NDVI")+
+    #theme(aspect.ratio=1)+
+    xlab('NDVI Sequoia')+
+    ylab('NDVI MRE')+
+    #coord_equal(ratio=1)
+    coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+  plot(pNDVITRM1b)
+}
+
+ggsave(
+  pNDVITRM1b,
+  filename = "E:/glenn/Tramway_Rcode/figures/plots/SEQ_VS_MRE_TRM1_NDVI.png",
+  width = 7,
+  height = 7,
+  units = "cm"
+)
+#----27.  SEQ vs MRE Mean NDVI Plot for Figure 5----
+# Plot SEQ vs MRE  NDVI
+{
+  x <- as.vector(TRM_Mean_SEQ_FootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi)
+  y <- as.vector(TRM_Mean_MRE_FootprintSpectralonNDVI$TRM_1_MRE_2lines_SPE_index_ndvi)
+  df <- data.frame(x = x, y = y,
+                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+  pca <- prcomp(~x+y,df)
+  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+  
+  # Compute the Lin's  correlation concordance coefficient
+  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+  
+  MADval <- mean(abs(x-y))
+  MADrel <- MADval/mean(x)*100
+  lmres <- lm(y~x)
+  r2val <- summary(lmres)$r.squared
+  
+  pNDVIb <- ggplot(df) +
+    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+    geom_point(aes(x, y), alpha=0.3, size = 1) +
+    geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
+    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
+    #theme(text = element_text(size=20))+
+    scale_color_identity() +
+    theme_fancy() +
+    
+    geom_abline(intercept = 0, slope = 1, col='grey' ) +
+    ggtitle("Comparison of  Sequoia \n  with MRE NDVI")+
+    #theme(aspect.ratio=1)+
+    xlab('NDVI Sequoia')+
+    ylab('NDVI MRE')+
+    #coord_equal(ratio=1)
+    coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+  plot(pNDVIb)
+}
+
+ggsave(
+  pNDVIb,
+  filename = "E:/glenn/Tramway_Rcode/figures/plots/SEQ_VS_MRE_Mean_NDVI.png",
+  width = 16,
+  height = 16,
+  units = "cm"
+)
+#----28 Combined NDVI plot for figure 6----
+
+## Plotting theme
+theme_fancy_2 <- function() {
+  theme_bw() +
+    theme(
+      text = element_text(family = "Helvetica"),
+      axis.text = element_text(size = 6, color = "black"),
+      axis.title = element_text(size = 6, color = "black"),
+      axis.line.x = element_line(size = 0.3, color = "black"),
+      axis.line.y = element_line(size = 0.3, color = "black"),
+      axis.ticks = element_line(size = 0.3, color = "black"),
+      panel.border = element_blank(),
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor.x = element_blank(),
+      panel.grid.minor.y = element_blank(),
+      panel.grid.major.y = element_blank(),
+      plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), units = , "cm"),
+      plot.title = element_text(
+        size = 8,
+        vjust = 1,
+        hjust = 0.5,
+        color = "black"
+      ),
+      legend.text = element_text(size = 8, color = "black"),
+      legend.title = element_text(size = 8, color = "black"),
+      legend.position = c(0.9, 0.9),
+      legend.key.size = unit(0.9, "line"),
+      legend.background = element_rect(
+        color = "black",
+        fill = "transparent",
+        size = 2,
+        linetype = "blank"
+      )
+    )
+}
+
+#MRE NDVI
+x <- as.vector(MeanFwdMREresampNDVI)
+y <- as.vector(TRM_Mean_MRE_FootprintSpectralonNDVI$TRM_1_MRE_2lines_SPE_index_ndvi)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMMVI <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,2)),hjust='left',size=1.5)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=1.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=1.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=1.5)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy_2() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+# ggtitle("Comparison of Tramway Mean Data with MRE \n Survey Mean Data NDVI")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Relectance resampled for MRE NDVI band')+
+  ylab('Reflectance MRE NDVI Band')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMMVI)
+
+ggsave(
+  pMMVI,
+  filename = "E:/glenn/Tramway_Rcode/figures/plots/MRE_Mean_NDVI_small.png",
+  width = 6,
+  height = 6,
+  units = "cm"
+)
+
+#SEq NDVI
+
+x <- as.vector(MeanFwdSeqresampNDVI)
+y <- as.vector(TRM_Mean_SEQ_FootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+pMSVI <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=1.5)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=1.5)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=1.5)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=1.5)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy_2() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+#  ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey Mean Data NDVI")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Relectance resampled for Sequoia NDVI')+
+  ylab('Reflectance Sequoia NDVI')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(pMSVI)
+
+ggsave(
+  pMSVI,
+  filename = "E:/glenn/Tramway_Rcode/figures/plots/SEQ_Mean_NDVI_small.png",
+  width = 6,
+  height = 6,
+  units = "cm"
+)
+
+#Tramway length plot
+
+#SEQ NDVI VS TRAMWAY NDVI PLOT
+plot(1:110, MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, MeanFwdSeqresampNDVI,col='black')
+lines(1:110, TRM_Mean_SEQ_FootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi,col='red')
+legend(0, 0.45, legend=c("Tramway Spectrometer NDVI (resampled for Sequoia bandwidth)", "Mean Sequoia NDVI"),
+       lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
+#title("Parrot Sequoia NDVI and Tramway Data Mean NDVI")
+
+#MRE NDVI VS TRAMWAY NDVI PLOT
+plot(1:110, MeanFwdMREresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, MeanFwdMREresampNDVI,col='black')
+lines(1:110, TRM_Mean_MRE_FootprintSpectralonNDVI$TRM_1_MRE_2lines_SPE_index_ndvi, col='blue')
+legend(0, 0.45, legend=c("Tramway Spectrometer NDVI (resampled for MRE bandwidth)", "Mean MRE NDVI"),
+       lty=c(1,1),col=c('black','blue'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
+#title("MicaSense RedEdge NDVI and Tramway Data Mean NDVI")
+
+#PlotcombinedNDVI <-  plot_grid(P2,P3,P13, align = "v", nrow = 1, rel_heights = c(0.33,0.33,0.33))

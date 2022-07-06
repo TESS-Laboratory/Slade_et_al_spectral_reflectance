@@ -1,6 +1,6 @@
-##Script for comparing Sentinel 2 and drone reflectance data
+##Script for comparing Sentinel-2 and drone reflectance data
 ## TRM1,TRM2 and TRM3 Surveys
-#Smaller TRMa surveys encompassing 64 Sentinel 2 10m pixels
+#Smaller TRMa surveys encompassing 64 Sentinel-2 10m pixels
 
 
 # Library
@@ -34,7 +34,7 @@ TRM_1_SeqSpectralonReflStack <- stack("E:/Glenn/Tramway Experiment/Processed/Dro
 
 
 
-#-----3. Resample drone image to resolution of sentinel 2 image
+#-----3. Resample drone image to resolution of Sentinel-2 image
 
 #TRM_1_MRE_Resampled <- resample(TRM_1_MRESpectralonReflStack_TRMaCrop, SEN_2022_02_23_stackcrop,method="bilinear", filename="E:/Glenn/Tramway Experiment/Processed/DroneData/ReflStacks/Resampled/TRMA_1_MRE_Resampled_10m",format="GTiff")
 #TRM_1_SEQ_Resampled <- resample(TRM_1_SeqSpectralonReflStack_TRMaCrop, SEN_2022_02_23_stackcrop,method="bilinear", filename="E:/Glenn/Tramway Experiment/Processed/DroneData/ReflStacks/Resampled/TRMA_1_SEQ_Resampled_10m",format="GTiff")
@@ -105,7 +105,7 @@ theme_fancy <- function() {
 }
 windowsFonts("Helvetica" = windowsFont("Helvetica")) # Ensure font is mapped correctly
 
-#-----Plot MRE Blue vs Sentinel 2
+#-----Plot MRE Blue vs Sentinel-2
 x <- as.vector(Sentinel_Grid_Reflectance$blue)
 y <- as.vector(TRM_1_MRE_Grid_Reflectance$blue)
 df <- data.frame(x = x, y = y,
@@ -138,15 +138,15 @@ senmb <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of MRE TRM_1 Survey \n with Sentinel 2 Blue Band")+
+  ggtitle("Comparison of MRE TRM_1 Survey \n with Sentinel-2 Blue Band")+
   #theme(aspect.ratio=1)+
-  xlab('Sentinel 2 Blue band')+
+  xlab('Sentinel-2 Blue band')+
   ylab('Reflectance MRE Blue Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.2),ylim=c(0,0.2))
 plot(senmb)
 
-#-----Plot MRE Green vs Sentinel 2
+#-----Plot MRE Green vs Sentinel-2
 x <- as.vector(Sentinel_Grid_Reflectance$green)
 y <- as.vector(TRM_1_MRE_Grid_Reflectance$green)
 df <- data.frame(x = x, y = y,
@@ -179,15 +179,15 @@ senmg <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of MRE TRM_1 Survey \n with Sentinel 2 Green Band")+
+  ggtitle("Comparison of MRE TRM_1 Survey \n with Sentinel-2 Green Band")+
   #theme(aspect.ratio=1)+
-  xlab('Sentinel 2 Green band')+
+  xlab('Sentinel-2 Green band')+
   ylab('Reflectance MRE Green Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.2),ylim=c(0,0.2))
 plot(senmg)
 
-#-----Plot MRE Red vs Sentinel 2
+#-----Plot MRE Red vs Sentinel-2
 x <- as.vector(Sentinel_Grid_Reflectance$red)
 y <- as.vector(TRM_1_MRE_Grid_Reflectance$red)
 df <- data.frame(x = x, y = y,
@@ -221,15 +221,15 @@ senmr <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of MRE TRM_1 Survey \n with Sentinel 2 Red Band")+
+  ggtitle("Comparison of MRE TRM_1 Survey \n with Sentinel-2 Red Band")+
   #theme(aspect.ratio=1)+
-  xlab('Sentinel 2 Red band')+
+  xlab('Sentinel-2 Red band')+
   ylab('Reflectance MRE Red Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.3),ylim=c(0,0.3))
 plot(senmr)
 
-#-----Plot MRE NIR vs Sentinel 2
+#-----Plot MRE NIR vs Sentinel-2
 x <- as.vector(Sentinel_Grid_Reflectance$NIR)
 y <- as.vector(TRM_1_MRE_Grid_Reflectance$NIR)
 df <- data.frame(x = x, y = y,
@@ -262,15 +262,15 @@ senmni <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of MRE TRM_1 Survey \n with Sentinel 2 NIR Band")+
+  ggtitle("Comparison of MRE TRM_1 Survey \n with Sentinel-2 NIR Band")+
   #theme(aspect.ratio=1)+
-  xlab('Sentinel 2 NIR band')+
+  xlab('Sentinel-2 NIR band')+
   ylab('Reflectance MRE NIR Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.4),ylim=c(0,0.4))
 plot(senmni)
 
-#-----Plot SEQ NIR vs Sentinel 2
+#-----Plot SEQ NIR vs Sentinel-2
 x <- as.vector(Sentinel_Grid_Reflectance$NIR)
 y <- as.vector(TRM_1_SEQ_Grid_Reflectance$NIR)
 df <- data.frame(x = x, y = y,
@@ -303,15 +303,15 @@ sensni <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of SEQ TRM_1 Survey \n with Sentinel 2 NIR Band")+
+  ggtitle("Comparison of SEQ TRM_1 Survey \n with Sentinel-2 NIR Band")+
   #theme(aspect.ratio=1)+
-  xlab('Sentinel 2 NIR band')+
+  xlab('Sentinel-2 NIR band')+
   ylab('Reflectance SEQ NIR Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.4),ylim=c(0,0.4))
 plot(sensni)
 
-#-----Plot SEQ Red vs Sentinel 2
+#-----Plot SEQ Red vs Sentinel-2
 x <- as.vector(Sentinel_Grid_Reflectance$red)
 y <- as.vector(TRM_1_SEQ_Grid_Reflectance$red)
 df <- data.frame(x = x, y = y,
@@ -344,15 +344,15 @@ sensr <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of SEQ TRM_1 Survey \n with Sentinel 2 Red Band")+
+  ggtitle("Comparison of SEQ TRM_1 Survey \n with Sentinel-2 Red Band")+
   #theme(aspect.ratio=1)+
-  xlab('Sentinel 2 Red band')+
+  xlab('Sentinel-2 Red band')+
   ylab('Reflectance SEQ Red Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.4),ylim=c(0,0.4))
 plot(sensr)
 
-#-----Plot SEQ Green vs Sentinel 2
+#-----Plot SEQ Green vs Sentinel-2
 x <- as.vector(Sentinel_Grid_Reflectance$green)
 y <- as.vector(TRM_1_SEQ_Grid_Reflectance$green)
 df <- data.frame(x = x, y = y,
@@ -385,15 +385,15 @@ sensg <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of SEQ TRM_1 Survey \n with Sentinel 2 Green Band")+
+  ggtitle("Comparison of SEQ TRM_1 Survey \n with Sentinel-2 Green Band")+
   #theme(aspect.ratio=1)+
-  xlab('Sentinel 2 Green band')+
+  xlab('Sentinel-2 Green band')+
   ylab('Reflectance SEQ Green Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.4),ylim=c(0,0.4))
 plot(sensg)
 
-#-----Plot SEQ NDVI vs Sentinel 2
+#-----Plot SEQ NDVI vs Sentinel-2
 x <- as.vector(Sentinel_Grid_Reflectance_NDVI)
 y <- as.vector(TRM_1_SEQ_Grid_Reflectance_NDVI)
 df <- data.frame(x = x, y = y,
@@ -426,15 +426,15 @@ sensvi <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of SEQ TRM_1 Survey \n with Sentinel 2 NDVI")+
+  ggtitle("Comparison of SEQ TRM_1 Survey \n with Sentinel-2 NDVI")+
   #theme(aspect.ratio=1)+
-  xlab('Sentinel 2 NDVI')+
+  xlab('Sentinel-2 NDVI')+
   ylab('SEQ NDVI')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.4),ylim=c(0,0.4))
 plot(sensvi)
 
-#-----Plot MRE NDVI vs Sentinel 2
+#-----Plot MRE NDVI vs Sentinel-2
 x <- as.vector(Sentinel_Grid_Reflectance_NDVI)
 y <- as.vector(TRM_1_MRE_Grid_Reflectance_NDVI)
 df <- data.frame(x = x, y = y,
@@ -467,9 +467,9 @@ senmvi <- ggplot(df) +
   theme_fancy() +
   
   geom_abline(intercept = 0, slope = 1) +
-  ggtitle("Comparison of MRE TRM_1 Survey \n with Sentinel 2 NDVI")+
+  ggtitle("Comparison of MRE TRM_1 Survey \n with Sentinel-2 NDVI")+
   #theme(aspect.ratio=1)+
-  xlab('Sentinel 2 NDVI')+
+  xlab('Sentinel-2 NDVI')+
   ylab('MRE NDVI')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.4),ylim=c(0,0.4))
