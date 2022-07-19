@@ -12,3 +12,9 @@ A static version of this code is archived at:
 
 .. image:: https://zenodo.org/badge/501316875.svg
    :target: https://zenodo.org/badge/latestdoi/501316875
+   
+   
+
+[![DOI](https://zenodo.org/badge/501316875.svg)](https://zenodo.org/badge/latestdoi/501316875)
+
+
