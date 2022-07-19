@@ -16,7 +16,7 @@ library(gridExtra)
 library(DescTools)
 library(sf)
 library(exactextractr)
-  
+library(writexl)  
 }
 #----------1.Theme--------
 
@@ -57,8 +57,8 @@ theme_fancy <- function() {
 windowsFonts("Helvetica" = windowsFont("Helvetica")) # Ensure font is mapped correctly
 
 #----------2.Read in Tramway footprint and ROI shape files------
-tramwayFootprintsShapes <- readOGR(dsn = 'E:/Glenn/Tramway Experiment/Processed/TramwayData/Footprints', layer = "TramwayMeasurementFootprintShapesNew")
-tramwayROI <- readOGR(dsn = 'E:/Glenn/Tramway Experiment/Processed/TramwayData', layer = "TramwayROI")
+tramwayFootprintsShapes <- read_sf(dsn = 'E:/Glenn/Tramway Experiment/Processed/TramwayData/Footprints', layer = "TramwayMeasurementFootprintShapesNew")
+tramwayROI <- read_sf(dsn = 'E:/Glenn/Tramway Experiment/Processed/TramwayData', layer = "TramwayROI")
 
 # ----3.Read in SEQ Stacked images and NDVI, crop NDV----
 {
@@ -246,67 +246,91 @@ MeanFwdSeqresampNDVI <- (MeanFwdSeqresampNIR-MeanFwdSeqresampRed)/(MeanFwdSeqres
 
 #----7.Extract reflectance data from Stacked image data for Tramway footprints----
 #SEQ exact_extract
-TRM_1_seqFootprintSpectralonReflectance1 <- exact_extract(TRM_1_seqSpectralonReflStackCrop,tramwayFootprintsShapes,"mean",force_df=TRUE, append_cols = "meterpos")
-names(TRM_1_seqFootprintSpectralonReflectance1) <- c('location','green','red','redEdge','NIR')
-TRM_1_seqFootprintSpectralonReflectance <- apply(TRM_1_seqFootprintSpectralonReflectance1, 2, as.numeric)
-TRM_1_seqFootprintSpectralonNDVI1 <- exact_extract(TRM_1_seqSpectralonNDVICrop,tramwayFootprintsShapes,"mean",force_df=TRUE,append_cols = "meterpos")
-names(TRM_1_seqFootprintSpectralonNDVI1)<-c('location','NDVI')
-TRM_1_seqFootprintSpectralonNDVI <- apply(TRM_1_seqFootprintSpectralonNDVI1, 2, as.numeric)
+TRM_1_seqFootprintSpectralonReflectance <- exact_extract(TRM_1_seqSpectralonReflStackCrop,tramwayFootprintsShapes,"mean")
+names(TRM_1_seqFootprintSpectralonReflectance) <- c('T1S_green','T1S_red','T1S_redEdge','T1S_NIR')
+Main_Footprint_DF <-bind_cols(tramwayFootprintsShapes,TRM_1_seqFootprintSpectralonReflectance)
+TRM_1_seqFootprintSpectralonNDVI <- exact_extract(TRM_1_seqSpectralonNDVICrop,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF <- dplyr::mutate(Main_Footprint_DF, T1S_NDVI = TRM_1_seqFootprintSpectralonNDVI)
 
-TRM_2_seqFootprintSpectralonReflectance2 <- exact_extract(TRM_2_seqSpectralonReflStackCrop,tramwayFootprintsShapes,"mean",force_df=TRUE, append_cols = "meterpos")
-names(TRM_2_seqFootprintSpectralonReflectance2) <- c('location','green','red','redEdge','NIR')
-TRM_2_seqFootprintSpectralonReflectance <- apply(TRM_2_seqFootprintSpectralonReflectance2, 2, as.numeric)
-TRM_2_seqFootprintSpectralonNDVI2 <- exact_extract(TRM_2_seqSpectralonNDVICrop,tramwayFootprintsShapes,"mean",force_df=TRUE, append_cols = "meterpos")
-names(TRM_2_seqFootprintSpectralonNDVI2)<-c('location','NDVI')
-TRM_2_seqFootprintSpectralonNDVI <- apply(TRM_2_seqFootprintSpectralonNDVI2, 2, as.numeric)
 
-TRM_3_seqFootprintSpectralonReflectance3 <- exact_extract(TRM_3_seqSpectralonReflStackCrop,tramwayFootprintsShapes,"mean",force_df=TRUE, append_cols = "meterpos")
-names(TRM_3_seqFootprintSpectralonReflectance3) <- c('location','green','red','redEdge','NIR')
-TRM_3_seqFootprintSpectralonReflectance <- apply(TRM_3_seqFootprintSpectralonReflectance3, 2, as.numeric)
-TRM_3_seqFootprintSpectralonNDVI3 <- exact_extract(TRM_3_seqSpectralonNDVICrop,tramwayFootprintsShapes,"mean",force_df=TRUE, append_cols = "meterpos")
-names(TRM_3_seqFootprintSpectralonNDVI)<-c('location','NDVI')
-TRM_3_seqFootprintSpectralonNDVI <- apply(TRM_3_seqFootprintSpectralonNDVI3, 2, as.numeric)
+TRM_2_seqFootprintSpectralonReflectance <- exact_extract(TRM_2_seqSpectralonReflStackCrop,tramwayFootprintsShapes,"mean")
+names(TRM_2_seqFootprintSpectralonReflectance) <- c('T2S_green','T2S_red','T2S_redEdge','T2S_NIR')
+Main_Footprint_DF <-bind_cols(Main_Footprint_DF,TRM_2_seqFootprintSpectralonReflectance)
+TRM_2_seqFootprintSpectralonNDVI <- exact_extract(TRM_2_seqSpectralonNDVICrop,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF <- dplyr::mutate(Main_Footprint_DF, T2S_NDVI = TRM_2_seqFootprintSpectralonNDVI)
 
-ARE_1_seqFootprintSpectralonReflectance <- exact_extract(ARE_1_seqSpectralonReflStackCrop,tramwayFootprintsShapes,"mean",force_df=TRUE, append_cols = "meterpos")
-names(ARE_1_seqFootprintSpectralonReflectance) <- c('location','green','red','redEdge','NIR')
-ARE_1_seqFootprintSpectralonNDVI <- exact_extract(ARE_1_seqSpectralonNDVICrop,tramwayFootprintsShapes,"mean",force_df=TRUE, append_cols = "meterpos")
-names(ARE_1_seqFootprintSpectralonNDVI)<-c('location','NDVI')
+TRM_3_seqFootprintSpectralonReflectance <- exact_extract(TRM_3_seqSpectralonReflStackCrop,tramwayFootprintsShapes,"mean")
+names(TRM_3_seqFootprintSpectralonReflectance) <- c('T3S_green','T3S_red','T3S_redEdge','T3S_NIR')
+Main_Footprint_DF <-bind_cols(Main_Footprint_DF,TRM_3_seqFootprintSpectralonReflectance)
+TRM_3_seqFootprintSpectralonNDVI <- exact_extract(TRM_3_seqSpectralonNDVICrop,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF <- dplyr::mutate(Main_Footprint_DF, T3S_NDVI = TRM_3_seqFootprintSpectralonNDVI)
 
 
 # Average Sequoia reflectance for Footprint
 
-TRM_Mean_SEQ_FootprintSpectralonReflectance <- (TRM_1_seqFootprintSpectralonReflectance+TRM_2_seqFootprintSpectralonReflectance+TRM_3_seqFootprintSpectralonReflectance)/3
-TRM_Mean_SEQ_FootprintSpectralonNDVI <- (TRM_1_seqFootprintSpectralonNDVI+TRM_2_seqFootprintSpectralonNDVI+TRM_3_seqFootprintSpectralonNDVI)/3
+Main_Footprint_DF$TMS_NDVI<- (Main_Footprint_DF$T1S_NDVI+Main_Footprint_DF$T2S_NDVI+Main_Footprint_DF$T3S_NDVI)/3
+Main_Footprint_DF$TMS_green<- (Main_Footprint_DF$T1S_green+Main_Footprint_DF$T2S_green+Main_Footprint_DF$T3S_green)/3
+Main_Footprint_DF$TMS_red<- (Main_Footprint_DF$T1S_red+Main_Footprint_DF$T2S_red+Main_Footprint_DF$T3S_red)/3
+Main_Footprint_DF$TMS_redEdge<- (Main_Footprint_DF$T1S_redEdge+Main_Footprint_DF$T2S_redEdge+Main_Footprint_DF$T3S_redEdge)/3
+Main_Footprint_DF$TMS_NIR<- (Main_Footprint_DF$T1S_NIR+Main_Footprint_DF$T2S_NIR+Main_Footprint_DF$T3S_NIR)/3
+
 
 #MRE exact_extract
 
-ARE_1_MREFootprintSpectralonReflectance <- exact_extract(ARE_1_MRESpectralonReflStackCrop,tramwayFootprintsShapes,"mean",force_df=TRUE, append_cols = "meterpos")
-names(ARE_1_MREFootprintSpectralonReflectance) <- c('location','blue','green','red','redEdge','NIR')
-ARE_1_MREFootprintNDVI <- exact_extract(ARE_1_MRESpectralonNDVICrop,tramwayFootprintsShapes,"mean",force_df=TRUE, append_cols = "meterpos")
-names(ARE_1_MREFootprintNDVI)<-c('location','NDVI')
+TRM_1_MREFootprintSpectralonReflectance <- exact_extract(TRM_1_MRESpectralonReflStackCrop,tramwayFootprintsShapes,"mean")
+names(TRM_1_MREFootprintSpectralonReflectance) <- c('T1M_blue','T1M_green','T1M_red','T1M_redEdge','T1M_NIR')
+Main_Footprint_DF <-bind_cols(Main_Footprint_DF,TRM_1_MREFootprintSpectralonReflectance)
+TRM_1_MREFootprintSpectralonNDVI <- exact_extract(TRM_1_MRESpectralonNDVICrop,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF <- dplyr::mutate(Main_Footprint_DF, T1M_NDVI = TRM_1_MREFootprintSpectralonNDVI)
 
-TRM_1_MREFootprintSpectralonReflectance <- exact_extract(TRM_1_MRESpectralonReflStackCrop,tramwayFootprintsShapes,"mean",force_df=TRUE, append_cols = "meterpos")
-names(TRM_1_MREFootprintSpectralonReflectance) <- c('location','blue','green','red','redEdge','NIR')
-TRM_1_MREFootprintNDVI <- exact_extract(TRM_1_MRESpectralonNDVICrop,tramwayFootprintsShapes,"mean",force_df=TRUE, append_cols = "meterpos")
-names(TRM_1_MREFootprintNDVI)<-c('location','NDVI')
 
-TRM_2_MREFootprintSpectralonReflectance <- exact_extract(TRM_2_MRESpectralonReflStackCrop,tramwayFootprintsShapes,"mean",force_df=TRUE, append_cols = "meterpos")
-names(TRM_2_MREFootprintSpectralonReflectance) <- c('location','blue','green','red','redEdge','NIR')
-TRM_2_MREFootprintNDVI <- exact_extract(TRM_2_MRESpectralonNDVICrop,tramwayFootprintsShapes,"mean",force_df=TRUE, append_cols = "meterpos")
-names(TRM_2_MREFootprintNDVI)<-c('location','NDVI')
+TRM_2_MREFootprintSpectralonReflectance <- exact_extract(TRM_2_MRESpectralonReflStackCrop,tramwayFootprintsShapes,"mean")
+names(TRM_2_MREFootprintSpectralonReflectance) <- c('T2M_blue','T2M_green','T2M_red','T2M_redEdge','T2M_NIR')
+Main_Footprint_DF <-bind_cols(Main_Footprint_DF,TRM_2_MREFootprintSpectralonReflectance)
+TRM_2_MREFootprintSpectralonNDVI <- exact_extract(TRM_2_MRESpectralonNDVICrop,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF <- dplyr::mutate(Main_Footprint_DF, T2M_NDVI = TRM_2_MREFootprintSpectralonNDVI)
 
-TRM_3_MREFootprintSpectralonReflectance <- exact_extract(TRM_3_MRESpectralonReflStackCrop,tramwayFootprintsShapes,"mean",force_df=TRUE, append_cols = "meterpos")
-names(TRM_3_MREFootprintSpectralonReflectance) <- c('location','blue','green','red','redEdge','NIR')
-TRM_3_MREFootprintNDVI <- exact_extract(TRM_3_MRESpectralonNDVICrop,tramwayFootprintsShapes,"mean",force_df=TRUE, append_cols = "meterpos")
-names(TRM_3_MREFootprintNDVI)<-c('location','NDVI')
+TRM_3_MREFootprintSpectralonReflectance <- exact_extract(TRM_3_MRESpectralonReflStackCrop,tramwayFootprintsShapes,"mean")
+names(TRM_3_MREFootprintSpectralonReflectance) <- c('T3M_blue','T3M_green','T3M_red','T3M_redEdge','T3M_NIR')
+Main_Footprint_DF <-bind_cols(Main_Footprint_DF,TRM_3_MREFootprintSpectralonReflectance)
+TRM_3_MREFootprintSpectralonNDVI <- exact_extract(TRM_3_MRESpectralonNDVICrop,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF <- dplyr::mutate(Main_Footprint_DF, T3M_NDVI = TRM_3_MREFootprintSpectralonNDVI)
 
 #Average MRE Reflectance for Footprint
 
-TRM_Mean_MRE_FootprintSpectralonReflectance <- (TRM_1_MREFootprintSpectralonReflectance+TRM_2_MREFootprintSpectralonReflectance+TRM_3_MREFootprintSpectralonReflectance)/3
-TRM_Mean_MRE_FootprintSpectralonNDVI <- (TRM_1_MREFootprintNDVI+TRM_2_MREFootprintNDVI+TRM_3_MREFootprintNDVI)/3
+Main_Footprint_DF$TMM_NDVI<- (Main_Footprint_DF$T1M_NDVI+Main_Footprint_DF$T2M_NDVI+Main_Footprint_DF$T3M_NDVI)/3
+Main_Footprint_DF$TMM_blue<- (Main_Footprint_DF$T1M_blue+Main_Footprint_DF$T2M_blue+Main_Footprint_DF$T3M_blue)/3
+Main_Footprint_DF$TMM_green<- (Main_Footprint_DF$T1M_green+Main_Footprint_DF$T2M_green+Main_Footprint_DF$T3M_green)/3
+Main_Footprint_DF$TMM_red<- (Main_Footprint_DF$T1M_red+Main_Footprint_DF$T2M_red+Main_Footprint_DF$T3M_red)/3
+Main_Footprint_DF$TMM_redEdge<- (Main_Footprint_DF$T1M_redEdge+Main_Footprint_DF$T2M_redEdge+Main_Footprint_DF$T3M_redEdge)/3
+Main_Footprint_DF$TMM_NIR<- (Main_Footprint_DF$T1M_NIR+Main_Footprint_DF$T2M_NIR+Main_Footprint_DF$T3M_NIR)/3
 
+#----7.5 Append Tramway data to tibble and export------
+Main_Footprint_DF <-bind_cols(Main_Footprint_DF,MeanFwdSeqresampdf)
+Main_Footprint_DF <- dplyr::mutate(Main_Footprint_DF, MeanFwdSeqresampNDVI = MeanFwdSeqresampNDVI)
+
+Main_Footprint_DF <-bind_cols(Main_Footprint_DF,MeanFwdMREresampdf)
+Main_Footprint_DF <- dplyr::mutate(Main_Footprint_DF, MeanFwdMREresampNDVI = MeanFwdMREresampNDVI)
+
+write.csv(Main_Footprint_DF, "E:/Glenn/Tramway_Rcode/output_data/Main_Footprint_DF" )
+write_xlsx(Main_Footprint_DF, "E:/Glenn/Tramway_Rcode/output_data/Main_Footprint_DF.xlsx" )
 
 #-----8. Tramway Data Only Plots--------
+
+
+# Sequoia Surveys reproducibility 
+plot(1:110, FirstRunFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, Main_Footprint_DF$T1S_green,col='black')
+lines(1:110, Main_Footprint_DF$T2S_green,col='red')
+lines(1:110, Main_Footprint_DF$T3S_green,col='blue')
+#lines(1:110, SecondRunBkdSeqresampNDVI,col='green')
+##lines(1:110, ThirdRunFwdSeqresampNDVI,col='grey')
+#lines(1:110, ThirdRunBkdSeqresampNDVI,col='yellow')
+legend(20, 0.4, legend=c("Sequoia TRM_1", "Sequioa TRM_2", "Sequoia TRM_3"),
+       lty=c(1,1),col=c('black','red', 'blue'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
+title(" Sequoia green band")
+
+
 
 #Tramway runs resampled for Sequoia
 plot(1:110, FirstRunFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
@@ -340,6 +364,54 @@ legend(20, 0.4, legend=c("Mean FWd Runs MRE", "Mean FWd Runs SEQ"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
 title("Tramway Mean Forward Runs NDVI comparison of resampling for Sequoia and MRE band wavelengths")
 
+# Plot Tramway Runscomparison of resampling
+
+x <- as.vector(MeanFwdSeqresampNDVI)
+y <- as.vector(MeanFwdMREresampNDVI)
+df <- data.frame(x = x, y = y,
+                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# Calculate Total Least Squares Regression (extracted from base-R PCA function)
+pca <- prcomp(~x+y,df)
+tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+
+# Compute the Lin's  correlation concordance coefficient
+ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+
+MADval <- mean(abs(x-y))
+MADrel <- MADval/mean(x)*100
+lmres <- lm(y~x)
+r2val <- summary(lmres)$r.squared
+
+resamp_compare <- ggplot(df) +
+  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+  geom_point(aes(x, y), alpha=0.3, size = 1) +
+  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+  #theme(text = element_text(size=20))+
+  scale_color_identity() +
+  theme_fancy() +
+  
+  geom_abline(intercept = 0, slope = 1, col='grey' ) +
+  ggtitle("Comparison of NDVI from Tramway Data \n resampled for Sequoia and MRE sensor band widths ")+
+  #theme(aspect.ratio=1)+
+  xlab('Tramway Measurements resampled for Sequioa \n sensor band widths NDVI')+
+  ylab('Tramway Measurements resampled for MRE \n sensor band widths NDVI')+
+  #coord_equal(ratio=1)
+  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+plot(resamp_compare)
+
+ggsave(
+  resamp_compare,
+  filename = "E:/glenn/Tramway_Rcode/figures/plots/Tramway_data_compare_resampling.png",
+  width = 10,
+  height =10,
+  units = "cm"
+)
 
 
 #-----9. TRM 1 SEQ Drone Survey and Tramway Data Plots Mean Forward Runs --------
@@ -347,7 +419,7 @@ title("Tramway Mean Forward Runs NDVI comparison of resampling for Sequoia and M
 #SEQ NDVI VS TRAMWAY NDVI PLOT
 plot(1:110, MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
 lines(1:110, MeanFwdSeqresampNDVI,col='black')
-lines(1:110, TRM_1_seqFootprintSpectralonNDVI$NDVI,col='red')
+lines(1:110, Main_Footprint_DF$T1S_NDVI,col='red')
 legend(0, 0.4, legend=c("Tramway Spectrometer NDVI (resampled for Sequoia bandwidth)", "Sequoia NDVI"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
 title("Parrot Sequoia NDVI and Tramway Data Mean NDVI")
@@ -355,7 +427,7 @@ title("Parrot Sequoia NDVI and Tramway Data Mean NDVI")
 #MRE NDVI VS TRAMWAY NDVI PLOT
 plot(1:110, MeanFwdMREresampNDVI,type='n',xlab='[m]',ylab='NDVI')
 lines(1:110, MeanFwdMREresampNDVI,col='black')
-lines(1:110, TRM_1_MREFootprintNDVI$NDVI, col='blue')
+lines(1:110, Main_Footprint_DF$T1M_NDVI, col='blue')
 legend(0, 0.45, legend=c("Tramway Spectrometer NDVI (resampled for MRE bandwidth)", "MRE NDVI"),
        lty=c(1,1),col=c('black','blue'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
 title("MicaSense RedEdge NDVI and Tramway Data Mean NDVI")
@@ -363,19 +435,19 @@ title("MicaSense RedEdge NDVI and Tramway Data Mean NDVI")
 
 #TRM 1 SEQ NDVI VS TRM 1 MRE NDVI PLOT
 plot(1:110, MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
-lines(1:110, TRM_1_MREFootprintNDVI$TRM_1_MRE_2lines_SPE_index_ndvi ,col= 'black')
-lines(1:110, TRM_1_seqFootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi,col='red')
+lines(1:110, Main_Footprint_DF$T1M_NDVI ,col= 'blue')
+lines(1:110, Main_Footprint_DF$T1S_NDVI ,col='red')
 #lines(1:110, SecondRunFwdSeqresampNDVI,col='green')
 legend(20, 0.4, legend=c("MRE NDVI", "Sequoia NDVI"),
-       lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
+       lty=c(1,1),col=c('blue','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
 title("TRM1 SEQ Drone Survey and  TRM1 MRE Drone Survey")
 
 
 
 # Plot Tramway Mean Fwd Sequoia TRM1 Green Band
 
-x <- as.vector(MeanFwdSeqresampGreen)
-y <- as.vector(TRM_1_seqFootprintSpectralonReflectance$green)
+x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampGreen)
+y <- as.vector(Main_Footprint_DF$T1S_green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)

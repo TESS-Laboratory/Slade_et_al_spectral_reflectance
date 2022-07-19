@@ -28,14 +28,19 @@
   library(DescTools)
   library(Metrics)
   library(hydroGOF) # The RMSE function in this package allows for na.rm parameter
-
+  library(sf)
+  library(exactextractr)
   
 }
 #----1. Read in shape files-----
 
-tramwayFootprintsShapes <- readOGR(dsn = 'E:/Glenn/Tramway Experiment/Processed/TramwayData/Footprints', layer = "TramwayMeasurementFootprintShapesNew")
-study_area_ROI <- readOGR(dsn = 'E:/Glenn/Tramway Experiment/Processed/Shapefiles', layer = "Studyarea")
-Sentinel_grid  <- readOGR(dsn = 'E:/Glenn/Tramway Experiment/Processed/Shapefiles', layer = "Sentinel_10m_pixel_grid")
+study_area_ROI <- read_sf(dsn = 'E:/Glenn/Tramway Experiment/Processed/Shapefiles', layer = "Studyarea")
+
+Sentinel_grid  <- read_sf(dsn = 'E:/Glenn/Tramway Experiment/Processed/Shapefiles', layer = "Sentinel_10m_pixel_grid")
+
+tramwayFootprintsShapes <- read_sf(dsn = 'E:/Glenn/Tramway Experiment/Processed/TramwayData/Footprints', layer = "TramwayMeasurementFootprintShapesNew")
+tramwayROI <- read_sf(dsn = 'E:/Glenn/Tramway Experiment/Processed/TramwayData', layer = "TramwayROI")
+
 
 #----2. Read in images--------
 #SEQUOIA
@@ -419,69 +424,136 @@ MeanFwdMREresampMSAVI <- MeanFwdMREresampNIR + 0.5 - (0.5 * sqrt((2 * MeanFwdMRE
 #----5. Extract Image Data ------
 
 #Extract TRM 1 Indices data for footprints
-TRM_1_SEQFootprintMSAVI2 <- extract(SEQmsavi21,tramwayFootprintsShapes,fun=mean,df=TRUE)
-TRM_1_MREFootprintMSAVI2 <- extract(MREmsavi21,tramwayFootprintsShapes,fun=mean,df=TRUE)
 
-TRM_1_SEQFootprintMSAVI <- extract(SEQMSAVI1,tramwayFootprintsShapes,fun=mean,df=TRUE)
-TRM_1_MREFootprintMSAVI <- extract(MREMSAVI1,tramwayFootprintsShapes,fun=mean,df=TRUE)
+T1S_MSAVI2 <- exact_extract(SEQmsavi21,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(tramwayFootprintsShapes, T1S_MSAVI2 = T1S_MSAVI2)
 
-TRM_1_SEQFootprintSAVI <- extract(SEQSAVI1,tramwayFootprintsShapes,fun=mean,df=TRUE)
-TRM_1_MREFootprintSAVI <- extract(MRESAVI1,tramwayFootprintsShapes,fun=mean,df=TRUE)
+T1M_MSAVI2 <- exact_extract(MREmsavi21,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T1M_MSAVI2 = T1M_MSAVI2)
 
-TRM_1_SEQFootprintMTVI <- extract(SEQmtvi1,tramwayFootprintsShapes,fun=mean,df=TRUE)
-TRM_1_MREFootprintMTVI <- extract(MREmtvi1,tramwayFootprintsShapes,fun=mean,df=TRUE)
+T1S_MSAVI <- exact_extract(SEQMSAVI1,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T1S_MSAVI = T1S_MSAVI)
 
-TRM_1_SEQFootprintNDVI <- extract(SEQndvi1,tramwayFootprintsShapes,fun=mean,df=TRUE)
-TRM_1_MREFootprintNDVI <- extract(MREndvi1,tramwayFootprintsShapes,fun=mean,df=TRUE)
+T1M_MSAVI <- exact_extract(MREMSAVI1,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T1M_MSAVI = T1M_MSAVI)
+
+T1S_SAVI <- exact_extract(SEQSAVI1,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T1S_SAVI = T1S_SAVI)
+
+T1M_SAVI <- exact_extract(MRESAVI1,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T1M_SAVI = T1M_SAVI)
+
+T1S_MTVI <- exact_extract(SEQmtvi1,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T1S_MTVI = T1S_MTVI)
+
+T1M_MTVI <- exact_extract(MREmtvi1,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T1M_MTVI = T1M_MTVI)
+
+T1S_NDVI <- exact_extract(SEQndvi1,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T1S_NDVI = T1S_NDVI)
+
+T1M_NDVI <- exact_extract(MREndvi1,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T1M_NDVI = T1M_NDVI)
 
 #Extract TRM 2 Indices data for footprints
-TRM_2_SEQFootprintMSAVI2 <- extract(SEQmsavi22,tramwayFootprintsShapes,fun=mean,df=TRUE)
-TRM_2_MREFootprintMSAVI2 <- extract(MREmsavi22,tramwayFootprintsShapes,fun=mean,df=TRUE)
+T2S_MSAVI2 <- exact_extract(SEQmsavi22,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T2S_MSAVI2 = T2S_MSAVI2)
 
-TRM_2_SEQFootprintMSAVI <- extract(SEQMSAVI2,tramwayFootprintsShapes,fun=mean,df=TRUE)
-TRM_2_MREFootprintMSAVI <- extract(MREMSAVI2,tramwayFootprintsShapes,fun=mean,df=TRUE)
+T2M_MSAVI2 <- exact_extract(MREmsavi22,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T2M_MSAVI2 = T2M_MSAVI2)
 
-TRM_2_SEQFootprintSAVI <- extract(SEQSAVI2,tramwayFootprintsShapes,fun=mean,df=TRUE)
-TRM_2_MREFootprintSAVI <- extract(MRESAVI2,tramwayFootprintsShapes,fun=mean,df=TRUE)
+T2S_MSAVI <- exact_extract(SEQMSAVI2,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T2S_MSAVI = T2S_MSAVI)
 
-TRM_2_SEQFootprintMTVI <- extract(SEQmtvi2,tramwayFootprintsShapes,fun=mean,df=TRUE)
-TRM_2_MREFootprintMTVI <- extract(MREmtvi2,tramwayFootprintsShapes,fun=mean,df=TRUE)
+T2M_MSAVI <- exact_extract(MREMSAVI2,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T2M_MSAVI = T2M_MSAVI)
 
-TRM_2_SEQFootprintNDVI <- extract(SEQndvi2,tramwayFootprintsShapes,fun=mean,df=TRUE)
-TRM_2_MREFootprintNDVI <- extract(MREndvi2,tramwayFootprintsShapes,fun=mean,df=TRUE)
+T2S_SAVI <- exact_extract(SEQSAVI2,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T2S_SAVI = T2S_SAVI)
+
+T2M_SAVI <- exact_extract(MRESAVI2,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T2M_SAVI = T2M_SAVI)
+
+T2S_MTVI <- exact_extract(SEQmtvi2,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T2S_MTVI = T2S_MTVI)
+
+T2M_MTVI <- exact_extract(MREmtvi2,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T2M_MTVI = T2M_MTVI)
+
+T2S_NDVI <- exact_extract(SEQndvi2,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T2S_NDVI = T2S_NDVI)
+
+T2M_NDVI <- exact_extract(MREndvi2,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T2M_NDVI = T2M_NDVI)
+
 
 #Extract TRM 3 Indices data for footprints
-TRM_3_SEQFootprintMSAVI2 <- extract(SEQmsavi23,tramwayFootprintsShapes,fun=mean,df=TRUE)
-TRM_3_MREFootprintMSAVI2 <- extract(MREmsavi23,tramwayFootprintsShapes,fun=mean,df=TRUE)
+T3S_MSAVI2 <- exact_extract(SEQmsavi23,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T3S_MSAVI2 = T3S_MSAVI2)
 
-TRM_3_SEQFootprintMSAVI <- extract(SEQMSAVI3,tramwayFootprintsShapes,fun=mean,df=TRUE)
-TRM_3_MREFootprintMSAVI <- extract(MREMSAVI3,tramwayFootprintsShapes,fun=mean,df=TRUE)
+T3M_MSAVI2 <- exact_extract(MREmsavi23,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T3M_MSAVI2 = T3M_MSAVI2)
 
-TRM_3_SEQFootprintSAVI <- extract(SEQSAVI3,tramwayFootprintsShapes,fun=mean,df=TRUE)
-TRM_3_MREFootprintSAVI <- extract(MRESAVI3,tramwayFootprintsShapes,fun=mean,df=TRUE)
+T3S_MSAVI <- exact_extract(SEQMSAVI3,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T3S_MSAVI = T3S_MSAVI)
 
-TRM_3_SEQFootprintMTVI <- extract(SEQmtvi3,tramwayFootprintsShapes,fun=mean,df=TRUE)
-TRM_3_MREFootprintMTVI <- extract(MREmtvi3,tramwayFootprintsShapes,fun=mean,df=TRUE)
+T3M_MSAVI <- exact_extract(MREMSAVI3,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T3M_MSAVI = T3M_MSAVI)
 
-TRM_3_SEQFootprintNDVI <- extract(SEQndvi3,tramwayFootprintsShapes,fun=mean,df=TRUE)
-TRM_3_MREFootprintNDVI <- extract(MREndvi3,tramwayFootprintsShapes,fun=mean,df=TRUE)
+T3S_SAVI <- exact_extract(SEQSAVI3,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T3S_SAVI = T3S_SAVI)
+
+T3M_SAVI <- exact_extract(MRESAVI3,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T3M_SAVI = T3M_SAVI)
+
+T3S_MTVI <- exact_extract(SEQmtvi3,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T3S_MTVI = T3S_MTVI)
+
+T3M_MTVI <- exact_extract(MREmtvi3,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T3M_MTVI = T3M_MTVI)
+
+T3S_NDVI <- exact_extract(SEQndvi3,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T3S_NDVI = T3S_NDVI)
+
+T3M_NDVI <- exact_extract(MREndvi3,tramwayFootprintsShapes,"mean")
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, T3M_NDVI = T3M_NDVI)
 
 #----5.1 Mean Extracted data for surveys
 #Mean NDVI
-MeanSEQFootprintNDVI <- (TRM_1_SEQFootprintNDVI  + TRM_2_SEQFootprintNDVI + TRM_3_SEQFootprintNDVI)/3
-MeanMREFootprintNDVI <-  (TRM_1_MREFootprintNDVI  + TRM_2_MREFootprintNDVI + TRM_3_MREFootprintNDVI)/3
+Main_Footprint_DF2$TMS_NDVI<- (Main_Footprint_DF2$T1S_NDVI+Main_Footprint_DF2$T2S_NDVI+Main_Footprint_DF2$T3S_NDVI)/3
+Main_Footprint_DF2$TMM_NDVI<- (Main_Footprint_DF2$T1M_NDVI+Main_Footprint_DF2$T2M_NDVI+Main_Footprint_DF2$T3M_NDVI)/3
 #Mean SAVI
-MeanSEQFootprintSAVI <- (TRM_1_SEQFootprintSAVI  + TRM_2_SEQFootprintSAVI + TRM_3_SEQFootprintSAVI)/3
-MeanMREFootprintSAVI <-  (TRM_1_MREFootprintSAVI  + TRM_2_MREFootprintSAVI + TRM_3_MREFootprintSAVI)/3
+Main_Footprint_DF2$TMS_SAVI<- (Main_Footprint_DF2$T1S_SAVI+Main_Footprint_DF2$T2S_SAVI+Main_Footprint_DF2$T3S_SAVI)/3
+Main_Footprint_DF2$TMM_SAVI<- (Main_Footprint_DF2$T1M_SAVI+Main_Footprint_DF2$T2M_SAVI+Main_Footprint_DF2$T3M_SAVI)/3
 #Mean MSAVI
-MeanSEQFootprintMSAVI <- (TRM_1_SEQFootprintMSAVI  + TRM_2_SEQFootprintMSAVI + TRM_3_SEQFootprintMSAVI)/3
-MeanMREFootprintMSAVI <-  (TRM_1_MREFootprintMSAVI  + TRM_2_MREFootprintMSAVI + TRM_3_MREFootprintMSAVI)/3
+Main_Footprint_DF2$TMS_MSAVI<- (Main_Footprint_DF2$T1S_MSAVI+Main_Footprint_DF2$T2S_MSAVI+Main_Footprint_DF2$T3S_MSAVI)/3
+Main_Footprint_DF2$TMM_MSAVI<- (Main_Footprint_DF2$T1M_MSAVI+Main_Footprint_DF2$T2M_MSAVI+Main_Footprint_DF2$T3M_MSAVI)/3
 #Mean MSAVI2
-MeanSEQFootprintMSAVI2 <- (TRM_1_SEQFootprintMSAVI2  + TRM_2_SEQFootprintMSAVI2 + TRM_3_SEQFootprintMSAVI2)/3
-MeanMREFootprintMSAVI2 <-  (TRM_1_MREFootprintMSAVI2  + TRM_2_MREFootprintMSAVI2 + TRM_3_MREFootprintMSAVI2)/3
+Main_Footprint_DF2$TMS_MSAVI2<- (Main_Footprint_DF2$T1S_MSAVI2+Main_Footprint_DF2$T2S_MSAVI2+Main_Footprint_DF2$T3S_MSAVI2)/3
+Main_Footprint_DF2$TMM_MSAVI2<- (Main_Footprint_DF2$T1M_MSAVI2+Main_Footprint_DF2$T2M_MSAVI2+Main_Footprint_DF2$T3M_MSAVI2)/3
 #Mean MTVI2
-MeanSEQFootprintMTVI <- (TRM_1_SEQFootprintMTVI  + TRM_2_SEQFootprintMTVI + TRM_3_SEQFootprintMTVI)/3
-MeanMREFootprintMTVI <-  (TRM_1_MREFootprintMTVI  + TRM_2_MREFootprintMTVI + TRM_3_MREFootprintMTVI)/3
+Main_Footprint_DF2$TMS_MTVI<- (Main_Footprint_DF2$T1S_MTVI+Main_Footprint_DF2$T2S_MTVI+Main_Footprint_DF2$T3S_MTVI)/3
+Main_Footprint_DF2$TMM_MTVI<- (Main_Footprint_DF2$T1M_MTVI+Main_Footprint_DF2$T2M_MTVI+Main_Footprint_DF2$T3M_MTVI)/3
+
+
+#----5.2 Append tramway data and export-----
+
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, MeanFwdSeqresampNDVI = MeanFwdSeqresampNDVI)
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, MeanFwdSeqresampMSAVI2 = MeanFwdSeqresampMSAVI2)
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, MeanFwdSeqresampMSAVI = MeanFwdSeqresampMSAVI)
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, MeanFwdSeqresampMTVI = MeanFwdSeqresampMTVI)
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, MeanFwdSeqresampSAVI = MeanFwdSeqresampSAVI)
+
+
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, MeanFwdMREresampNDVI = MeanFwdMREresampNDVI)
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, MeanFwdMREresampMSAVI2 = MeanFwdMREresampMSAVI2)
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, MeanFwdMREresampMTVI = MeanFwdMREresampMTVI)
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, MeanFwdMREresampSAVI = MeanFwdMREresampSAVI)
+Main_Footprint_DF2 <- dplyr::mutate(Main_Footprint_DF2, MeanFwdMREresampMSAVI = MeanFwdMREresampMSAVI)
+
+write.csv(Main_Footprint_DF2, "E:/Glenn/Tramway_Rcode/output_data/Main_Footprint_DF_Indices" )
+write_xlsx(Main_Footprint_DF2, "E:/Glenn/Tramway_Rcode/output_data/Main_Footprint_DF_indices.xlsx" )
+
 
 #-----6. Plots--------
 ## Plotting theme
@@ -526,8 +598,8 @@ windowsFonts("Helvetica" = windowsFont("Helvetica")) # Ensure font is mapped cor
 
 
 # Assign axis
-x <- as.vector(MeanFwdSeqresampMSAVI2)
-y <- as.vector(MeanSEQFootprintMSAVI2$layer)
+x <- as.vector(Main_Footprint_DF2$MeanFwdSeqresampMSAVI2)
+y <- as.vector(Main_Footprint_DF2$TMS_MSAVI2)
 # Make Data Frame
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -570,12 +642,13 @@ psmsavi2 <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 plot(psmsavi2)
 
-#-----6b Plot Tramway Mean data MRE TRM1 MSAVI2-------
+#-----6b Plot Tramway Mean data MRE MSAVI2-------
 
+rm (x,y)
 
 # Assign axis
-x <- as.vector(MeanFwdMREresampMSAVI2)
-y <- as.vector(TRM_1_MREFootprintMSAVI2$layer)
+x <- as.vector(Main_Footprint_DF2$MeanFwdMREresampMSAVI2)
+y <- as.vector(Main_Footprint_DF2$TMM_MSAVI2)
 # Make Data Frame
 df2 <- data.frame(x = x, y = y,
                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -619,11 +692,11 @@ pmmsavi2 <- ggplot(df2) +
 plot(pmmsavi2)
 
 #-----6c Plot Tramway Mean data MRE TRM1 SAVI-------
-
+rm (x,y)
 
 # Assign axis
-x <- as.vector(MeanFwdMREresampSAVI)
-y <- as.vector(TRM_1_MREFootprintSAVI$layer)
+x <- as.vector(Main_Footprint_DF2$MeanFwdMREresampSAVI)
+y <- as.vector(Main_Footprint_DF2$TMM_SAVI)
 # Make Data Frame
 df3 <- data.frame(x = x, y = y,
                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -667,11 +740,11 @@ pmsavi <- ggplot(df3) +
 plot(pmsavi)
 
 #-----6d Plot Tramway Mean data MRE TRM1 MSAVI-------
-
+rm (x,y)
 
 # Assign axis
-x <- as.vector(MeanFwdMREresampMSAVI)
-y <- as.vector(TRM_1_MREFootprintMSAVI$layer)
+x <- as.vector(Main_Footprint_DF2$MeanFwdMREresampMSAVI)
+y <- as.vector(Main_Footprint_DF2$TMM_MSAVI)
 # Make Data Frame
 df4 <- data.frame(x = x, y = y,
                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -714,12 +787,12 @@ pmmsavi <- ggplot(df4) +
   coord_fixed(xlim=c(-0.5,0.1),ylim=c(0,0.5))
 plot(pmmsavi)
 
-#-----6e Plot Tramway Mean data MRE TRM1 NDVI-------
-
+#-----6e Plot Tramway Mean data MRE NDVI-------
+rm (x,y)
 
 # Assign axis
-x <- as.vector(MeanFwdMREresampNDVI)
-y <- as.vector(TRM_1_MREFootprintNDVI$layer)
+x <- as.vector(Main_Footprint_DF2$MeanFwdMREresampNDVI)
+y <- as.vector(Main_Footprint_DF2$TMM_NDVI)
 # Make Data Frame
 df2 <- data.frame(x = x, y = y,
                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -762,12 +835,12 @@ pmndvi <- ggplot(df2) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 plot(pmndvi)
 
-#-----6f Plot Tramway Mean data MRE TRM1 MTVI-------
-
+#-----6f Plot Tramway Mean data MRE MTVI-------
+rm (x,y)
 
 # Assign axis
-x <- as.vector(MeanFwdMREresampMTVI)
-y <- as.vector(TRM_1_MREFootprintMTVI$layer)
+x <- as.vector(Main_Footprint_DF2$MeanFwdMREresampMTVI)
+y <- as.vector(Main_Footprint_DF2$TMM_MTVI)
 # Make Data Frame
 df2 <- data.frame(x = x, y = y,
                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -810,12 +883,13 @@ pmmtvi <- ggplot(df2) +
   coord_fixed(xlim=c(-0.1,0.5),ylim=c(-0.1,0.5))
 plot(pmmtvi)
 
-#-----6g Plot Tramway Mean data SEQ TRM1 MTVI-------
+#-----6g Plot Tramway Mean data SEQ MTVI-------
 
+rm(x,y)
 
 # Assign axis
-x <- as.vector(MeanFwdSeqresampMTVI)
-y <- as.vector(TRM_1_SEQFootprintMTVI$layer)
+x <- as.vector(Main_Footprint_DF2$MeanFwdSeqresampMTVI)
+y <- as.vector(Main_Footprint_DF2$TMS_MTVI)
 # Make Data Frame
 df2 <- data.frame(x = x, y = y,
                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -858,12 +932,13 @@ psmtvi <- ggplot(df2) +
   coord_fixed(xlim=c(-0.1,0.5),ylim=c(-0.1,0.5))
 plot(psmtvi)
 
-#-----6h Plot Tramway Mean data SEQ TRM1 NDVI-------
+#-----6h Plot Tramway Mean data SEQ NDVI-------
 
+rm(x,y)
 
 # Assign axis
-x <- as.vector(MeanFwdSeqresampNDVI)
-y <- as.vector(TRM_1_SEQFootprintNDVI$layer)
+x <- as.vector(Main_Footprint_DF2$MeanFwdSeqresampNDVI)
+y <- as.vector(Main_Footprint_DF2$TMS_NDVI)
 # Make Data Frame
 df2 <- data.frame(x = x, y = y,
                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -905,12 +980,12 @@ psndvi <- ggplot(df2) +
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 plot(psndvi)
-#-----6i Plot Tramway Mean data SEQ TRM1 MSAVI-------
-
+#-----6i Plot Tramway Mean data SEQ MSAVI-------
+rm(x,y)
 
 # Assign axis
-x <- as.vector(MeanFwdSeqresampMSAVI)
-y <- as.vector(TRM_1_SEQFootprintMSAVI$layer)
+x <- as.vector(Main_Footprint_DF2$MeanFwdSeqresampMSAVI)
+y <- as.vector(Main_Footprint_DF2$TMS_MSAVI)
 # Make Data Frame
 df2 <- data.frame(x = x, y = y,
                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -953,12 +1028,12 @@ psmsavi <- ggplot(df2) +
   coord_fixed(xlim=c(-0.40,0.1),ylim=c(-0.2,0.5))
 plot(psmsavi)
 
-#-----6j Plot Tramway Mean data SEQ TRM1 SAVI-------
-
+#-----6j Plot Tramway Mean data SEQ SAVI-------
+rm(x,y)
 
 # Assign axis
-x <- as.vector(MeanFwdSeqresampSAVI)
-y <- as.vector(TRM_1_SEQFootprintSAVI$layer)
+x <- as.vector(Main_Footprint_DF2$MeanFwdSeqresampSAVI)
+y <- as.vector(Main_Footprint_DF2$TMS_SAVI)
 # Make Data Frame
 df2 <- data.frame(x = x, y = y,
                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
@@ -1010,7 +1085,7 @@ PlotTRM1_MRE <-grid.arrange(pmndvi, pmsavi, pmmsavi2, pmmtvi, nrow = 2)#Plots of
 
 ggsave(
   PlotTRM1_SEQ,
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/SEQ_all_VI_M.png",
+  filename = "E:/glenn/Tramway_Rcode/figures/plots/SEQ_all_VI_Mean.png",
   width = 16,
   height = 25,
   units = "cm"
@@ -1018,7 +1093,7 @@ ggsave(
 
 ggsave(
   PlotTRM1_MRE,
-  filename = "E:/glenn/Tramway Experiment/Processed/Plots/MRE_all_VI_M.png",
+  filename = "E:/glenn/Tramway_Rcode/figures/plots/MRE_all_VI_Mean.png",
   width = 16,
   height = 25,
   units = "cm"

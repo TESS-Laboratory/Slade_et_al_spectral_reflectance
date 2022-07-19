@@ -72,22 +72,15 @@ df3 <- melt (Combined_Response_Curve ,  id.vars = 'Wavelength', variable.name = 
 df4 <- melt (Combined_Response_Curve_Sen ,  id.vars = 'Wavelength', variable.name = 'series')
 df5 <- melt (Response_Curve_Sen ,  id.vars = 'Wavelength', variable.name = 'series')
 
-#cSequoia Spectral Response Curve - coloured
-P1 <-ggplot(df, aes(sequoiaTransSens.wvl, value)) +
-  geom_line(aes(colour = series))+ theme_fancy ()+scale_color_manual(values = c(green= 'green',
-                                                                                red = 'red', redge = 'purple', NIR = 'black'))+
-  ylab ('Reflectance [HCRF] Response')+ xlab('Wavelength nm')+labs(colour='Sequoia Sensor')
-
-plot (P1)
 
 # Sequoia Spectral Response Curve - all black
 P2 <-ggplot(df, aes(Wavelength, value)) +
   geom_line(aes(colour = series))+ theme_fancy ()+scale_color_manual(values = c(SEQ_Green = 'red',
                                                                                 SEQ_Red = 'red', SEQ_RedEdge = 'red', SEQ_NIR = 'red'))+
-  ylab ('Reflectance [HCRF] Response')+ xlab('Wavelength nm')+labs(colour='Sequoia Sensor')+
+  ylab ('Reflectance [HCRF]\n Response')+ xlab('Wavelength nm')+labs(colour='Sequoia Sensor')+
   scale_y_continuous(breaks = seq(0, 1, by = .2))+   scale_x_continuous(breaks = seq(400, 900, by = 50))+
     theme(legend.position="none")+
-  annotate ("text",  x = 405, y = 0.9, label = "Sequoia", size=2.5)+
+  annotate ("text",  x = 405, y = 0.9, label = "Parrot \n Sequoia", size=2.5)+
   annotate("segment", x =430, xend = 455, y = 0.89, yend = 0.89, colour = "red", size=0.35)
 
 plot (P2)
@@ -96,7 +89,7 @@ plot (P2)
 P3 <-ggplot(df2, aes(Wavelength, value)) +
   geom_line(aes(colour = series))+ theme_fancy ()+scale_color_manual(values = c(MRE_Blue='black',MRE_Green= 'black',
                                                                                  MRE_Red = 'black', MRE_RedEdge = 'black', MRE_NIR = 'black'))+
-  ylab ('Reflectance[HCRF] Response')+ xlab('Wavelength nm')+labs(colour='MicaSense Red Edge Sensor')+
+  ylab ('Reflectance[HCRF]\n Response')+ xlab('Wavelength nm')+labs(colour='MicaSense Red Edge Sensor')+
   scale_y_continuous(breaks = seq(0, 1, by = .2))+   scale_x_continuous(breaks = seq(400, 900, by = 50))+
   theme(legend.position="none")+
   annotate ("text",  x = 405, y = 0.9, label = "MicaSense \n RedEdge", size=2.5)+
@@ -108,7 +101,7 @@ plot (P3)
 P4 <-ggplot(df3, aes(Wavelength, value)) +
   geom_line(aes(colour = series))+ theme_fancy ()+scale_color_manual(values = c(MRE_Blue='black',MRE_Green= 'black',
                                                                                 MRE_Red = 'black', MRE_RedEdge = 'black', MRE_NIR = 'black', SEQ_Green='red', SEQ_Red= 'red',SEQ_RedEdge='red',SEQ_NIR='red'))+
-  ylab ('Reflectance[HCRF] Response')+ xlab('Wavelength nm')+labs(colour='MicaSense Red Edge Sensor')+theme(legend.position="none")
+  ylab ('Reflectance[HCRF]\n Response')+ xlab('Wavelength nm')+labs(colour='MicaSense Red Edge Sensor')+theme(legend.position="none")
 
 plot (P4)
 
@@ -473,7 +466,7 @@ P8 <-ggplot(df3, aes(Wavelength, value)) +
   {
     P13 <-ggplot(df5, aes(Wavelength, value)) +
       geom_line(aes(colour = series), size =0.35)+ theme_fancy ()+scale_color_manual(values = c(S2_Blue = 'blue', S2_Green = 'blue', S2_Red ='blue',S2_NIR='blue', S2_B5 = 'blue', S2_B6 = 'blue', S2_B7 = 'blue'))+
-      ylab ('Reflectance[HCRF] Response')+ xlab('Wavelength nm')+labs(colour='Sensors')+
+      ylab ('Reflectance[HCRF]\n Response')+ xlab('Wavelength nm')+labs(colour='Sensors')+
       #ylim (-0.3,1)+ 
       scale_y_continuous(breaks = seq(0, 1, by = .2))+   scale_x_continuous(breaks = seq(400, 900, by = 50))+
       annotate ("text",  x = 405, y = 0.8, label = "Sentinel-2", size=2.5)+
@@ -482,15 +475,7 @@ P8 <-ggplot(df3, aes(Wavelength, value)) +
   }
   plot (P13) 
   
-   
-  ggsave(
-    P1,
-    filename = "E:/glenn/Tramway_Rcode/figures/plots/sensor_response_curves/Sequoia_coloured.pdf",
-    width = 25,
-    height = 16,
-    units = "cm"
-  )  
-  
+
   ggsave(
     P2,
     filename = "E:/glenn/Tramway_Rcode/figures/plots/sensor_response_curves/Sequoia_black.pdf",
