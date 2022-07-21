@@ -429,8 +429,9 @@ plot(1:110, MeanFwdMREresampNDVI,type='n',xlab='[m]',ylab='NDVI')
 lines(1:110, MeanFwdMREresampNDVI,col='black')
 lines(1:110, Main_Footprint_DF$T1M_NDVI, col='blue')
 legend(0, 0.45, legend=c("Tramway Spectrometer NDVI (resampled for MRE bandwidth)", "MRE NDVI"),
-       lty=c(1,1),col=c('black','blue'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
+       lty=c(1,1),col=c('black','blue'),box.lty=0, y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
 title("MicaSense RedEdge NDVI and Tramway Data Mean NDVI")
+
 
 
 #TRM 1 SEQ NDVI VS TRM 1 MRE NDVI PLOT
@@ -487,8 +488,8 @@ plot(p1sg)
 
 # Plot Tramway Mean Data against Sequoia TRM1 Red Band
 
-x <- as.vector(MeanFwdSeqresampRed)
-y <- as.vector(TRM_1_seqFootprintSpectralonReflectance$red)
+x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampRed)
+y <- as.vector(Main_Footprint_DF$T1S_red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -524,12 +525,12 @@ p1sr <- ggplot(df) +
   ylab('Reflectance Sequioa Red Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p1sr)
 
 # Plot Tramway Meant data compared Sequoia TRM1 RedEdge Band
 
-x <- as.vector(MeanFwdSeqresampRedEdge)
-y <- as.vector(TRM_1_seqFootprintSpectralonReflectance$redEdge)
+x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampRedEdge)
+y <- as.vector(Main_Footprint_DF$T1S_redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -565,12 +566,12 @@ p1sre <- ggplot(df) +
   ylab('Reflectance Sequioa RedEdge Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-
+plot (p1sre)
 
 #Plot Tramway Mean Data Compared with Sequoia TRM1 NIR Band
 
-x <- as.vector(MeanFwdSeqresampNIR)
-y <- as.vector(TRM_1_seqFootprintSpectralonReflectance$NIR)
+x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampNIR)
+y <- as.vector(Main_Footprint_DF$T1S_NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -606,12 +607,12 @@ p1sni <- ggplot(df) +
   ylab('Reflectance Sequioa NIR Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p1sni)
 
 #Plot Tramway Mean Data compared with Sequoia TRM1 NDVI
 
-x <- as.vector(MeanFwdSeqresampNDVI)
-y <- as.vector(TRM_1_seqFootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi)
+x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampNDVI)
+y <- as.vector(Main_Footprint_DF$T1S_NDVI)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -648,21 +649,21 @@ p1snv <- ggplot(df) +
   ylab('Sequoia NDVI')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p1snv)
 #----10. TRM 1 MRE Drone Survey and Tramway Mean Forward Runs------
 {
-#MRE NDVI VS TRAMWAY NDVI PLOT (2nd run fwd)
-plot(1:110, MeanFwdMREresampNDVI,ylim=c(0,0.6),type='n',xlab='[m]',ylab='NDVI')
-lines(1:110, MeanFwdMREresampNDVI,col='black')
-lines(1:110, TRM_1_MREFootprintNDVI$TRM_1_MRE_2lines_SPE_index_ndvi ,col='red')
+#MRE NDVI VS TRAMWAY NDVI PLOT (mean fwd)
+plot(1:110, Main_Footprint_DF$MeanFwdMREresampNDVI,ylim=c(0,0.6),type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, Main_Footprint_DF$MeanFwdMREresampNDVI,col='black')
+lines(1:110, Main_Footprint_DF$T1M_NDVI ,col='red')
 legend(20, 0.6, legend=c("Tramway Spectrometer NDVI", "MRE NDVI"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
 title("TRM1 MRE Drone Survey - Tramway Mean Data")
 
 # Plot Tramway Mean Data compared with MRE TRM1 Blue Band
 
-x <- as.vector(MeanFwdMREresampBlue)
-y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$blue)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampBlue)
+y <- as.vector(Main_Footprint_DF$T1M_blue)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -699,12 +700,12 @@ p1mb <- ggplot(df) +
   ylab('Reflectance MRE Blue Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p1mb)
 
 # Plot Tramway Mean Data Compared with  MRE TRM1 Green Band
 
-x <- as.vector(MeanFwdMREresampGreen)
-y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$green)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampGreen)
+y <- as.vector(Main_Footprint_DF$T1M_green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -741,12 +742,12 @@ p1mg <- ggplot(df) +
   ylab('Reflectance MRE Green Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p1mg)
 
 # Plot Tramway Mean Data compared with MRE TRM1 Red Band
 
-x <- as.vector(MeanFwdMREresampRed)
-y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$red)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampRed)
+y <- as.vector(Main_Footprint_DF$T1M_red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -782,12 +783,12 @@ p1mr <- ggplot(df) +
   ylab('Reflectance MRE Red Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p1mr)
 
 # Plot Tramway Mean Data compared with MRE TRM1 RedEdge Band
 
-x <- as.vector(MeanFwdMREresampRedEdge)
-y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$redEdge)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampRedEdge)
+y <- as.vector(Main_Footprint_DF$T1M_redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -824,12 +825,12 @@ p1mre <- ggplot(df) +
   ylab('Reflectance MRE RedEdge Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p1mre)
 
 #Plot Tramway Mean Data Compared with MRE TRM1 NIR Band
 
-x <- as.vector(MeanFwdMREresampNIR)
-y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$NIR)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampNIR)
+y <- as.vector(Main_Footprint_DF$T1M_NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -866,12 +867,12 @@ p1mni <- ggplot(df) +
   ylab('Reflectance MRE NIR Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p1mni)
 
 #Plot Tramway Mean Data compared with MRE TRM1 NDVI
 
-x <- as.vector(MeanFwdMREresampNDVI)
-y <- as.vector(TRM_1_MREFootprintNDVI$TRM_1_MRE_2lines_SPE_index_ndvi)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampNDVI)
+y <- as.vector(Main_Footprint_DF$T1M_NDVI)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -914,18 +915,18 @@ plot(p1mnv)
 #-----11. TRM 2 Sequoia Drone Survey and Tramway Mean Data Plots--------
 {
 #TRM 2 SEQ NDVI VS TRM 2 MRE PLOT
-plot(1:110, MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
-lines(1:110, TRM_2_MREFootprintNDVI$TRM_2_MRE_proj2lines_index_ndvi ,col= 'black')
-lines(1:110, TRM_2_seqFootprintSpectralonNDVI$TRM_2_SEQ_proj2lines_index_ndvi,col='red')
+plot(1:110, Main_Footprint_DF$MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, Main_Footprint_DF$T2M_NDVI ,col= 'black')
+lines(1:110, Main_Footprint_DF$T2S_NDVI,col='red')
 #lines(1:110, SecondRunFwdSeqresampNDVI,col='green')
 legend(20, 0.4, legend=c("MRE NDVI", "Sequoia NDVI"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
 title("TRM2 SEQ compared with TRM2 MRE ")
 
 #TRM 2 SEQ Spectralon Mean Forward Tramway
-plot(1:110, MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
-lines(1:110, MeanFwdSeqresampNDVI,col='black')
-lines(1:110, TRM_2_seqFootprintSpectralonNDVI$TRM_2_SEQ_proj2lines_index_ndvi,col='red')
+plot(1:110, Main_Footprint_DF$MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, Main_Footprint_DF$MeanFwdSeqresampNDVI,col='black')
+lines(1:110, Main_Footprint_DF$T2S_NDVI,col='red')
 legend(20, 0.4, legend=c("Tramway Spectrometer NDVI", "Sequoia NDVI"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
 title("TRM2 Sequioa Drone Survey - Tramway Mean Data")
@@ -933,8 +934,8 @@ title("TRM2 Sequioa Drone Survey - Tramway Mean Data")
 
 # Plot Tramway Mean Data compared with Sequoia TRM2 Green Band
 
-x <- as.vector(MeanFwdSeqresampGreen)
-y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$green)
+x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampGreen)
+y <- as.vector(Main_Footprint_DF$T2S_green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -971,12 +972,12 @@ p2sg <- ggplot(df) +
   ylab('Reflectance Sequioa Green Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p2sg)
 
 # Plot Tramway Mean Data compared with Sequoia TRM2 Red Band
 
-x <- as.vector(MeanFwdSeqresampRed)
-y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$red)
+x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampRed)
+y <- as.vector(Main_Footprint_DF$T2S_red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -1013,12 +1014,12 @@ p2sr <- ggplot(df) +
   ylab('Reflectance Sequioa Red Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p2sr)
 
 # Plot Tramway Mean Data compared with Sequoia TRM2 RedEdge Band
 
-x <- as.vector(MeanFwdSeqresampRedEdge)
-y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$redEdge)
+x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampRedEdge)
+y <- as.vector(Main_Footprint_DF$T2S_redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -1055,12 +1056,12 @@ p2sre <- ggplot(df) +
   ylab('Reflectance Sequioa RedEdge Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p2sre)
 
 #Plot Tramway Mean Data compared with Sequoia TRM2 NIR Band
 
-x <- as.vector(MeanFwdSeqresampNIR)
-y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$NIR)
+x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampNIR)
+y <- as.vector(Main_Footprint_DF$T2S_NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -1097,12 +1098,12 @@ p2sni <- ggplot(df) +
   ylab('Reflectance Sequioa NIR Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p2sni)
 
 #Plot Tramway Mean Data with Sequoia TRM2 NDVI
 
-x <- as.vector(MeanFwdSeqresampNDVI)
-y <- as.vector(TRM_2_seqFootprintSpectralonNDVI$TRM_2_SEQ_proj2lines_index_ndvi)
+x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampNDVI)
+y <- as.vector(Main_Footprint_DF$T2S_NDVI)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -1139,23 +1140,23 @@ p2snv <- ggplot(df) +
   ylab('Sequoia NDVI')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p2snv)
 }
 
 #-----12. TRM 2 MRE survey and Tramway Mean Data plots-----
 {
 #TRM 2 MRE Spectralon vs Mean Tramway Data
-plot(1:110, MeanFwdMREresampNDVI,type='n',xlab='[m]',ylab='NDVI')
-lines(1:110, MeanFwdMREresampNDVI,col='black')
-lines(1:110, TRM_2_MREFootprintNDVI$TRM_2_MRE_proj2lines_index_ndvi,col='red')
+plot(1:110, Main_Footprint_DF$MeanFwdMREresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, Main_Footprint_DF$MeanFwdMREresampNDVI,col='black')
+lines(1:110, Main_Footprint_DF$T2M_NDVI,col='red')
 legend(20, 0.4, legend=c("Tramway Spectrometer NDVI", "MRE NDVI"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
 title("TRM2 MRE Compared with Tramway Mean Data")
 
 # Plot Tramway Mean Data MRE TRM2 Blue Band
 
-x <- as.vector(MeanFwdMREresampBlue)
-y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$blue)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampBlue)
+y <- as.vector(Main_Footprint_DF$T2M_blue)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -1192,12 +1193,12 @@ p2mb <- ggplot(df) +
   ylab('Reflectance MRE Blue Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p2mb)
 
 # Plot Tramway Mean Data vs MRE TRM2 Green Band
 
-x <- as.vector(MeanFwdMREresampGreen)
-y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$green)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampGreen)
+y <- as.vector(Main_Footprint_DF$T2M_green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -1234,12 +1235,12 @@ p2mg <- ggplot(df) +
   ylab('Reflectance MRE Green Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p2mg)
 
 # Plot Tramway Mean Data vs MRE TRM2 Red Band
 
-x <- as.vector(MeanFwdMREresampRed)
-y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$red)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampRed)
+y <- as.vector(Main_Footprint_DF$T2M_red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -1276,12 +1277,12 @@ p2mr <- ggplot(df) +
   ylab('Reflectance MRE Red Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p2mr)
 
 # Plot Tramway Mean Data vs MRE TRM2 RedEdge Band
 
-x <- as.vector(MeanFwdMREresampRedEdge)
-y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$redEdge)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampRedEdge)
+y <- as.vector(Main_Footprint_DF$T2M_redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 
@@ -1318,12 +1319,12 @@ p2mre <- ggplot(df) +
   ylab('Reflectance MRE RedEdge Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p2mre)
 
 #Plot Tramway Mean Data vs MRE TRM2 NIR Band
 
-x <- as.vector(MeanFwdMREresampNIR)
-y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$NIR)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampNIR)
+y <- as.vector(Main_Footprint_DF$T2M_NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 
@@ -1360,12 +1361,12 @@ p2mni <- ggplot(df) +
   ylab('Reflectance MRE NIR Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p2mni)
 
 #Plot Tramway Mean Data vs MRE TRM2 NDVI
 
-x <- as.vector(MeanFwdMREresampNDVI)
-y <- as.vector(TRM_2_MREFootprintNDVI$TRM_2_MRE_proj2lines_index_ndvi)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampNDVI)
+y <- as.vector(Main_Footprint_DF$T2M_NDVI)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -1407,9 +1408,9 @@ plot(p2mnv)
 #----13. TRM 3 Sequoia Drone Survey and Tramway Mean Data plots -----
 {
   #TRM 3 SEQ Spectralon 2nd run Bk
-  plot(1:110, MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
-  lines(1:110, MeanFwdSeqresampNDVI,col='black')
-  lines(1:110, TRM_3_seqFootprintSpectralonNDVI$TRM_3_SEQ_2lines_SPE_index_ndvi,col='red')
+  plot(1:110, Main_Footprint_DF$MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+  lines(1:110, Main_Footprint_DF$MeanFwdSeqresampNDVI,col='black')
+  lines(1:110, Main_Footprint_DF$T3S_NDVI,col='red')
   legend(20, 0.4, legend=c("Tramway Spectrometer NDVI", "Sequoia NDVI"),
          lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
   title("TRM3 Sequioa Drone Survey - Tramway Mean Data")
@@ -1417,8 +1418,8 @@ plot(p2mnv)
   
   # Plot Tramway Mean data vs Sequoia TRM3 Green Band
   
-  x <- as.vector(MeanFwdSeqresampGreen)
-  y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$green)
+  x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampGreen)
+  y <- as.vector(Main_Footprint_DF$T3S_green)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -1455,12 +1456,12 @@ plot(p2mnv)
     ylab('Reflectance Sequioa Green Band')+
     #coord_equal(ratio=1)
     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-  #plot(p)
+  plot(p3sg)
   
   # Plot Tramway Mean data vs Sequoia TRM3 Red Band
   
-  x <- as.vector(MeanFwdSeqresampRed)
-  y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$red)
+  x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampRed)
+  y <- as.vector(Main_Footprint_DF$T3S_red)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -1497,12 +1498,12 @@ plot(p2mnv)
     ylab('Reflectance Sequioa Red Band')+
     #coord_equal(ratio=1)
     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-  #plot(p)
+  plot(p3sr)
   
   # Plot Tramway Mean Data vs Sequoia TRM3 RedEdge Band
   
-  x <- as.vector(MeanFwdSeqresampRedEdge)
-  y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$redEdge)
+  x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampRedEdge)
+  y <- as.vector(Main_Footprint_DF$T3S_redEdge)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -1539,12 +1540,12 @@ plot(p2mnv)
     ylab('Reflectance Sequioa RedEdge Band')+
     #coord_equal(ratio=1)
     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-  #plot(p)
+  plot(p3sre)
   
   #Plot Tramway Mean data vs Sequoia TRM3 NIR Band
   
-  x <- as.vector(MeanFwdSeqresampNIR)
-  y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$NIR)
+  x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampNIR)
+  y <- as.vector(Main_Footprint_DF$T3S_NIR)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -1581,12 +1582,12 @@ plot(p2mnv)
     ylab('Reflectance Sequioa NIR Band')+
     #coord_equal(ratio=1)
     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-  #plot(p)
+  plot(p3sni)
   
   #Plot Tramway Mean Data vs Sequoia TRM3 NDVI
   
-  x <- as.vector(MeanFwdSeqresampNDVI)
-  y <- as.vector(TRM_3_seqFootprintSpectralonNDVI$TRM_3_SEQ_2lines_SPE_index_ndvi)
+  x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampNDVI)
+  y <- as.vector(Main_Footprint_DF$T3S_NDVI)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -1630,17 +1631,17 @@ plot(p3snv)
 
 {
 #TRM 3 MRE Spectralon 2nd run Bk
-plot(1:110, MeanFwdMREresampNDVI,type='n',xlab='[m]',ylab='NDVI')
-lines(1:110, MeanFwdMREresampNDVI,col='black')
-lines(1:110, TRM_3_MREFootprintNDVI$TRM_3_MRE_SPE_2lines_index_ndvi,col='red')
+plot(1:110, Main_Footprint_DF$MeanFwdMREresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, Main_Footprint_DF$MeanFwdMREresampNDVI,col='black')
+lines(1:110, Main_Footprint_DF$T3M_NDVI,col='red')
 legend(20, 0.4, legend=c("Tramway Spectrometer NDVI", "MRE NDVI"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
 title("TRM3 MRE Spectralon - Tramway Mean Data")
 
 # Plot Tramway Mean data MRE TRM3 Blue Band
 
-x <- as.vector(MeanFwdMREresampBlue)
-y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$blue)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampBlue)
+y <- as.vector(Main_Footprint_DF$T3M_blue)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -1677,12 +1678,12 @@ p3mb <- ggplot(df) +
   ylab('Reflectance MRE Blue Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p3mb)
 
 # Plot Tramway Mean data vs MRE TRM3 Green Band
 
-x <- as.vector(MeanFwdMREresampGreen)
-y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$green)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampGreen)
+y <- as.vector(Main_Footprint_DF$T3M_green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -1719,12 +1720,20 @@ p3mg <- ggplot(df) +
   ylab('Reflectance MRE Green Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p3mg)
+
+ggsave(
+  p3mg,
+  filename = "figures/plots/test.png",
+  width = 6,
+  height = 6,
+  units = "cm"
+)
 
 # Plot Tramway Mean Data vs MRE TRM3 Red Band
 
-x <- as.vector(MeanFwdMREresampRed)
-y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$red)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampRed)
+y <- as.vector(Main_Footprint_DF$T3M_red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -1761,12 +1770,12 @@ p3mr <- ggplot(df) +
   ylab('Reflectance MRE Red Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p3mr)
 
 # Plot Tramway Mean data vs MRE TRM3 RedEdge Band
 
-x <- as.vector(MeanFwdMREresampRedEdge)
-y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$redEdge)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampRedEdge)
+y <- as.vector(Main_Footprint_DF$T3M_redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -1803,12 +1812,12 @@ p3mre <- ggplot(df) +
   ylab('Reflectance MRE RedEdge Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p3mre)
 
 #Plot Tramway Mean data vs MRE TRM3 NIR Band
 
-x <- as.vector(MeanFwdMREresampNIR)
-y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$NIR)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampNIR)
+y <- as.vector(Main_Footprint_DF$T3M_NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -1845,12 +1854,12 @@ p3mni <- ggplot(df) +
   ylab('Reflectance MRE NIR Band')+
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
+plot(p3mni)
 
 #Plot Tramway Mean data vs MRE TRM3 NDVI
 
-x <- as.vector(MeanFwdMREresampNDVI)
-y <- as.vector(TRM_3_MREFootprintNDVI$TRM_3_MRE_SPE_2lines_index_ndvi)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampNDVI)
+y <- as.vector(Main_Footprint_DF$T3M_NDVI)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -1890,489 +1899,499 @@ p3mnv <- ggplot(df) +
 plot(p3mnv)
 }
 
-#----15. ARE 1 Sequoia Drone Survey and Tramway Mean Data plots -----
-#ARE 1 SEQ vs Mean Data
+
+# Following section has been commented out as decision was taken to only compare tramway focused drone surveys TRM1,2 and 3
+# and not include the Area wide survey in the comparison with tramway data as it is not at the same spatial resolution
+# and was included in the study for the purposes of comparison with Sentinel-2 data not tramway hyperspectral data.
+# This commented section has not been updated with the exactextract function - if you want to run this code for the area use
+# the /scripts/Mean_Tramway_FWDRuns_All_Drone_Data_Compare_Panel_improvements.R script
+
 {
-plot(1:110, MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
-lines(1:110, MeanFwdSeqresampNDVI,col='black')
-lines(1:110, ARE_1_seqFootprintSpectralonNDVI$ARE_1_SEQ_2lines_SPE_index_ndvi,col='red')
-legend(20, 0.4, legend=c("Tramway Spectrometer NDVI", "Sequoia NDVI"),
-       lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
-title("ARE1 Sequoia Drone Survey - Tramway Mean Data")
+# #----15. ARE 1 Sequoia Drone Survey and Tramway Mean Data plots -----
+# #ARE 1 SEQ vs Mean Data
+# {
+# plot(1:110, Main_Footprint_DF$MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+# lines(1:110, Main_Footprint_DF$MeanFwdSeqresampNDVI,col='black')
+# lines(1:110, ARE_1_seqFootprintSpectralonNDVI$ARE_1_SEQ_2lines_SPE_index_ndvi,col='red')
+# legend(20, 0.4, legend=c("Tramway Spectrometer NDVI", "Sequoia NDVI"),
+#        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
+# title("ARE1 Sequoia Drone Survey - Tramway Mean Data")
+# 
+# 
+# # Plot Tramway Mean Data vs Sequoia ARE1 Green Band
+# 
+# x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampGreen)
+# y <- as.vector(ARE_1_seqFootprintSpectralonReflectance$green)
+# df <- data.frame(x = x, y = y,
+#                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+# pca <- prcomp(~x+y,df)
+# tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+# tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+# equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+# 
+# # Compute the Lin's  correlation concordance coefficient
+# ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+# ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+# 
+# 
+# MADval <- mean(abs(x-y))
+# MADrel <- MADval/mean(x)*100
+# lmres <- lm(y~x)
+# r2val <- summary(lmres)$r.squared
+# 
+# pasg <- ggplot(df) +
+#   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+#   geom_point(aes(x, y), alpha=0.3, size = 1) +
+#   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+#   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+#   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+#   #theme(text = element_text(size=20))+
+#   scale_color_identity() +
+#   theme_fancy() +
+#   
+#   geom_abline(intercept = 0, slope = 1, col='grey' ) +
+#   ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey ARE1 Green Band")+
+#   #theme(aspect.ratio=1)+
+#   xlab('Tramway Relectance resampled for Sequoia Green band')+
+#   ylab('Reflectance Sequioa Green Band')+
+#   #coord_equal(ratio=1)
+#   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+# #plot(p)
+# 
+# # Plot Tramway Mean data vs Sequoia ARE1 Red Band
+# 
+# x <- as.vector(MeanFwdSeqresampRed)
+# y <- as.vector(ARE_1_seqFootprintSpectralonReflectance$red)
+# df <- data.frame(x = x, y = y,
+#                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+# pca <- prcomp(~x+y,df)
+# tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+# tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+# equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+# 
+# # Compute the Lin's  correlation concordance coefficient
+# ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+# ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+# 
+# 
+# MADval <- mean(abs(x-y))
+# MADrel <- MADval/mean(x)*100
+# lmres <- lm(y~x)
+# r2val <- summary(lmres)$r.squared
+# 
+# pasr <- ggplot(df) +
+#   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+#   geom_point(aes(x, y), alpha=0.3, size = 1) +
+#   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+#   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+#   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+#   #theme(text = element_text(size=20))+
+#   scale_color_identity() +
+#   theme_fancy() +
+#   
+#   geom_abline(intercept = 0, slope = 1, col='grey' ) +
+#   ggtitle("Comparison of Tramway Mean Data with Sequoia Survey \n ARE1 Red Band")+
+#   #theme(aspect.ratio=1)+
+#   xlab('Tramway Relectance resampled for Sequoia Red band')+
+#   ylab('Reflectance Sequioa Red Band')+
+#   #coord_equal(ratio=1)
+#   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+# #plot(p)
+# 
+# # Plot Tramway Run 1 Bkd Sequoia ARE1 RedEdge Band
+# 
+# x <- as.vector(MeanFwdSeqresampRedEdge)
+# y <- as.vector(ARE_1_seqFootprintSpectralonReflectance$redEdge)
+# df <- data.frame(x = x, y = y,
+#                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+# pca <- prcomp(~x+y,df)
+# tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+# tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+# equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+# 
+# # Compute the Lin's  correlation concordance coefficient
+# ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+# ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+# 
+# 
+# MADval <- mean(abs(x-y))
+# MADrel <- MADval/mean(x)*100
+# lmres <- lm(y~x)
+# r2val <- summary(lmres)$r.squared
+# 
+# pasre <- ggplot(df) +
+#   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+#   geom_point(aes(x, y), alpha=0.3, size = 1) +
+#   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+#   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+#   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+#   #theme(text = element_text(size=20))+
+#   scale_color_identity() +
+#   theme_fancy() +
+#   
+#   geom_abline(intercept = 0, slope = 1, col='grey' ) +
+#   ggtitle("Comparison of Tramway Mean Data with Sequoia Survey \n ARE1 RedEdge Band")+
+#   #theme(aspect.ratio=1)+
+#   xlab('Tramway Relectance resampled for Sequoia RedEdge band')+
+#   ylab('Reflectance Sequioa RedEdge Band')+
+#   #coord_equal(ratio=1)
+#   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+# #plot(p)
+# 
+# #Plot Tramway Mean data vs Sequoia ARE1 NIR Band
+# 
+# x <- as.vector(MeanFwdSeqresampNIR)
+# y <- as.vector(ARE_1_seqFootprintSpectralonReflectance$NIR)
+# df <- data.frame(x = x, y = y,
+#                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+# pca <- prcomp(~x+y,df)
+# tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+# tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+# equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+# 
+# # Compute the Lin's  correlation concordance coefficient
+# ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+# ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+# 
+# 
+# MADval <- mean(abs(x-y))
+# MADrel <- MADval/mean(x)*100
+# lmres <- lm(y~x)
+# r2val <- summary(lmres)$r.squared
+# 
+# pasni <- ggplot(df) +
+#   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+#   geom_point(aes(x, y), alpha=0.3, size = 1) +
+#   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+#   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+#   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+#   #theme(text = element_text(size=20))+
+#   scale_color_identity() +
+#   theme_fancy() +
+#   
+#   geom_abline(intercept = 0, slope = 1, col='grey' ) +
+#   ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey ARE1 NIR Band")+
+#   #theme(aspect.ratio=1)+
+#   xlab('Tramway Relectance resampled for Sequoia NIR band')+
+#   ylab('Reflectance Sequioa NIR Band')+
+#   #coord_equal(ratio=1)
+#   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+# #plot(p)
+# 
+# #Plot Tramway Mean Data vs Sequoia ARE1 NDVI
+# 
+# x <- as.vector(MeanFwdSeqresampNDVI)
+# y <- as.vector(ARE_1_seqFootprintSpectralonNDVI$ARE_1_SEQ_2lines_SPE_index_ndvi)
+# df <- data.frame(x = x, y = y,
+#                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+# # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+# pca <- prcomp(~x+y,df)
+# tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+# tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+# equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+# 
+# # Compute the Lin's  correlation concordance coefficient
+# ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+# ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+# 
+# 
+# MADval <- mean(abs(x-y))
+# MADrel <- MADval/mean(x)*100
+# lmres <- lm(y~x)
+# r2val <- summary(lmres)$r.squared
+# 
+# pasnv <- ggplot(df) +
+#   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+#   geom_point(aes(x, y), alpha=0.3, size = 1) +
+#   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+#   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+#   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+#   #theme(text = element_text(size=20))+
+#   scale_color_identity() +
+#   theme_fancy() +
+#   
+#   geom_abline(intercept = 0, slope = 1,col='grey' ) +
+#   ggtitle("Comparison of Tramway Mean data \n with Sequoia Survey ARE1 NDVI")+
+#   #theme(aspect.ratio=1)+
+#   xlab('Tramway Relectance resampled for Sequoia NDVI')+
+#   ylab('Sequoia NDVI')+
+#   #coord_equal(ratio=1)
+#   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+# plot(pasnv)
+# }
+# 
+# #----16. ARE 1 MRE Drone Survey and Tramway Mean Data plots -----
+# {
+#   
+#   plot(1:110, MeanFwdMREresampNDVI,ylim=c(0,0.6),type='n',xlab='[m]',ylab='NDVI')
+#   lines(1:110, MeanFwdMREresampNDVI,col='black')
+#   lines(1:110, ARE_1_MREFootprintNDVI$ARE_1_MRE_2lines_SPE_index_ndvi ,col='red')
+#   legend(20, 0.6, legend=c("Tramway Spectrometer NDVI", "MRE NDVI"),
+#          lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
+#   title("ARE1 MRE Spectralon - Tramway Mean Data")
+#   
+#   # Plot Tramway Run 1 Bkd MRE ARE1 Blue Band
+#   
+#   x <- as.vector(MeanFwdMREresampBlue)
+#   y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$blue)
+#   df <- data.frame(x = x, y = y,
+#                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+#   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+#   pca <- prcomp(~x+y,df)
+#   tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+#   tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+#   equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+#   
+#   # Compute the Lin's  correlation concordance coefficient
+#   ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+#   ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+#   
+#   
+#   MADval <- mean(abs(x-y))
+#   MADrel <- MADval/mean(x)*100
+#   lmres <- lm(y~x)
+#   r2val <- summary(lmres)$r.squared
+#   
+#   pamb <- ggplot(df) +
+#     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+#     geom_point(aes(x, y), alpha=0.3, size = 1) +
+#     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+#     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+#     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+#     #theme(text = element_text(size=20))+
+#     scale_color_identity() +
+#     theme_fancy() +
+#     
+#     geom_abline(intercept = 0, slope = 1, col='grey' ) +
+#     ggtitle("Comparison of Tramway Mean Data with MRE \n Survey ARE1 Blue Band")+
+#     #theme(aspect.ratio=1)+
+#     xlab('Tramway Relectance resampled for MRE Blue band')+
+#     ylab('Reflectance MRE Blue Band')+
+#     #coord_equal(ratio=1)
+#     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+#   #plot(p)
+#   
+#   # Plot Tramway Mean Data vs MRE ARE1 Green Band
+#   
+#   x <- as.vector(MeanFwdMREresampGreen)
+#   y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$green)
+#   df <- data.frame(x = x, y = y,
+#                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+#   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+#   pca <- prcomp(~x+y,df)
+#   tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+#   tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+#   equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+#   
+#   # Compute the Lin's  correlation concordance coefficient
+#   ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+#   ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+#   
+#   
+#   MADval <- mean(abs(x-y))
+#   MADrel <- MADval/mean(x)*100
+#   lmres <- lm(y~x)
+#   r2val <- summary(lmres)$r.squared
+#   
+#   pamg <- ggplot(df) +
+#     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+#     geom_point(aes(x, y), alpha=0.3, size = 1) +
+#     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+#     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+#     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+#     #theme(text = element_text(size=20))+
+#     scale_color_identity() +
+#     theme_fancy() +
+#     
+#     geom_abline(intercept = 0, slope = 1, col='grey' ) +
+#     ggtitle("Comparison of Tramway Mean Data with MRE \n Survey ARE1 Green Band")+
+#     #theme(aspect.ratio=1)+
+#     xlab('Tramway Relectance resampled for MRE Green band')+
+#     ylab('Reflectance MRE Green Band')+
+#     #coord_equal(ratio=1)
+#     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+#   #plot(p)
+#   
+#   # Plot Tramway Mean data vs MRE ARE1 Red Band
+#   
+#   x <- as.vector(MeanFwdMREresampRed)
+#   y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$red)
+#   df <- data.frame(x = x, y = y,
+#                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+#   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+#   pca <- prcomp(~x+y,df)
+#   tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+#   tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+#   equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+#   
+#   # Compute the Lin's  correlation concordance coefficient
+#   ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+#   ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+#   
+#   
+#   MADval <- mean(abs(x-y))
+#   MADrel <- MADval/mean(x)*100
+#   lmres <- lm(y~x)
+#   r2val <- summary(lmres)$r.squared
+#   
+#   pamr <- ggplot(df) +
+#     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+#     geom_point(aes(x, y), alpha=0.3, size = 1) +
+#     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+#     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+#     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+#     #theme(text = element_text(size=20))+
+#     scale_color_identity() +
+#     theme_fancy() +
+#     
+#     geom_abline(intercept = 0, slope = 1, col='grey' ) +
+#     ggtitle("Comparison of Tramway Mean Data with MRE Survey \n ARE1 Red Band")+
+#     #theme(aspect.ratio=1)+
+#     xlab('Tramway Relectance resampled for MRE Red band')+
+#     ylab('Reflectance MRE Red Band')+
+#     #coord_equal(ratio=1)
+#     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+#   #plot(p)
+#   
+#   # Plot Tramway Mean Data vs MRE ARE1 RedEdge Band
+#   
+#   x <- as.vector(MeanFwdMREresampRedEdge)
+#   y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$redEdge)
+#   df <- data.frame(x = x, y = y,
+#                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+#   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+#   pca <- prcomp(~x+y,df)
+#   tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+#   tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+#   equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+#   
+#   # Compute the Lin's  correlation concordance coefficient
+#   ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+#   ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+#   
+#   
+#   MADval <- mean(abs(x-y))
+#   MADrel <- MADval/mean(x)*100
+#   lmres <- lm(y~x)
+#   r2val <- summary(lmres)$r.squared
+#   
+#   pamre <- ggplot(df) +
+#     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+#     geom_point(aes(x, y), alpha=0.3, size = 1) +
+#     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+#     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+#     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+#     #theme(text = element_text(size=20))+
+#     scale_color_identity() +
+#     theme_fancy() +
+#     
+#     geom_abline(intercept = 0, slope = 1, col='grey' ) +
+#     ggtitle("Comparison of Tramway Mean Data with MRE Survey \n ARE1 RedEdge Band")+
+#     #theme(aspect.ratio=1)+
+#     xlab('Tramway Relectance resampled for MRE RedEdge band')+
+#     ylab('Reflectance MRE RedEdge Band')+
+#     #coord_equal(ratio=1)
+#     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+#   #plot(p)
+#   
+#   #Plot Tramway Mean Data vs MRE ARE1 NIR Band
+#   
+#   x <- as.vector(MeanFwdMREresampNIR)
+#   y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$NIR)
+#   df <- data.frame(x = x, y = y,
+#                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+#   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+#   pca <- prcomp(~x+y,df)
+#   tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+#   tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+#   equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+#   
+#   # Compute the Lin's  correlation concordance coefficient
+#   ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+#   ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+#   
+#   
+#   MADval <- mean(abs(x-y))
+#   MADrel <- MADval/mean(x)*100
+#   lmres <- lm(y~x)
+#   r2val <- summary(lmres)$r.squared
+#   
+#   pamni <- ggplot(df) +
+#     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+#     geom_point(aes(x, y), alpha=0.3, size = 1) +
+#     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+#     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+#     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+#     #theme(text = element_text(size=20))+
+#     scale_color_identity() +
+#     theme_fancy() +
+#     
+#     geom_abline(intercept = 0, slope = 1, col='grey' ) +
+#     ggtitle("Comparison of Tramway Mean Data with MRE \n Survey ARE1 NIR Band")+
+#     #theme(aspect.ratio=1)+
+#     xlab('Tramway Relectance resampled for MRE NIR band')+
+#     ylab('Reflectance MRE NIR Band')+
+#     #coord_equal(ratio=1)
+#     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+#   #plot(p)
+#   
+#   #Plot Tramway Mean data vs  MRE ARE1 NDVI
+#   
+#   x <- as.vector(MeanFwdMREresampNDVI)
+#   y <- as.vector(ARE_1_MREFootprintNDVI$ARE_1_MRE_2lines_SPE_index_ndvi)
+#   df <- data.frame(x = x, y = y,
+#                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
+#   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
+#   pca <- prcomp(~x+y,df)
+#   tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
+#   tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
+#   equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
+#   
+#   # Compute the Lin's  correlation concordance coefficient
+#   ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
+#   ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
+#   
+#   
+#   MADval <- mean(abs(x-y))
+#   MADrel <- MADval/mean(x)*100
+#   lmres <- lm(y~x)
+#   r2val <- summary(lmres)$r.squared
+#   
+#   pamnv <- ggplot(df) +
+#     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
+#     geom_point(aes(x, y), alpha=0.3, size = 1) +
+#     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
+#     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
+#     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
+#     #theme(text = element_text(size=20))+
+#     scale_color_identity() +
+#     theme_fancy() +
+#     
+#     geom_abline(intercept = 0, slope = 1,col='grey' ) +
+#     ggtitle("Comparison of Tramway Mean Data \n with MRE Survey ARE1 NDVI")+
+#     #theme(aspect.ratio=1)+
+#     xlab('Tramway Relectance resampled for MRE NDVI')+
+#     ylab('MRE NDVI')+
+#     #coord_equal(ratio=1)
+#     coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
+#   plot(pamnv)
+# 
 
-
-# Plot Tramway Mean Data vs Sequoia ARE1 Green Band
-
-x <- as.vector(MeanFwdSeqresampGreen)
-y <- as.vector(ARE_1_seqFootprintSpectralonReflectance$green)
-df <- data.frame(x = x, y = y,
-                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
-# Calculate Total Least Squares Regression (extracted from base-R PCA function)
-pca <- prcomp(~x+y,df)
-tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
-tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
-equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
-
-# Compute the Lin's  correlation concordance coefficient
-ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
-ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
-
-
-MADval <- mean(abs(x-y))
-MADrel <- MADval/mean(x)*100
-lmres <- lm(y~x)
-r2val <- summary(lmres)$r.squared
-
-pasg <- ggplot(df) +
-  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
-  geom_point(aes(x, y), alpha=0.3, size = 1) +
-  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
-  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
-  #theme(text = element_text(size=20))+
-  scale_color_identity() +
-  theme_fancy() +
-  
-  geom_abline(intercept = 0, slope = 1, col='grey' ) +
-  ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey ARE1 Green Band")+
-  #theme(aspect.ratio=1)+
-  xlab('Tramway Relectance resampled for Sequoia Green band')+
-  ylab('Reflectance Sequioa Green Band')+
-  #coord_equal(ratio=1)
-  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
-
-# Plot Tramway Mean data vs Sequoia ARE1 Red Band
-
-x <- as.vector(MeanFwdSeqresampRed)
-y <- as.vector(ARE_1_seqFootprintSpectralonReflectance$red)
-df <- data.frame(x = x, y = y,
-                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
-# Calculate Total Least Squares Regression (extracted from base-R PCA function)
-pca <- prcomp(~x+y,df)
-tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
-tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
-equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
-
-# Compute the Lin's  correlation concordance coefficient
-ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
-ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
-
-
-MADval <- mean(abs(x-y))
-MADrel <- MADval/mean(x)*100
-lmres <- lm(y~x)
-r2val <- summary(lmres)$r.squared
-
-pasr <- ggplot(df) +
-  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
-  geom_point(aes(x, y), alpha=0.3, size = 1) +
-  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
-  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
-  #theme(text = element_text(size=20))+
-  scale_color_identity() +
-  theme_fancy() +
-  
-  geom_abline(intercept = 0, slope = 1, col='grey' ) +
-  ggtitle("Comparison of Tramway Mean Data with Sequoia Survey \n ARE1 Red Band")+
-  #theme(aspect.ratio=1)+
-  xlab('Tramway Relectance resampled for Sequoia Red band')+
-  ylab('Reflectance Sequioa Red Band')+
-  #coord_equal(ratio=1)
-  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
-
-# Plot Tramway Run 1 Bkd Sequoia ARE1 RedEdge Band
-
-x <- as.vector(MeanFwdSeqresampRedEdge)
-y <- as.vector(ARE_1_seqFootprintSpectralonReflectance$redEdge)
-df <- data.frame(x = x, y = y,
-                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
-# Calculate Total Least Squares Regression (extracted from base-R PCA function)
-pca <- prcomp(~x+y,df)
-tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
-tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
-equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
-
-# Compute the Lin's  correlation concordance coefficient
-ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
-ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
-
-
-MADval <- mean(abs(x-y))
-MADrel <- MADval/mean(x)*100
-lmres <- lm(y~x)
-r2val <- summary(lmres)$r.squared
-
-pasre <- ggplot(df) +
-  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
-  geom_point(aes(x, y), alpha=0.3, size = 1) +
-  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
-  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
-  #theme(text = element_text(size=20))+
-  scale_color_identity() +
-  theme_fancy() +
-  
-  geom_abline(intercept = 0, slope = 1, col='grey' ) +
-  ggtitle("Comparison of Tramway Mean Data with Sequoia Survey \n ARE1 RedEdge Band")+
-  #theme(aspect.ratio=1)+
-  xlab('Tramway Relectance resampled for Sequoia RedEdge band')+
-  ylab('Reflectance Sequioa RedEdge Band')+
-  #coord_equal(ratio=1)
-  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
-
-#Plot Tramway Mean data vs Sequoia ARE1 NIR Band
-
-x <- as.vector(MeanFwdSeqresampNIR)
-y <- as.vector(ARE_1_seqFootprintSpectralonReflectance$NIR)
-df <- data.frame(x = x, y = y,
-                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
-# Calculate Total Least Squares Regression (extracted from base-R PCA function)
-pca <- prcomp(~x+y,df)
-tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
-tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
-equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
-
-# Compute the Lin's  correlation concordance coefficient
-ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
-ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
-
-
-MADval <- mean(abs(x-y))
-MADrel <- MADval/mean(x)*100
-lmres <- lm(y~x)
-r2val <- summary(lmres)$r.squared
-
-pasni <- ggplot(df) +
-  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
-  geom_point(aes(x, y), alpha=0.3, size = 1) +
-  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
-  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
-  #theme(text = element_text(size=20))+
-  scale_color_identity() +
-  theme_fancy() +
-  
-  geom_abline(intercept = 0, slope = 1, col='grey' ) +
-  ggtitle("Comparison of Tramway Mean Data with Sequoia \n Survey ARE1 NIR Band")+
-  #theme(aspect.ratio=1)+
-  xlab('Tramway Relectance resampled for Sequoia NIR band')+
-  ylab('Reflectance Sequioa NIR Band')+
-  #coord_equal(ratio=1)
-  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-#plot(p)
-
-#Plot Tramway Mean Data vs Sequoia ARE1 NDVI
-
-x <- as.vector(MeanFwdSeqresampNDVI)
-y <- as.vector(ARE_1_seqFootprintSpectralonNDVI$ARE_1_SEQ_2lines_SPE_index_ndvi)
-df <- data.frame(x = x, y = y,
-                 d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
-# Calculate Total Least Squares Regression (extracted from base-R PCA function)
-pca <- prcomp(~x+y,df)
-tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
-tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
-equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
-
-# Compute the Lin's  correlation concordance coefficient
-ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
-ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
-
-
-MADval <- mean(abs(x-y))
-MADrel <- MADval/mean(x)*100
-lmres <- lm(y~x)
-r2val <- summary(lmres)$r.squared
-
-pasnv <- ggplot(df) +
-  geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
-  geom_point(aes(x, y), alpha=0.3, size = 1) +
-  geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
-  geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
-  #theme(text = element_text(size=20))+
-  scale_color_identity() +
-  theme_fancy() +
-  
-  geom_abline(intercept = 0, slope = 1,col='grey' ) +
-  ggtitle("Comparison of Tramway Mean data \n with Sequoia Survey ARE1 NDVI")+
-  #theme(aspect.ratio=1)+
-  xlab('Tramway Relectance resampled for Sequoia NDVI')+
-  ylab('Sequoia NDVI')+
-  #coord_equal(ratio=1)
-  coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-plot(pasnv)
-}
-
-#----16. ARE 1 MRE Drone Survey and Tramway Mean Data plots -----
-{
-  
-  plot(1:110, MeanFwdMREresampNDVI,ylim=c(0,0.6),type='n',xlab='[m]',ylab='NDVI')
-  lines(1:110, MeanFwdMREresampNDVI,col='black')
-  lines(1:110, ARE_1_MREFootprintNDVI$ARE_1_MRE_2lines_SPE_index_ndvi ,col='red')
-  legend(20, 0.6, legend=c("Tramway Spectrometer NDVI", "MRE NDVI"),
-         lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
-  title("ARE1 MRE Spectralon - Tramway Mean Data")
-  
-  # Plot Tramway Run 1 Bkd MRE ARE1 Blue Band
-  
-  x <- as.vector(MeanFwdMREresampBlue)
-  y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$blue)
-  df <- data.frame(x = x, y = y,
-                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
-  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
-  pca <- prcomp(~x+y,df)
-  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
-  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
-  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
-  
-  # Compute the Lin's  correlation concordance coefficient
-  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
-  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
-  
-  
-  MADval <- mean(abs(x-y))
-  MADrel <- MADval/mean(x)*100
-  lmres <- lm(y~x)
-  r2val <- summary(lmres)$r.squared
-  
-  pamb <- ggplot(df) +
-    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
-    geom_point(aes(x, y), alpha=0.3, size = 1) +
-    geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
-    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
-    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
-    #theme(text = element_text(size=20))+
-    scale_color_identity() +
-    theme_fancy() +
-    
-    geom_abline(intercept = 0, slope = 1, col='grey' ) +
-    ggtitle("Comparison of Tramway Mean Data with MRE \n Survey ARE1 Blue Band")+
-    #theme(aspect.ratio=1)+
-    xlab('Tramway Relectance resampled for MRE Blue band')+
-    ylab('Reflectance MRE Blue Band')+
-    #coord_equal(ratio=1)
-    coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-  #plot(p)
-  
-  # Plot Tramway Mean Data vs MRE ARE1 Green Band
-  
-  x <- as.vector(MeanFwdMREresampGreen)
-  y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$green)
-  df <- data.frame(x = x, y = y,
-                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
-  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
-  pca <- prcomp(~x+y,df)
-  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
-  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
-  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
-  
-  # Compute the Lin's  correlation concordance coefficient
-  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
-  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
-  
-  
-  MADval <- mean(abs(x-y))
-  MADrel <- MADval/mean(x)*100
-  lmres <- lm(y~x)
-  r2val <- summary(lmres)$r.squared
-  
-  pamg <- ggplot(df) +
-    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
-    geom_point(aes(x, y), alpha=0.3, size = 1) +
-    geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
-    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
-    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
-    #theme(text = element_text(size=20))+
-    scale_color_identity() +
-    theme_fancy() +
-    
-    geom_abline(intercept = 0, slope = 1, col='grey' ) +
-    ggtitle("Comparison of Tramway Mean Data with MRE \n Survey ARE1 Green Band")+
-    #theme(aspect.ratio=1)+
-    xlab('Tramway Relectance resampled for MRE Green band')+
-    ylab('Reflectance MRE Green Band')+
-    #coord_equal(ratio=1)
-    coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-  #plot(p)
-  
-  # Plot Tramway Mean data vs MRE ARE1 Red Band
-  
-  x <- as.vector(MeanFwdMREresampRed)
-  y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$red)
-  df <- data.frame(x = x, y = y,
-                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
-  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
-  pca <- prcomp(~x+y,df)
-  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
-  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
-  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
-  
-  # Compute the Lin's  correlation concordance coefficient
-  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
-  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
-  
-  
-  MADval <- mean(abs(x-y))
-  MADrel <- MADval/mean(x)*100
-  lmres <- lm(y~x)
-  r2val <- summary(lmres)$r.squared
-  
-  pamr <- ggplot(df) +
-    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
-    geom_point(aes(x, y), alpha=0.3, size = 1) +
-    geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
-    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
-    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
-    #theme(text = element_text(size=20))+
-    scale_color_identity() +
-    theme_fancy() +
-    
-    geom_abline(intercept = 0, slope = 1, col='grey' ) +
-    ggtitle("Comparison of Tramway Mean Data with MRE Survey \n ARE1 Red Band")+
-    #theme(aspect.ratio=1)+
-    xlab('Tramway Relectance resampled for MRE Red band')+
-    ylab('Reflectance MRE Red Band')+
-    #coord_equal(ratio=1)
-    coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-  #plot(p)
-  
-  # Plot Tramway Mean Data vs MRE ARE1 RedEdge Band
-  
-  x <- as.vector(MeanFwdMREresampRedEdge)
-  y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$redEdge)
-  df <- data.frame(x = x, y = y,
-                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
-  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
-  pca <- prcomp(~x+y,df)
-  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
-  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
-  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
-  
-  # Compute the Lin's  correlation concordance coefficient
-  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
-  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
-  
-  
-  MADval <- mean(abs(x-y))
-  MADrel <- MADval/mean(x)*100
-  lmres <- lm(y~x)
-  r2val <- summary(lmres)$r.squared
-  
-  pamre <- ggplot(df) +
-    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
-    geom_point(aes(x, y), alpha=0.3, size = 1) +
-    geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
-    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
-    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
-    #theme(text = element_text(size=20))+
-    scale_color_identity() +
-    theme_fancy() +
-    
-    geom_abline(intercept = 0, slope = 1, col='grey' ) +
-    ggtitle("Comparison of Tramway Mean Data with MRE Survey \n ARE1 RedEdge Band")+
-    #theme(aspect.ratio=1)+
-    xlab('Tramway Relectance resampled for MRE RedEdge band')+
-    ylab('Reflectance MRE RedEdge Band')+
-    #coord_equal(ratio=1)
-    coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-  #plot(p)
-  
-  #Plot Tramway Mean Data vs MRE ARE1 NIR Band
-  
-  x <- as.vector(MeanFwdMREresampNIR)
-  y <- as.vector(ARE_1_MREFootprintSpectralonReflectance$NIR)
-  df <- data.frame(x = x, y = y,
-                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
-  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
-  pca <- prcomp(~x+y,df)
-  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
-  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
-  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
-  
-  # Compute the Lin's  correlation concordance coefficient
-  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
-  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
-  
-  
-  MADval <- mean(abs(x-y))
-  MADrel <- MADval/mean(x)*100
-  lmres <- lm(y~x)
-  r2val <- summary(lmres)$r.squared
-  
-  pamni <- ggplot(df) +
-    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
-    geom_point(aes(x, y), alpha=0.3, size = 1) +
-    geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
-    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
-    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
-    #theme(text = element_text(size=20))+
-    scale_color_identity() +
-    theme_fancy() +
-    
-    geom_abline(intercept = 0, slope = 1, col='grey' ) +
-    ggtitle("Comparison of Tramway Mean Data with MRE \n Survey ARE1 NIR Band")+
-    #theme(aspect.ratio=1)+
-    xlab('Tramway Relectance resampled for MRE NIR band')+
-    ylab('Reflectance MRE NIR Band')+
-    #coord_equal(ratio=1)
-    coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-  #plot(p)
-  
-  #Plot Tramway Mean data vs  MRE ARE1 NDVI
-  
-  x <- as.vector(MeanFwdMREresampNDVI)
-  y <- as.vector(ARE_1_MREFootprintNDVI$ARE_1_MRE_2lines_SPE_index_ndvi)
-  df <- data.frame(x = x, y = y,
-                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
-  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
-  pca <- prcomp(~x+y,df)
-  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
-  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
-  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
-  
-  # Compute the Lin's  correlation concordance coefficient
-  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
-  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
-  
-  
-  MADval <- mean(abs(x-y))
-  MADrel <- MADval/mean(x)*100
-  lmres <- lm(y~x)
-  r2val <- summary(lmres)$r.squared
-  
-  pamnv <- ggplot(df) +
-    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
-    geom_point(aes(x, y), alpha=0.3, size = 1) +
-    geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
-    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
-    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
-    #theme(text = element_text(size=20))+
-    scale_color_identity() +
-    theme_fancy() +
-    
-    geom_abline(intercept = 0, slope = 1,col='grey' ) +
-    ggtitle("Comparison of Tramway Mean Data \n with MRE Survey ARE1 NDVI")+
-    #theme(aspect.ratio=1)+
-    xlab('Tramway Relectance resampled for MRE NDVI')+
-    ylab('MRE NDVI')+
-    #coord_equal(ratio=1)
-    coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-  plot(pamnv)
 }
 
 #----17. Panel arrangement of Plots-----
@@ -2382,35 +2401,122 @@ PlotTRM2_SEQ <-grid.arrange(p2sg, p2sr, p2sre, p2sni,p2snv, nrow = 3)#Plots of T
 PlotTRM2_MRE <-grid.arrange(p2mb,p2mg, p2mr, p2mre, p2mni,p2mnv, nrow = 3)#Plots of TRM2 MRE Survey
 PlotTRM3_SEQ <- grid.arrange(p3sg, p3sr, p3sre, p3sni,p3snv, nrow = 3)#Plots of TRM3 Sequoia survey
 PlotTRM3_MRE <-grid.arrange(p3mb,p3mg, p3mr, p3mre, p3mni,p3mnv, nrow = 3)#Plots of TRM3 MRE Survey
-PlotARE1_SEQ <-grid.arrange(pasg, pasr, pasre, pasni,pasnv, nrow = 3)#Plots of ARE1 Sequoia survey
-PlotARE1_MRE <-grid.arrange(pamb,pamg, pamr, pamre, pamni,pamnv, nrow = 3)#Plots of ARE1 MRE Survey
-PlotNDVI <-grid.arrange(p1snv,p1mnv,p2snv, p2mnv, p3snv,p3mnv,pasnv,pamnv, nrow = 4)#Plots of NDVI all Surveys
-PlotGreen<-grid.arrange(p1sg,p1mg,p2sg, p2mg, p3sg,p3mg,pasg,pamg, nrow = 4)#Plots of Green Band all Surveys
-PlotRed<-grid.arrange(p1sr,p1mr,p2sr, p2mr, p3sr,p3mr,pasr,pamr, nrow = 4)#Plots of Red Band all Surveys
-PlotRedEdge<-grid.arrange(p1sre,p1mre,p2sre, p2mre, p3sre,p3mre,pasre,pamre, nrow = 4)#Plots of RedEdge Band all Surveys
-PlotNIR<-grid.arrange(p1sni,p1mni,p2sni, p2mni, p3sni,p3mni,pasni,pamni, nrow = 4)#Plots of NIR Band all Surveys
-PlotBlue<-grid.arrange(p1mb,p2mb,p3mb,pamb, nrow = 2)#Plots of Blue Band all Surveys
+#PlotARE1_SEQ <-grid.arrange(pasg, pasr, pasre, pasni,pasnv, nrow = 3)#Plots of ARE1 Sequoia survey
+#PlotARE1_MRE <-grid.arrange(pamb,pamg, pamr, pamre, pamni,pamnv, nrow = 3)#Plots of ARE1 MRE Survey
+PlotNDVI <-grid.arrange(p1snv,p1mnv,p2snv, p2mnv, p3snv,p3mnv, nrow = 3)#Plots of NDVI all Surveys
+PlotGreen<-grid.arrange(p1sg,p1mg,p2sg, p2mg, p3sg,p3mg,nrow = 3)#Plots of Green Band all Surveys
+PlotRed<-grid.arrange(p1sr,p1mr,p2sr, p2mr, p3sr,p3mr, nrow = 3)#Plots of Red Band all Surveys
+PlotRedEdge<-grid.arrange(p1sre,p1mre,p2sre, p2mre, p3sre,p3mre, nrow = 3)#Plots of RedEdge Band all Surveys
+PlotNIR<-grid.arrange(p1sni,p1mni,p2sni, p2mni, p3sni,p3mni, nrow = 3)#Plots of NIR Band all Surveys
+PlotBlue<-grid.arrange(p1mb,p2mb,p3mb, nrow = 2)#Plots of Blue Band all Surveys
+# GGSAVE above plots
+{
+  ggsave(
+    PlotTRM1_SEQ,
+    filename = "figures/plots/PlotTRM1_SEQ.png",
+    width = 16,
+    height = 25,
+    units = "cm"
+  )  
+  ggsave(
+    PlotTRM1_MRE,
+    filename = "figures/plots/PlotTRM1_MRE.png",
+    width = 16,
+    height = 25,
+    units = "cm"
+  )  
+  ggsave(
+    PlotTRM2_SEQ,
+    filename = "figures/plots/PlotTRM2_SEQ.png",
+    width = 16,
+    height = 25,
+    units = "cm"
+  )
+  ggsave(
+    PlotTRM2_MRE,
+    filename = "figures/plots/PlotTRM2_MRE.png",
+    width = 6,
+    height = 6,
+    units = "cm"
+  )
+  ggsave(
+    PlotTRM3_SEQ,
+    filename = "figures/plots/PlotTRM3_SEQ.png",
+    width = 16,
+    height = 25,
+    units = "cm"
+  )
+  ggsave(
+    PlotNDVI,
+    filename = "figures/plots/PlotNDVI_ALL_Surveys.png",
+    width = 16,
+    height = 25,
+    units = "cm"
+  )
+  ggsave(
+    PlotTRM3_MRE,
+    filename = "figures/plots/PlotTRM3_MRE.png",
+    width = 16,
+    height = 25,
+    units = "cm"
+  )
+  ggsave(
+    PlotGreen,
+    filename = "figures/plots/PlotGreen_ALL_Surveys.png",
+    width = 6,
+    height = 6,
+    units = "cm"
+  )
+  ggsave(
+    PlotRed,
+    filename = "figures/plots/PlotRed_ALL_Surveys.png",
+    width = 16,
+    height = 25,
+    units = "cm"
+  )
+  ggsave(
+    PlotRedEdge,
+    filename = "figures/plots/PlotredEdge_ALL_Surveys.png",
+    width = 16,
+    height = 25,
+    units = "cm"
+  ) 
+  ggsave(
+    PlotNIR,
+    filename = "figures/plots/PlotNIR_ALL_Surveys.png",
+    width = 6,
+    height = 6,
+    units = "cm"
+  )
+  ggsave(
+    PlotBlue,
+    filename = "figures/plots/PlotBlue_ALL_Surveys.png",
+    width = 16,
+    height = 25,
+    units = "cm"
+  )
+}
 
-plot(1:110, MeanFwdMREresampNDVI,ylim=c(0,0.6),type='n',xlab='[m]',ylab='NDVI')
-lines(1:110, MeanFwdMREresampNDVI,col='black')
-lines(1:110, TRM_1_MREFootprintNDVI$TRM_1_MRE_2lines_SPE_index_ndvi ,col='red')
-lines(1:110, TRM_2_MREFootprintNDVI$TRM_2_MRE_proj2lines_index_ndvi ,col='green')
-lines(1:110, TRM_3_MREFootprintNDVI$TRM_3_MRE_SPE_2lines_index_ndvi ,col='blue')
-lines(1:110, ARE_1_MREFootprintNDVI$ARE_1_MRE_2lines_SPE_index_ndvi ,col='orange')
+plot(1:110, Main_Footprint_DF$MeanFwdMREresampNDVI,ylim=c(0,0.6),type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, Main_Footprint_DF$MeanFwdMREresampNDVI,col='black')
+lines(1:110, Main_Footprint_DF$T1M_NDVI ,col='red')
+lines(1:110, Main_Footprint_DF$T2M_NDVI ,col='green')
+lines(1:110, Main_Footprint_DF$T3M_NDVI ,col='blue')
+#lines(1:110, ARE_1_MREFootprintNDVI$ARE_1_MRE_2lines_SPE_index_ndvi ,col='orange')
 
-legend(20, 0.6, legend=c("Tramway Mean Data NDVI", "TRM_1 NDVI", "TRM_2 NDVI","TRM_3 NDVI", "ARE_1 NDVI"),
-       lty=c(1,1),col=c('black','red', 'green','blue','orange'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
+legend(20, 0.6, legend=c("Tramway Mean Data NDVI", "TRM_1 NDVI", "TRM_2 NDVI","TRM_3 NDVI"),
+       lty=c(1,1),col=c('black','red', 'green','blue'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
 title("NDVI MRE Surveys")
 
-plot(1:110, MeanFwdSeqresampNDVI,ylim=c(0,0.6),type='n',xlab='[m]',ylab='NDVI')
-lines(1:110, MeanFwdSeqresampNDVI,col='black')
-lines(1:110, TRM_1_seqFootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi ,col='red')
-lines(1:110, TRM_2_seqFootprintSpectralonNDVI$TRM_2_SEQ_proj2lines_index_ndvi ,col='green')
-lines(1:110, TRM_3_seqFootprintSpectralonNDVI$TRM_3_SEQ_2lines_SPE_index_ndvi ,col='blue')
-lines(1:110, ARE_1_seqFootprintSpectralonNDVI$ARE_1_SEQ_2lines_SPE_index_ndvi ,col='orange')
+plot(1:110, Main_Footprint_DF$MeanFwdSeqresampNDVI,ylim=c(0,0.6),type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, Main_Footprint_DF$MeanFwdSeqresampNDVI,col='black')
+lines(1:110, Main_Footprint_DF$T1S_NDVI ,col='red')
+lines(1:110, Main_Footprint_DF$T2S_NDVI ,col='green')
+lines(1:110, Main_Footprint_DF$T3S_NDVI ,col='blue')
+#lines(1:110, ARE_1_seqFootprintSpectralonNDVI$ARE_1_SEQ_2lines_SPE_index_ndvi ,col='orange')
 
-legend(20, 0.6, legend=c("Tramway Mean Data NDVI", "TRM_1 NDVI", "TRM_2 NDVI","TRM_3 NDVI", "ARE_1 NDVI"),
-       lty=c(1,1),col=c('black','red', 'green','blue','orange'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
+legend(20, 0.6, legend=c("Tramway Mean Data NDVI", "TRM_1 NDVI", "TRM_2 NDVI","TRM_3 NDVI"),
+       lty=c(1,1),col=c('black','red', 'green','blue'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
 title("NDVI Sequoia Surveys")
 
 #-----18. Save Plots------
@@ -2418,7 +2524,7 @@ title("NDVI Sequoia Surveys")
 ggsave(
   PlotNDVI,
   # filename = "/plots/test.pdf",
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/NDVI_all_surveys_M_SRF.pdf",
+  filename = "figures/plots/NDVI_all_surveys_M_SRF.pdf",
   width = 16,
   height = 25,
   units = "cm"
@@ -2426,7 +2532,7 @@ ggsave(
 ggsave(
   PlotBlue,
   # filename = "/plots/test.pdf",
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/Blue_all_surveys_M_SRF.pdf",
+  filename = "figures/plots/Blue_all_surveys_M_SRF.pdf",
   width = 16,
   height = 25,
   units = "cm"
@@ -2434,7 +2540,7 @@ ggsave(
 ggsave(
   PlotGreen,
   # filename = "/plots/test.pdf",
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/Green_all_surveys_M_SRF.pdf",
+  filename = "figures/plots/Green_all_surveys_M_SRF.pdf",
   width = 16,
   height = 25,
   units = "cm"
@@ -2442,7 +2548,7 @@ ggsave(
 ggsave(
   PlotRed,
   # filename = "/plots/test.pdf",
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/Red_all_surveys_M_SRF.pdf",
+  filename = "figures/plots/Red_all_surveys_M_SRF.pdf",
   width = 16,
   height = 25,
   units = "cm"
@@ -2451,7 +2557,7 @@ ggsave(
 ggsave(
   PlotRedEdge,
   # filename = "/plots/test.pdf",
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/RedEdge_all_surveys_M_SRF.pdf",
+  filename = "figures/plots/RedEdge_all_surveys_M_SRF.pdf",
   width = 16,
   height = 25,
   units = "cm"
@@ -2460,7 +2566,7 @@ ggsave(
 ggsave(
   PlotNIR,
   # filename = "/plots/test.pdf",
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/NIR_all_surveys_M_SRF.pdf",
+  filename = "figures/plots/NIR_all_surveys_M_SRF.pdf",
   width = 16,
   height = 25,
   units = "cm"
@@ -2468,56 +2574,42 @@ ggsave(
 
 ggsave(
   PlotTRM1_SEQ,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/TRM1_SEQ_All bands_M_SRF.pdf",
+  filename = "figures/plots/TRM1_SEQ_All bands_M_SRF.pdf",
   width = 16,
   height = 25,
   units = "cm"
 )
 ggsave(
   PlotTRM2_SEQ,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/TRM2_SEQ_All bands_M_SRF.pdf",
+  filename = "figures/plots/TRM2_SEQ_All bands_M_SRF.pdf",
   width = 16,
   height = 25,
   units = "cm"
 )
 ggsave(
   PlotTRM3_SEQ,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/TRM3_SEQ_All bands_M.pdf",
+  filename = "figures/plots/TRM3_SEQ_All bands_M.pdf",
   width = 16,
   height = 25,
   units = "cm"
 )
 ggsave(
   PlotTRM1_MRE,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/TRM1_MRE_All bands_M.pdf",
+  filename = "figures/plots/TRM1_MRE_All bands_M.pdf",
   width = 16,
   height = 25,
   units = "cm"
 )
 ggsave(
   PlotTRM2_MRE,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/TRM2_MRE_All bands_M_SRF.pdf",
+  filename = "figures/plots/TRM2_MRE_All bands_M_SRF.pdf",
   width = 16,
   height = 25,
   units = "cm"
 )
 ggsave(
   PlotTRM3_MRE,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/TRM3_MRE_All bands_M_SRF.pdf",
-  width = 16,
-  height = 25,
-  units = "cm"
-)
-ggsave(
-  PlotARE1_MRE,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/ARE1_MRE_All bands_M_SRF.pdf",
-  width = 16,
-  height = 25,
-  units = "cm"
-)
-ggsave(
-  PlotARE1_SEQ,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/ARE1_SEQ_All bands_M_SRF.pdf",
+  filename = "figures/plots/TRM3_MRE_All bands_M_SRF.pdf",
   width = 16,
   height = 25,
   units = "cm"
@@ -2526,8 +2618,8 @@ ggsave(
 #----19. SEQ Vs MRE TRM1 Survey----
 # Plot SEQ TRM1 vs MRE TRM1 Green
 {
-x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$green)
-y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$green)
+x <- as.vector(Main_Footprint_DF$T1S_green)
+y <- as.vector(Main_Footprint_DF$T1M_green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -2567,49 +2659,12 @@ plot(pGreenTRM1)
 }
 # Plot SEQ TRM1 vs MRE TRM1 Red
 {
-  x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$red)
-  y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$red)
-  df <- data.frame(x = x, y = y,
-                   d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
-  # Calculate Total Least Squares Regression (extracted from base-R PCA function)
-  pca <- prcomp(~x+y,df)
-  tls_slp <- with(pca, rotation[2,1] / rotation[1,1]) # compute slope
-  tls_int <- with(pca, center[2] - tls_slp*center[1]) # compute y-intercept
-  equation <- paste("y = ", round(tls_int, 3), "+", round(tls_slp, 3), "x")
-  
-  # Compute the Lin's  correlation concordance coefficient
-  ccc_result <- CCC(x, y, ci = "z-transform",conf.level = 0.95)
-  ccc <- paste("CCC = ", round(ccc_result$rho.c[1], 3))
-  
-  MADval <- mean(abs(x-y))
-  MADrel <- MADval/mean(x)*100
-  lmres <- lm(y~x)
-  r2val <- summary(lmres)$r.squared
-  
-  pRedTRM1 <- ggplot(df) +
-    geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
-    geom_point(aes(x, y), alpha=0.3, size = 1) +
-    geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
-    geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
-    geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
-    #theme(text = element_text(size=20))+
-    scale_color_identity() +
-    theme_fancy() +
-    
-    geom_abline(intercept = 0, slope = 1, col='grey' ) +
-    ggtitle("Comparison of  Sequoia \n Survey TRM1 with MRE TRM1 Red")+
-    #theme(aspect.ratio=1)+
-    xlab('Reflectance (Red) Sequoia')+
-    ylab('Reflectance (Red) MRE')+
-    #coord_equal(ratio=1)
-    coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
-  plot(pRedTRM1)
+
 }
 # Plot SEQ TRM1 vs MRE TRM1 RedEdge
 {
-  x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$redEdge)
-  y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$redEdge)
+  x <- as.vector(Main_Footprint_DF$T1S_redEdge)
+  y <- as.vector(Main_Footprint_DF$T1M_redEdge)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -2649,8 +2704,8 @@ plot(pGreenTRM1)
 }
 # Plot SEQ TRM1 vs MRE TRM1 NIR
 {
-  x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$NIR)
-  y <- as.vector(TRM_1_MREFootprintSpectralonReflectance$NIR)
+  x <- as.vector(Main_Footprint_DF$T1S_NIR)
+  y <- as.vector(Main_Footprint_DF$T1M_NIR)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -2690,8 +2745,8 @@ plot(pGreenTRM1)
 }
 # Plot SEQ TRM1 vs MRE TRM1 NDVI
 {
-  x <- as.vector(TRM_1_seqFootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi)
-  y <- as.vector(TRM_1_MREFootprintNDVI$TRM_1_MRE_2lines_SPE_index_ndvi)
+  x <- as.vector(Main_Footprint_DF$T1S_NDVI)
+  y <- as.vector(Main_Footprint_DF$T1M_NDVI)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -2734,7 +2789,7 @@ PlotTRM1SEQvMRE <-grid.arrange(pGreenTRM1, pRedTRM1, pRedEdgeTRM1, pNIRTRM1,pNDV
 
 ggsave(
   PlotTRM1SEQvMRE,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/TRM1_SEQvsMRE_M_SRF.pdf",
+  filename = "figures/plots/TRM1_SEQvsMRE_M_SRF.pdf",
   width = 16,
   height = 25,
   units = "cm"
@@ -2744,8 +2799,8 @@ ggsave(
 -# ----20 Mean MRE reflectance vs Mean Tramway Data-----
 
 #MRE Blue
-x <- as.vector(MeanFwdMREresampBlue)
-y <- as.vector(TRM_Mean_MRE_FootprintSpectralonReflectance$blue)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampBlue)
+y <- as.vector(Main_Footprint_DF$TMM_blue)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -2787,8 +2842,8 @@ plot(pMMB)
 
 
 #MRE Green
-x <- as.vector(MeanFwdMREresampGreen)
-y <- as.vector(TRM_Mean_MRE_FootprintSpectralonReflectance$green)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampGreen)
+y <- as.vector(Main_Footprint_DF$TMM_green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -2828,8 +2883,8 @@ ylab('Reflectance MRE Green Band')+
 plot(pMMG)
 
 #MRE Red
-x <- as.vector(MeanFwdMREresampRed)
-y <- as.vector(TRM_Mean_MRE_FootprintSpectralonReflectance$red)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampRed)
+y <- as.vector(Main_Footprint_DF$TMM_red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -2869,8 +2924,8 @@ pMMR <- ggplot(df) +
 plot(pMMR)
 
 #MRE RedEdge
-x <- as.vector(MeanFwdMREresampRedEdge)
-y <- as.vector(TRM_Mean_MRE_FootprintSpectralonReflectance$redEdge)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampRedEdge)
+y <- as.vector(Main_Footprint_DF$TMM_redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -2910,8 +2965,8 @@ pMMRE <- ggplot(df) +
 plot(pMMRE)
 
 #MRE NIR
-x <- as.vector(MeanFwdMREresampNIR)
-y <- as.vector(TRM_Mean_MRE_FootprintSpectralonReflectance$NIR)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampNIR)
+y <- as.vector(Main_Footprint_DF$TMM_NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -2951,8 +3006,8 @@ pMMN <- ggplot(df) +
 plot(pMMN)
 
 #MRE NDVI
-x <- as.vector(MeanFwdMREresampNDVI)
-y <- as.vector(TRM_Mean_MRE_FootprintSpectralonNDVI$TRM_1_MRE_2lines_SPE_index_ndvi)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampNDVI)
+y <- as.vector(Main_Footprint_DF$TMM_NDVI)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -2993,7 +3048,7 @@ plot(pMMVI)
 
 ggsave(
   pMMVI,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/MRE_Mean_NDVI.pdf",
+  filename = "figures/plots/MRE_Mean_NDVI.pdf",
   width = 16,
   height = 25,
   units = "cm"
@@ -3003,8 +3058,8 @@ ggsave(
 
 #SEq Green
 
-x <- as.vector(MeanFwdSeqresampGreen)
-y <- as.vector(TRM_Mean_SEQ_FootprintSpectralonReflectance$green)
+x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampGreen)
+y <- as.vector(Main_Footprint_DF$TMS_green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3045,8 +3100,8 @@ plot(pMSG)
 
 #SEq Red
 
-x <- as.vector(MeanFwdSeqresampRed)
-y <- as.vector(TRM_Mean_SEQ_FootprintSpectralonReflectance$red)
+x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampRed)
+y <- as.vector(Main_Footprint_DF$TMS_red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3087,8 +3142,8 @@ plot(pMSR)
 
 #SEq RedEdge
 
-x <- as.vector(MeanFwdSeqresampRedEdge)
-y <- as.vector(TRM_Mean_SEQ_FootprintSpectralonReflectance$redEdge)
+x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampRedEdge)
+y <- as.vector(Main_Footprint_DF$TMS_redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3129,8 +3184,8 @@ plot(pMSRE)
 
 #SEq NIR
 
-x <- as.vector(MeanFwdSeqresampNIR)
-y <- as.vector(TRM_Mean_SEQ_FootprintSpectralonReflectance$NIR)
+x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampNIR)
+y <- as.vector(Main_Footprint_DF$TMS_NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3171,8 +3226,8 @@ plot(pMSN)
 
 #SEq NDVI
 
-x <- as.vector(MeanFwdSeqresampNDVI)
-y <- as.vector(TRM_Mean_SEQ_FootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi)
+x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampNDVI)
+y <- as.vector(Main_Footprint_DF$TMS_NDVI)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3213,7 +3268,7 @@ plot(pMSVI)
 
 ggsave(
   pMSVI,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/SEQ_Mean_NDVI.pdf",
+  filename = "figures/plots/SEQ_Mean_NDVI.pdf",
   width = 16,
   height = 25,
   units = "cm"
@@ -3226,7 +3281,7 @@ PlotMREMEAN <-grid.arrange(pMMB, pMMG, pMMR, pMMRE,pMMN,pMMVI, nrow = 3)#Plots o
 
 ggsave(
   PlotMREMEAN,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/MRE_Mean_Surveys_all bands.pdf",
+  filename = "figures/plots/MRE_Mean_Surveys_all bands.pdf",
   width = 16,
   height = 25,
   units = "cm"
@@ -3236,7 +3291,7 @@ PlotSEQMEAN <-grid.arrange(pMSG, pMSR, pMSRE,pMSN,pMSVI, nrow = 3)#Plots of  MRE
 
 ggsave(
   PlotSEQMEAN,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/SEQ_Mean_Surveys_all bands.pdf",
+  filename = "figures/plots/SEQ_Mean_Surveys_all bands.pdf",
   width = 16,
   height = 25,
   units = "cm"
@@ -3246,8 +3301,8 @@ ggsave(
 
 # Plot SEQ Mean vs MRE Mean Green
 {
-  x <- as.vector(TRM_Mean_SEQ_FootprintSpectralonReflectance$green)
-  y <- as.vector(TRM_Mean_MRE_FootprintSpectralonReflectance$green)
+  x <- as.vector(Main_Footprint_DF$TMS_green)
+  y <- as.vector(Main_Footprint_DF$TMM_green)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3287,8 +3342,8 @@ ggsave(
 }
 # Plot SEQ vs MRE  Red
 {
-  x <- as.vector(TRM_Mean_SEQ_FootprintSpectralonReflectance$red)
-  y <- as.vector(TRM_Mean_MRE_FootprintSpectralonReflectance$red)
+  x <- as.vector(Main_Footprint_DF$TMS_red)
+  y <- as.vector(Main_Footprint_DF$TMM_red)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3329,8 +3384,8 @@ ggsave(
 
 # Plot SEQ vs MRE  RedEdge
 {
-  x <- as.vector(TRM_Mean_SEQ_FootprintSpectralonReflectance$redEdge)
-  y <- as.vector(TRM_Mean_MRE_FootprintSpectralonReflectance$redEdge)
+  x <- as.vector(Main_Footprint_DF$TMS_redEdge)
+  y <- as.vector(Main_Footprint_DF$TMM_redEdge)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3371,8 +3426,8 @@ ggsave(
 
 # Plot SEQ vs MRE  NIR
 {
-  x <- as.vector(TRM_Mean_SEQ_FootprintSpectralonReflectance$NIR)
-  y <- as.vector(TRM_Mean_MRE_FootprintSpectralonReflectance$NIR)
+  x <- as.vector(Main_Footprint_DF$TMS_NIR)
+  y <- as.vector(Main_Footprint_DF$TMM_NIR)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3412,8 +3467,8 @@ ggsave(
 }
 # Plot SEQ vs MRE  NDVI
 {
-  x <- as.vector(TRM_Mean_SEQ_FootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi)
-  y <- as.vector(TRM_Mean_MRE_FootprintSpectralonNDVI$TRM_1_MRE_2lines_SPE_index_ndvi)
+  x <- as.vector(Main_Footprint_DF$TMS_NDVI)
+  y <- as.vector(Main_Footprint_DF$TMM_NDVI)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3455,7 +3510,7 @@ PlotSEQvsMRE <-grid.arrange(pGreen, pRed, pRedEdge,pNIR,pNDVI, nrow = 3)#Plots o
 
 ggsave(
   PlotSEQvsMRE,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/SEQ_VS_MRE_Mean_Surveys_all bands_V2.pdf",
+  filename = "figures/plots/SEQ_VS_MRE_Mean_Surveys_all bands_V2.pdf",
   width = 16,
   height = 25,
   units = "cm"
@@ -3463,7 +3518,7 @@ ggsave(
 
 ggsave(
   pNDVI,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/SEQ_VS_MRE_Mean_Surveys_NDVI.pdf",
+  filename = "figures/plots/SEQ_VS_MRE_Mean_Surveys_NDVI.pdf",
   width = 16,
   height = 25,
   units = "cm"
@@ -3473,8 +3528,8 @@ ggsave(
 
 #TRM1 SEQ vs TRM2 SEQ Green
 
-x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$green)
-y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$green)
+x <- as.vector(Main_Footprint_DF$T1S_green)
+y <- as.vector(Main_Footprint_DF$T2S_green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3515,8 +3570,8 @@ plot(pseq1v2green)
 
 #TRM1 SEQ vs TRM3 SEQ Green
 
-x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$green)
-y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$green)
+x <- as.vector(Main_Footprint_DF$T1S_green)
+y <- as.vector(Main_Footprint_DF$T3S_green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3555,8 +3610,8 @@ pseq1v3green <- ggplot(df) +
 plot(pseq1v3green)
 
 #TRM2 SEQ vs TRM3 SEQ Green
-x <- as.vector(TRM_2_seqFootprintSpectralonReflectance$green)
-y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$green)
+x <- as.vector(Main_Footprint_DF$T2S_green)
+y <- as.vector(Main_Footprint_DF$T3S_green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3596,8 +3651,8 @@ plot(pseq2v3green)
 
 #TRM1 SEQ vs TRM2 SEQ red
 
-x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$red)
-y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$red)
+x <- as.vector(Main_Footprint_DF$T1S_red)
+y <- as.vector(Main_Footprint_DF$T2S_red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3638,8 +3693,8 @@ plot(pseq1v2red)
 
 #TRM1 SEQ vs TRM3 SEQ red
 
-x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$red)
-y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$red)
+x <- as.vector(Main_Footprint_DF$T1S_red)
+y <- as.vector(Main_Footprint_DF$T3S_red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3678,8 +3733,8 @@ pseq1v3red <- ggplot(df) +
 plot(pseq1v3red)
 
 #TRM2 SEQ vs TRM3 SEQ red
-x <- as.vector(TRM_2_seqFootprintSpectralonReflectance$red)
-y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$red)
+x <- as.vector(Main_Footprint_DF$T2S_red)
+y <- as.vector(Main_Footprint_DF$T3S_red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3720,8 +3775,8 @@ plot(pseq2v3red)
 
 #TRM1 SEQ vs TRM2 SEQ RedEdge
 
-x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$redEdge)
-y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$redEdge)
+x <- as.vector(Main_Footprint_DF$T1S_redEdge)
+y <- as.vector(Main_Footprint_DF$T2S_redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3762,8 +3817,8 @@ plot(pseq1v2redEdge)
 
 #TRM1 SEQ vs TRM3 SEQ RedEdge
 
-x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$redEdge)
-y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$redEdge)
+x <- as.vector(Main_Footprint_DF$T1S_redEdge)
+y <- as.vector(Main_Footprint_DF$T3S_redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3802,8 +3857,8 @@ pseq1v3redEdge <- ggplot(df) +
 plot(pseq1v3redEdge)
 
 #TRM2 SEQ vs TRM3 SEQ redEdge
-x <- as.vector(TRM_2_seqFootprintSpectralonReflectance$redEdge)
-y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$redEdge)
+x <- as.vector(Main_Footprint_DF$T2S_redEdge)
+y <- as.vector(Main_Footprint_DF$T3S_redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3844,8 +3899,8 @@ plot(pseq2v3redEdge)
 
 #TRM1 SEQ vs TRM2 SEQ NIR
 
-x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$NIR)
-y <- as.vector(TRM_2_seqFootprintSpectralonReflectance$NIR)
+x <- as.vector(Main_Footprint_DF$T1S_NIR)
+y <- as.vector(Main_Footprint_DF$T2S_NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3886,8 +3941,8 @@ plot(pseq1v2NIR)
 
 #TRM1 SEQ vs TRM3 SEQ NIR
 
-x <- as.vector(TRM_1_seqFootprintSpectralonReflectance$NIR)
-y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$NIR)
+x <- as.vector(Main_Footprint_DF$T1S_NIR)
+y <- as.vector(Main_Footprint_DF$T3S_NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3926,8 +3981,8 @@ pseq1v3NIR <- ggplot(df) +
 plot(pseq1v3NIR)
 
 #TRM2 SEQ vs TRM3 SEQ NIR
-x <- as.vector(TRM_2_seqFootprintSpectralonReflectance$NIR)
-y <- as.vector(TRM_3_seqFootprintSpectralonReflectance$NIR)
+x <- as.vector(Main_Footprint_DF$T2S_NIR)
+y <- as.vector(Main_Footprint_DF$T3S_NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -3970,7 +4025,7 @@ PlotSEQvSEQgr <-grid.arrange(pseq1v2green, pseq1v2red, pseq2v3green, pseq2v3red,
 
 ggsave(
   PlotSEQvSEQgr,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/PlotSEQvSEQgreen_red.png",
+  filename = "figures/plots/PlotSEQvSEQgreen_red.png",
   width = 16,
   height = 25,
   units = "cm"
@@ -3990,8 +4045,8 @@ ggsave(
 
 #TRM1 MRE vs TRM2 MRE blue
 
-x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$blue)
-y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$blue)
+x <- as.vector(Main_Footprint_DF$T1M_blue)
+y <- as.vector(Main_Footprint_DF$T2M_blue)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -4032,8 +4087,8 @@ plot(pMRE1v2blue)
 
 #TRM1 MRE vs TRM3 MRE blue
 
-x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$blue)
-y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$blue)
+x <- as.vector(Main_Footprint_DF$T1M_blue)
+y <- as.vector(Main_Footprint_DF$T3M_blue)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -4072,8 +4127,8 @@ pMRE1v3blue <- ggplot(df) +
 plot(pMRE1v3blue)
 
 #TRM2 MRE vs TRM3 MRE blue
-x <- as.vector(TRM_2_MREFootprintSpectralonReflectance$blue)
-y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$blue)
+x <- as.vector(Main_Footprint_DF$T2M_blue)
+y <- as.vector(Main_Footprint_DF$T3M_blue)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -4114,8 +4169,8 @@ plot(pMRE2v3blue)
 
 #TRM1 MRE vs TRM2 MRE Green
 
-x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$green)
-y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$green)
+x <- as.vector(Main_Footprint_DF$T1M_green)
+y <- as.vector(Main_Footprint_DF$T2M_green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -4156,8 +4211,8 @@ plot(pMRE1v2green)
 
 #TRM1 MRE vs TRM3 MRE Green
 
-x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$green)
-y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$green)
+x <- as.vector(Main_Footprint_DF$T1M_green)
+y <- as.vector(Main_Footprint_DF$T3M_green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -4196,8 +4251,8 @@ pMRE1v3green <- ggplot(df) +
 plot(pMRE1v3green)
 
 #TRM2 MRE vs TRM3 MRE Green
-x <- as.vector(TRM_2_MREFootprintSpectralonReflectance$green)
-y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$green)
+x <- as.vector(Main_Footprint_DF$T2M_green)
+y <- as.vector(Main_Footprint_DF$T3M_green)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -4237,8 +4292,8 @@ plot(pMRE2v3green)
 
 #TRM1 MRE vs TRM2 MRE red
 
-x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$red)
-y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$red)
+x <- as.vector(Main_Footprint_DF$T1M_red)
+y <- as.vector(Main_Footprint_DF$T2M_red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -4279,8 +4334,8 @@ plot(pMRE1v2red)
 
 #TRM1 MRE vs TRM3 MRE red
 
-x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$red)
-y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$red)
+x <- as.vector(Main_Footprint_DF$T1M_red)
+y <- as.vector(Main_Footprint_DF$T3M_red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -4319,8 +4374,8 @@ pMRE1v3red <- ggplot(df) +
 plot(pMRE1v3red)
 
 #TRM2 MRE vs TRM3 MRE red
-x <- as.vector(TRM_2_MREFootprintSpectralonReflectance$red)
-y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$red)
+x <- as.vector(Main_Footprint_DF$T2M_red)
+y <- as.vector(Main_Footprint_DF$T3M_red)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -4361,8 +4416,8 @@ plot(pMRE2v3red)
 
 #TRM1 MRE vs TRM2 MRE RedEdge
 
-x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$redEdge)
-y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$redEdge)
+x <- as.vector(Main_Footprint_DF$T1M_redEdge)
+y <- as.vector(Main_Footprint_DF$T2M_redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -4403,8 +4458,8 @@ plot(pMRE1v2redEdge)
 
 #TRM1 MRE vs TRM3 MRE RedEdge
 
-x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$redEdge)
-y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$redEdge)
+x <- as.vector(Main_Footprint_DF$T1M_redEdge)
+y <- as.vector(Main_Footprint_DF$T3M_redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -4443,8 +4498,8 @@ pMRE1v3redEdge <- ggplot(df) +
 plot(pMRE1v3redEdge)
 
 #TRM2 MRE vs TRM3 MRE redEdge
-x <- as.vector(TRM_2_MREFootprintSpectralonReflectance$redEdge)
-y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$redEdge)
+x <- as.vector(Main_Footprint_DF$T2M_redEdge)
+y <- as.vector(Main_Footprint_DF$T3M_redEdge)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -4485,8 +4540,8 @@ plot(pMRE2v3redEdge)
 
 #TRM1 MRE vs TRM2 MRE NIR
 
-x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$NIR)
-y <- as.vector(TRM_2_MREFootprintSpectralonReflectance$NIR)
+x <- as.vector(Main_Footprint_DF$T1M_NIR)
+y <- as.vector(Main_Footprint_DF$T2M_NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -4527,8 +4582,8 @@ plot(pMRE1v2NIR)
 
 #TRM1 MRE vs TRM3 MRE NIR
 
-x <- as.vector(TRM_1_MREFootprintSpectralonReflectance$NIR)
-y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$NIR)
+x <- as.vector(Main_Footprint_DF$T1M_NIR)
+y <- as.vector(Main_Footprint_DF$T3M_NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -4567,8 +4622,8 @@ pMRE1v3NIR <- ggplot(df) +
 plot(pMRE1v3NIR)
 
 #TRM2 MRE vs TRM3 MRE NIR
-x <- as.vector(TRM_2_MREFootprintSpectralonReflectance$NIR)
-y <- as.vector(TRM_3_MREFootprintSpectralonReflectance$NIR)
+x <- as.vector(Main_Footprint_DF$T2M_NIR)
+y <- as.vector(Main_Footprint_DF$T3M_NIR)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -4611,7 +4666,7 @@ PlotMREvMREgr <-grid.arrange(pMRE1v2green, pMRE1v2red, pMRE2v3green, pMRE2v3red,
 
 ggsave(
   PlotMREvMREgr,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/PlotMREvMREgreen_red.png",
+  filename = "figures/plots/PlotMREvMREgreen_red.png",
   width = 16,
   height = 25,
   units = "cm"
@@ -4621,7 +4676,7 @@ PlotMREvMREreNIR <-grid.arrange(pMRE1v2redEdge, pMRE1v2NIR, pMRE2v3redEdge, pMRE
 
 ggsave(
   PlotMREvMREreNIR,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/PlotMREvMREredEdge_NIR.png",
+  filename = "figures/plots/PlotMREvMREredEdge_NIR.png",
   width = 16,
   height = 25,
   units = "cm"
@@ -4631,7 +4686,7 @@ PlotMREvMREblue <-grid.arrange(pMRE1v2blue, pMRE2v3blue, pMRE1v3blue, nrow = 3)#
 
 ggsave(
   PlotMREvMREblue,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/PlotMREvMREblue.png",
+  filename = "figures/plots/PlotMREvMREblue.png",
   width = 16,
   height = 25,
   units = "cm"
@@ -4641,8 +4696,8 @@ ggsave(
 
 # Plot SEQ TRM1 vs MRE TRM1 NDVI
 {
-  x <- as.vector(TRM_1_seqFootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi)
-  y <- as.vector(TRM_1_MREFootprintNDVI$TRM_1_MRE_2lines_SPE_index_ndvi)
+  x <- as.vector(Main_Footprint_DF$T1S_NDVI)
+  y <- as.vector(Main_Footprint_DF$T1M_NDVI)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -4683,7 +4738,7 @@ ggsave(
 
 ggsave(
   pNDVITRM1b,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/SEQ_VS_MRE_TRM1_NDVI.png",
+  filename = "figures/plots/SEQ_VS_MRE_TRM1_NDVI.png",
   width = 7,
   height = 7,
   units = "cm"
@@ -4691,8 +4746,8 @@ ggsave(
 #----27.  SEQ vs MRE Mean NDVI Plot for Figure 5----
 # Plot SEQ vs MRE  NDVI
 {
-  x <- as.vector(TRM_Mean_SEQ_FootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi)
-  y <- as.vector(TRM_Mean_MRE_FootprintSpectralonNDVI$TRM_1_MRE_2lines_SPE_index_ndvi)
+  x <- as.vector(Main_Footprint_DF$TMS_NDVI)
+  y <- as.vector(Main_Footprint_DF$TMM_NDVI)
   df <- data.frame(x = x, y = y,
                    d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
   # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -4733,7 +4788,7 @@ ggsave(
 
 ggsave(
   pNDVIb,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/SEQ_VS_MRE_Mean_NDVI.png",
+  filename = "figures/plots/SEQ_VS_MRE_Mean_NDVI.png",
   width = 16,
   height = 16,
   units = "cm"
@@ -4776,8 +4831,8 @@ theme_fancy_2 <- function() {
 }
 
 #MRE NDVI
-x <- as.vector(MeanFwdMREresampNDVI)
-y <- as.vector(TRM_Mean_MRE_FootprintSpectralonNDVI$TRM_1_MRE_2lines_SPE_index_ndvi)
+x <- as.vector(Main_Footprint_DF$MeanFwdMREresampNDVI)
+y <- as.vector(Main_Footprint_DF$TMM_NDVI)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -4826,8 +4881,8 @@ ggsave(
 
 #SEq NDVI
 
-x <- as.vector(MeanFwdSeqresampNDVI)
-y <- as.vector(TRM_Mean_SEQ_FootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi)
+x <- as.vector(Main_Footprint_DF$MeanFwdSeqresampNDVI)
+y <- as.vector(Main_Footprint_DF$TMS_NDVI)
 df <- data.frame(x = x, y = y,
                  d = densCols(x, y, colramp = colorRampPalette(rev(c('yellow','orange','turquoise4','dodgerblue4')))))#colorRampPalette(rev(rainbow(10, end = 4/6)))))
 # Calculate Total Least Squares Regression (extracted from base-R PCA function)
@@ -4866,9 +4921,17 @@ pMSVI <- ggplot(df) +
   coord_fixed(xlim=c(0,0.5),ylim=c(0,0.5))
 plot(pMSVI)
 
+#ggsave(
+ # pMSVI,
+  #filename = "E:/glenn/Tramway_Rcode/figures/plots/SEQ_Mean_NDVI_small.png",
+#   width = 6,
+#   height = 6,
+#   units = "cm"
+# )
+
 ggsave(
   pMSVI,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/SEQ_Mean_NDVI_small.png",
+  filename = "figures/plots/SEQ_Mean_NDVI_small.png",
   width = 6,
   height = 6,
   units = "cm"
@@ -4877,17 +4940,17 @@ ggsave(
 #Tramway length plot
 
 #SEQ NDVI VS TRAMWAY NDVI PLOT
-plot(1:110, MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
-lines(1:110, MeanFwdSeqresampNDVI,col='black')
-lines(1:110, TRM_Mean_SEQ_FootprintSpectralonNDVI$TRM_1_SEQ_3lines_SPE_index_ndvi,col='red')
+plot(1:110, Main_Footprint_DF$MeanFwdSeqresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, Main_Footprint_DF$MeanFwdSeqresampNDVI,col='black')
+lines(1:110, Main_Footprint_DF$TMS_NDVI ,col='red')
 legend(0, 0.45, legend=c("Tramway Spectrometer NDVI (resampled for Sequoia bandwidth)", "Mean Sequoia NDVI"),
        lty=c(1,1),col=c('black','red'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
 #title("Parrot Sequoia NDVI and Tramway Data Mean NDVI")
 
 #MRE NDVI VS TRAMWAY NDVI PLOT
-plot(1:110, MeanFwdMREresampNDVI,type='n',xlab='[m]',ylab='NDVI')
-lines(1:110, MeanFwdMREresampNDVI,col='black')
-lines(1:110, TRM_Mean_MRE_FootprintSpectralonNDVI$TRM_1_MRE_2lines_SPE_index_ndvi, col='blue')
+plot(1:110, Main_Footprint_DF$MeanFwdMREresampNDVI,type='n',xlab='[m]',ylab='NDVI')
+lines(1:110, Main_Footprint_DF$MeanFwdMREresampNDVI,col='black')
+lines(1:110, Main_Footprint_DF$TMM_NDVI , col='blue')
 legend(0, 0.45, legend=c("Tramway Spectrometer NDVI (resampled for MRE bandwidth)", "Mean MRE NDVI"),
        lty=c(1,1),col=c('black','blue'),box.lty=0,y.intersp=1,x.intersp=1,bg="transparent",xpd=TRUE)
 #title("MicaSense RedEdge NDVI and Tramway Data Mean NDVI")
