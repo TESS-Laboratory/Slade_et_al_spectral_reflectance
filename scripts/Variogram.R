@@ -13,7 +13,8 @@
   library(rgeos)
   library(gridExtra)
   library(DescTools)
-  library("usdm")          
+  library("usdm")
+  library (gstat)
 }
 #----------1.Theme--------
 
@@ -68,12 +69,13 @@ ARE_1_MRESpectralonNDVICrop <- crop(ARE_1_MRESpectralonNDVI,AreaROI)
 #----4. Variogram-----
 
 SEQ_NDVI.var <- Variogram(ARE_1_seqSpectralonNDVICrop,  size=100) 
-
 plot(SEQ_NDVI.var)
-
-plot(SEQ_NDVI.var, cloud=TRUE) 
-plot(SEQ_NDVI.var, box=TRUE)
+#plot(SEQ_NDVI.var, cloud=TRUE) 
+#plot(SEQ_NDVI.var, box=TRUE)
 
 MRE_NDVI.var <- Variogram(ARE_1_MRESpectralonNDVICrop,  size=100) 
-
 plot(MRE_NDVI.var)
+
+# fit.variogram(MRE_NDVI.var,fit.sills = TRUE, fit.ranges = TRUE,
+#              fit.method = 7, debug.level = 1, warn.if.neg = FALSE, fit.kappa = FALSE)
+#write.csv(MRE_NDVI.var, file = "E:/Glenn/Slade_et_al_spectral_reflectance/output_data/MRE_Variogram.csv")

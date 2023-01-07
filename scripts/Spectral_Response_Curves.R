@@ -427,16 +427,16 @@ P8 <-ggplot(df3, aes(Wavelength, value)) +
     annotate("rect", xmin = 820, xmax = 860, ymin = -0.1, ymax = -0.02,colour ='black' ,size =0.35 ,fill ='black',  alpha = .2)+
     annotate ("text",  x = 840, y = -0.12, label = "MRE NIR", size=2)+
     annotate("rect", xmin = 530, xmax = 570, ymin = -0.25, ymax = -0.17,colour ='red' ,size =0.35 ,fill ='green',  alpha = .2)+
-    annotate ("text",  x = 550, y = -0.27, label = "SEQ Green", size=2)+
+    annotate ("text",  x = 550, y = -0.27, label = "PS Green", size=2)+
     annotate("rect", xmin = 640, xmax = 680, ymin = -0.25, ymax = -0.17,colour ='red' ,size =0.35 ,fill ='red',  alpha = .2)+
-    annotate ("text",  x = 660, y = -0.27, label = "SEQ Red", size=2)+
+    annotate ("text",  x = 660, y = -0.27, label = "PS Red", size=2)+
     annotate("rect", xmin = 730, xmax = 740, ymin = -0.25, ymax = -0.17,colour ='red' ,size =0.35 ,fill ='orange',  alpha = .2)+
-    annotate ("text",  x = 735, y = -0.27, label = "SEQ RedEdge", size=2)+
+    annotate ("text",  x = 735, y = -0.27, label = "PS RedEdge", size=2)+
     annotate("rect", xmin = 770, xmax = 810, ymin = -0.25, ymax = -0.17,colour ='red' ,size =0.35 ,fill ='black',  alpha = .2)+
-    annotate ("text",  x = 790, y = -0.27, label = "SEQ NIR", size=2)+
-    annotate ("text",  x = 415, y = -0.07, label = "MicaSense \n RedEdge", size=2.5)+
-    annotate ("text",  x = 415, y = -0.19, label = "Sequoia", size=2.5)+
-    #annotate ("text",  x = 405, y = 0.8, label = "Sentinel-2", size=2.5)+
+    annotate ("text",  x = 790, y = -0.27, label = "PS NIR", size=2)+
+    annotate ("text",  x = 430, y = -0.07, label = "MicaSense \n (MRE)", size=2.25)+
+    annotate ("text",  x = 435, y = -0.21, label = "Parrot \n Sequoia (PS) ", size=2.25)+
+    #annotate ("text",  x = 405, y = 0.8, label = "Sentinel-2 (S2) ", size=2.5)+
    # annotate("segment", x =430, xend = 455, y = 0.79, yend = 0.79, colour = "blue", size=0.35)+
     #      annotate ("text",  x = 405, y = 0.7, label = "Creosote \n Bush", size=2.5)+
     #      annotate("segment", x =425, xend = 455, y = 0.69, yend = 0.69, colour = "green", size=0.55)+
@@ -454,7 +454,7 @@ P8 <-ggplot(df3, aes(Wavelength, value)) +
     annotate ("text",  x = 780, y = -0.4, label = "S2 RE B7", size=2)+
     annotate("rect", xmin = 780, xmax = 886, ymin = -0.38, ymax = -0.3,colour ='blue' ,size =0.35 ,fill ='black',  alpha = .2)+
     annotate ("text",  x = 833, y = -0.4, label = "S2 NIR", size=2)+
-    annotate ("text",  x = 415, y = -0.34, label = "Sentinel-2", size=2.5)+
+    annotate ("text",  x = 430, y = -0.34, label = "Sentinel-2", size=2.25)+
     theme(legend.position="none")+
      theme(
         plot.title = element_blank(),
