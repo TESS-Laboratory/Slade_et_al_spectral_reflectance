@@ -64,80 +64,42 @@ AreaROI <- readOGR(dsn = 'E:/Glenn/Tramway Experiment/Processed/Shapefiles', lay
 
 
 ARE_1_seqSpectralonNDVI <- raster("E:/Glenn/Tramway Experiment/Processed/DroneData/ReflStacks/ARE_1_SEQ/Spectralon/indices/ARE_1_SEQ_SPE_index_ndvi.tif")
-ARE_1_seqSpectralonNDVICrop <- crop(ARE_1_seqSpectralonNDVI,AreaROI)
+ARE_1_seqSpectralonNDVIC <- crop(ARE_1_seqSpectralonNDVI,AreaROI)
+ARE_1_seqSpectralonNDVICrop <- mask(ARE_1_seqSpectralonNDVIC,AreaROI)
+plot(ARE_1_seqSpectralonNDVI)
+plot(ARE_1_seqSpectralonNDVIC)
+plot (ARE_1_seqSpectralonNDVICrop)
+
+#writeRaster(ARE_1_seqSpectralonNDVICrop,"E:/Glenn/Temp/ARE_1_seqSpectralonNDVICrop.tif", overwrite=TRUE)
 
 ARE_1_MRESpectralonNDVI <- raster("E:/Glenn/Tramway Experiment/Processed/DroneData/ReflStacks/ARE_1_MRE/Spectralon/indices/ARE_1_MRE_SPE_index_ndvi.tif")
 ARE_1_MRESpectralonNDVICrop <- crop(ARE_1_MRESpectralonNDVI,AreaROI)
-
+plot (ARE_1_MRESpectralonNDVICrop)
 #----4. Variogram-----
 
-#SEQ_NDVI.var <- Variogram(ARE_1_seqSpectralonNDVICrop,  size=100) 
-#plot(SEQ_NDVI.var)
-#plot(SEQ_NDVI.var, cloud=TRUE) 
-#plot(SEQ_NDVI.var, box=TRUE)
 
-#r = ARE_1_seqSpectralonNDVICrop#raster(meuse.grid["dist"]) #replace with your raster
-#r= as.vector(ARE_1_seqSpectralonNDVICrop, mode='any')
-#r <- as.data.frame(ARE_1_seqSpectralonNDVICrop, xy=TRUE)
-#v <- variogram(dist~1, as(r, "SpatialPixelsDataFrame"))
-#variogram(log(zinc)~x+y, meuse)
-#v <- variogram(dist~x+y, as(r, "ARE_1_seqSpectralonNDVICrop"))
-#variogram(object, locations = coordinates(data), data, ...)
-
-#f <- fit.variogram(v, vgm("Sph"))#   model      psill    range# 1   Nug 0.09035948    0.000# 2   Sph 0.06709838 1216.737
-#v <- variogram (data = s, locations= ~x+y, width=100, cutoff= 5)
-
-#SEQ_NDVI.var <- Variogram(ARE_1_seqSpectralonNDVICrop,  size=100) 
-
-
-
+# resampling  needed for SEQ
 r <- ARE_1_seqSpectralonNDVICrop
-r.df <- as.data.frame(r,xy=TRUE)
-coordinates(r.df) = ~x+y
+r[is.na(r[])] <- 0 
+sampled <- terra::spatSample(rast(r),size = 1000000, xy=T, method = 'regular')
+coordinates(sampled) = ~x+y
 {tic()
-VAR <-variogram(ARE_1_SEQ_SPE_index_ndvi~x+y, r.df[1:100000,],width = 0.1, cutoff = 15)
-toc()}
+  VAR <-variogram(ARE_1_SEQ_SPE_index_ndvi~x+y, sampled ,width = 0.05, cutoff = 15)
+  toc()}
 Fit <- fit.variogram(VAR, vgm("Sph"))
 plot(VAR)
 plot(Fit,cutoff=15)
 
-#VAR <-variogram (data = sampled, locations= ~x+y, thin = 20, cut_off = 15, bin_width = 0.5)
-#s <- SpatialPointsDataFrame(coords=sampled[,1:2],data=sampled$varname)
+# resampling  needed for MRE
+r1 <- ARE_1_MRESpectralonNDVICrop
+r1[is.na(r1[])] <- 0 
+sampled1 <- terra::spatSample(rast(r1),size = 1000000, xy=T, method = 'regular')
+coordinates(sampled1) = ~x+y
+{tic()
+  VAR1 <-variogram(ARE_1_MRE_SPE_index_ndvi~x+y, sampled1 ,width = 0.05, cutoff = 15)
+  toc()}
+Fit1 <- fit.variogram(VAR1, vgm("Sph"))
+plot(VAR1)
+plot(Fit1,cutoff=15)
 
 
-#valsSampled <- terra::spatSample(spatRast,size=sampsize,xy=T,method='regular')
-#valsSampledSpatPts <- SpatialPointsDataFrame(coords=valsSampled[,1:2],data=valsSampled$varname)
-
-
-
-round(dim(r)[1:2]*0.5)
-
-
-
-#f <- fit.variogram(v, vgm("Sph"))#   model      psill    range# 1   Nug 0.09035948    0.000# 2   Sph 0.06709838 1216.737
-
-
-s <- as(r, "SpatialPixelsDataFrame")
-v <- variogram (data = s, locations= ~x+y, thin = 20, cut_off = 15, bin_width = 0.5)
-
-#rast(r)
-#sampled <- terra::spatSample(rast(r),size = 100000, xy=F, method = 'regular', as.points=TRUE)
-#coordinates(sampled) = ~x+y
-#plot(sampled)
-
-
-# resampling if needed
-sampled <- terra::spatSample(rast(r),size = 100000, xy=T, method = 'regular')
-coordinates(sampled) = ~x+y
-plot(sampled)
-
-
-thin = 20, cut_off = 15, bin_width = 0.15
-
-
-MRE_NDVI.var <- Variogram(ARE_1_MRESpectralonNDVICrop,  size=100) 
-plot(MRE_NDVI.var)
-
-# fit.variogram(MRE_NDVI.var,fit.sills = TRUE, fit.ranges = TRUE,
-#              fit.method = 7, debug.level = 1, warn.if.neg = FALSE, fit.kappa = FALSE)
-#write.csv(MRE_NDVI.var, file = "E:/Glenn/Slade_et_al_spectral_reflectance/output_data/MRE_Variogram.csv")
