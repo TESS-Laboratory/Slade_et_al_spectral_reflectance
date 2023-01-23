@@ -4,14 +4,7 @@ Title:
 Optical reflectance across spatial scales – An inter-comparison of transect-based hyperspectral, drone, and satellite reflectance data for dry season rangeland.
 
 Contributors: 
-Glenn Slade1*, Dominic Fawcett1, Karen Anderson2, Andrew M. Cunliffe1, Richard E. Brazier 1, Kamal Nyaupane4, Marguerite Mauritz3, Sergio Vargas4.
-
-Affiliation:
-*Corresponding Author 
-1 Department of Geography, Faculty of Environment, Science and Economy, University of Exeter
-2 Environment and Sustainability Institute, University of Exeter, Penryn Campus, TR109FE
-3 Biological Sciences, The University of Texas at El Paso, 500 W University Ave., El Paso, TX 79968, USA University of Texas at El Paso
-4 Environmental Science and Engineering Program, The University of Texas at El Paso, 500 W University Ave., El Paso, TX 79968, USA University of Texas at El Paso
+Glenn Slade, Dominic Fawcett, Karen Anderson, Andrew M. Cunliffe, Richard E. Brazier, Kamal Nyaupane, Marguerite Mauritz, Sergio Vargas.
 
 Submitted to: Drone Systems and Applications
 
