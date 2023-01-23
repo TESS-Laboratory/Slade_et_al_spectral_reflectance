@@ -1,3 +1,22 @@
+This Repo contains R scripts used in the preparation and analysis of Hyperspectral data, Drone Image Data and Satellite Image data for the following manuscript :
+
+Title:
+Optical reflectance across spatial scales – An inter-comparison of transect-based hyperspectral, drone, and satellite reflectance data for dry season rangeland.
+
+Contributors: 
+Glenn Slade1*, Dominic Fawcett1, Karen Anderson2, Andrew M. Cunliffe1, Richard E. Brazier 1, Kamal Nyaupane4, Marguerite Mauritz3, Sergio Vargas4.
+
+Affiliation:
+*Corresponding Author 
+1 Department of Geography, Faculty of Environment, Science and Economy, University of Exeter
+2 Environment and Sustainability Institute, University of Exeter, Penryn Campus, TR109FE
+3 Biological Sciences, The University of Texas at El Paso, 500 W University Ave., El Paso, TX 79968, USA University of Texas at El Paso
+4 Environmental Science and Engineering Program, The University of Texas at El Paso, 500 W University Ave., El Paso, TX 79968, USA University of Texas at El Paso
+
+Submitted to: Drone Systems and Applications
+
+
+
 Scripts Folder contains the following files:
 
 Spectral_Response_Curves: Reads in csv files for the spectral response curves for MicaSense RedEdge, Parrot Sequoia and Sentinel-2 sensors

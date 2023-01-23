@@ -81,7 +81,7 @@ plot (ARE_1_MRESpectralonNDVICrop)
 # resampling  needed for SEQ
 r <- ARE_1_seqSpectralonNDVICrop
 r[is.na(r[])] <- 0 
-sampled <- terra::spatSample(rast(r),size = 1000000, xy=T, method = 'regular')
+sampled <- terra::spatSample(rast(r),size = 5000000, xy=T, method = 'regular')
 coordinates(sampled) = ~x+y
 {tic()
   VAR <-variogram(ARE_1_SEQ_SPE_index_ndvi~x+y, sampled ,width = 0.05, cutoff = 15)
@@ -93,7 +93,7 @@ plot(Fit,cutoff=15)
 # resampling  needed for MRE
 r1 <- ARE_1_MRESpectralonNDVICrop
 r1[is.na(r1[])] <- 0 
-sampled1 <- terra::spatSample(rast(r1),size = 1000000, xy=T, method = 'regular')
+sampled1 <- terra::spatSample(rast(r1),size = 5000000, xy=T, method = 'regular')
 coordinates(sampled1) = ~x+y
 {tic()
   VAR1 <-variogram(ARE_1_MRE_SPE_index_ndvi~x+y, sampled1 ,width = 0.05, cutoff = 15)
@@ -102,4 +102,6 @@ Fit1 <- fit.variogram(VAR1, vgm("Sph"))
 plot(VAR1)
 plot(Fit1,cutoff=15)
 
+write_csv (VAR, "E:/Glenn/Slade_et_al_spectral_reflectance/output_data/variogram_SEQ.csv")
+write_csv (VAR1, "E:/Glenn/Slade_et_al_spectral_reflectance/output_data/variogram_MRE.csv")
 
