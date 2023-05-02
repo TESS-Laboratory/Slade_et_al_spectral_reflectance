@@ -14,8 +14,24 @@
   library(splines)
   library(rgeos)
   library(gridExtra)
-
+  library(tidyverse)
+  library(viridis)
+  library(rgdal)
+  library(lubridate)
+  library(RColorBrewer)
+  library(ggplot2)
+  library(raster)
+  library(MASS)
+  library(splines)
+  library(rgeos)
+  library(gridExtra)
+  library(DescTools)
+  library(sf)
+  library(exactextractr)
+  library(writexl)  
+  library(cowplot)
 }
+
 #----1. Read in shape files-----
 
 
@@ -456,7 +472,7 @@ sensrededge <- ggplot(df) +
   geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.23),label=ccc,hjust='left', size=3.0)+
-  geom_text(aes(x=0.0,y=0.20),label=equation,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.33),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -495,7 +511,7 @@ senmrededge <- ggplot(df) +
   geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.23),label=ccc,hjust='left', size=3.0)+
-  geom_text(aes(x=0.0,y=0.20),label=equation,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.33),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -534,7 +550,7 @@ senmrededge5 <- ggplot(df) +
   geom_text(aes(x=0.0,y=0.3),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.27),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.23),label=ccc,hjust='left', size=3.0)+
-  geom_text(aes(x=0.0,y=0.20),label=equation,hjust='left', size=3.0)+
+  geom_text(aes(x=0.0,y=0.33),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
   scale_color_identity() +
   theme_fancy() +
@@ -547,4 +563,21 @@ senmrededge5 <- ggplot(df) +
   #coord_equal(ratio=1)
   coord_fixed(xlim=c(0,0.4),ylim=c(0,0.4))
 plot(senmrededge5)
+
+p <-grid.arrange(sensrededge,senmrededge,senmrededge5, nrow = 3)
+
+
+ggsave2(
+  "E:/Glenn/slade_et_al_spectral_reflectance/figure/plots/sentinel_2_rededge_drone_comparison.png",
+  plot = p,
+  device = NULL,
+  path = NULL,
+  scale = 1,
+  width = 170,
+  height = 260,
+  units =  "mm",
+  dpi = 300,
+  limitsize = TRUE
+)
+
 

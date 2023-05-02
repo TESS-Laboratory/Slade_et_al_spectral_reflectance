@@ -389,7 +389,7 @@ resamp_compare <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -470,7 +470,7 @@ p1sg <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -511,7 +511,7 @@ p1sr <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -552,7 +552,7 @@ p1sre <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -593,7 +593,7 @@ p1sni <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -635,7 +635,7 @@ p1snv <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -686,7 +686,7 @@ p1mb <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -728,7 +728,7 @@ p1mg <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -769,7 +769,7 @@ p1mr <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -811,7 +811,7 @@ p1mre <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -853,7 +853,7 @@ p1mni <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -895,7 +895,7 @@ p1mnv <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -958,7 +958,7 @@ p2sg <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -1000,7 +1000,7 @@ p2sr <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -1042,7 +1042,7 @@ p2sre <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -1084,7 +1084,7 @@ p2sni <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -1126,7 +1126,7 @@ p2snv <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -1179,7 +1179,7 @@ p2mb <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -1221,7 +1221,7 @@ p2mg <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -1263,7 +1263,7 @@ p2mr <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -1305,7 +1305,7 @@ p2mre <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -1347,7 +1347,7 @@ p2mni <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -1389,7 +1389,7 @@ p2mnv <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -1442,7 +1442,7 @@ plot(p2mnv)
     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
     #theme(text = element_text(size=20))+
@@ -1484,7 +1484,7 @@ plot(p2mnv)
     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
     #theme(text = element_text(size=20))+
@@ -1526,7 +1526,7 @@ plot(p2mnv)
     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
     #theme(text = element_text(size=20))+
@@ -1568,7 +1568,7 @@ plot(p2mnv)
     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
     #theme(text = element_text(size=20))+
@@ -1610,7 +1610,7 @@ plot(p2mnv)
     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
     #theme(text = element_text(size=20))+
@@ -1664,7 +1664,7 @@ p3mb <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -1706,7 +1706,7 @@ p3mg <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -1756,7 +1756,7 @@ p3mr <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -1798,7 +1798,7 @@ p3mre <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -1840,7 +1840,7 @@ p3mni <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -1882,7 +1882,7 @@ p3mnv <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -1944,7 +1944,7 @@ plot(p3mnv)
 #   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
 #   geom_point(aes(x, y), alpha=0.3, size = 1) +
 #   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-#   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
 #   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
 #   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
 #   #theme(text = element_text(size=20))+
@@ -1986,7 +1986,7 @@ plot(p3mnv)
 #   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
 #   geom_point(aes(x, y), alpha=0.3, size = 1) +
 #   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-#   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
 #   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
 #   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
 #   #theme(text = element_text(size=20))+
@@ -2028,7 +2028,7 @@ plot(p3mnv)
 #   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
 #   geom_point(aes(x, y), alpha=0.3, size = 1) +
 #   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-#   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
 #   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
 #   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
 #   #theme(text = element_text(size=20))+
@@ -2070,7 +2070,7 @@ plot(p3mnv)
 #   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
 #   geom_point(aes(x, y), alpha=0.3, size = 1) +
 #   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-#   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
 #   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
 #   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
 #   #theme(text = element_text(size=20))+
@@ -2112,7 +2112,7 @@ plot(p3mnv)
 #   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
 #   geom_point(aes(x, y), alpha=0.3, size = 1) +
 #   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-#   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#   geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
 #   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
 #   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
 #   #theme(text = element_text(size=20))+
@@ -2165,7 +2165,7 @@ plot(p3mnv)
 #     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
 #     geom_point(aes(x, y), alpha=0.3, size = 1) +
 #     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-#     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
 #     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
 #     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
 #     #theme(text = element_text(size=20))+
@@ -2207,7 +2207,7 @@ plot(p3mnv)
 #     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
 #     geom_point(aes(x, y), alpha=0.3, size = 1) +
 #     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-#     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
 #     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
 #     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
 #     #theme(text = element_text(size=20))+
@@ -2249,7 +2249,7 @@ plot(p3mnv)
 #     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
 #     geom_point(aes(x, y), alpha=0.3, size = 1) +
 #     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-#     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
 #     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
 #     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
 #     #theme(text = element_text(size=20))+
@@ -2291,7 +2291,7 @@ plot(p3mnv)
 #     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
 #     geom_point(aes(x, y), alpha=0.3, size = 1) +
 #     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-#     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
 #     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
 #     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
 #     #theme(text = element_text(size=20))+
@@ -2333,7 +2333,7 @@ plot(p3mnv)
 #     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
 #     geom_point(aes(x, y), alpha=0.3, size = 1) +
 #     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-#     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
 #     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
 #     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
 #     #theme(text = element_text(size=20))+
@@ -2375,7 +2375,7 @@ plot(p3mnv)
 #     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
 #     geom_point(aes(x, y), alpha=0.3, size = 1) +
 #     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-#     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+#     geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
 #     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
 #     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
 #     #theme(text = element_text(size=20))+
@@ -2641,7 +2641,7 @@ pGreenTRM1 <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -2686,7 +2686,7 @@ plot(pGreenTRM1)
     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
     #theme(text = element_text(size=20))+
@@ -2727,7 +2727,7 @@ plot(pGreenTRM1)
     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
     #theme(text = element_text(size=20))+
@@ -2768,7 +2768,7 @@ plot(pGreenTRM1)
     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
     #theme(text = element_text(size=20))+
@@ -2823,7 +2823,7 @@ pMMB <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -2866,7 +2866,7 @@ pMMG <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -2907,7 +2907,7 @@ pMMR <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -2948,7 +2948,7 @@ pMMRE <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -2989,7 +2989,7 @@ pMMN <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -3030,7 +3030,7 @@ pMMVI <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -3082,7 +3082,7 @@ pMSG <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -3124,7 +3124,7 @@ pMSR <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -3166,7 +3166,7 @@ pMSRE <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -3208,7 +3208,7 @@ pMSN <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=2.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=2.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=2.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=2.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=2.0)+
   #theme(text = element_text(size=20))+
@@ -3250,7 +3250,7 @@ pMSVI <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -3324,7 +3324,7 @@ ggsave(
     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
     #theme(text = element_text(size=20))+
@@ -3365,7 +3365,7 @@ ggsave(
     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
     #theme(text = element_text(size=20))+
@@ -3407,7 +3407,7 @@ ggsave(
     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
     #theme(text = element_text(size=20))+
@@ -3449,7 +3449,7 @@ ggsave(
     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
     #theme(text = element_text(size=20))+
@@ -3490,7 +3490,7 @@ ggsave(
     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
     #theme(text = element_text(size=20))+
@@ -3551,7 +3551,7 @@ pseq1v2green <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -3593,7 +3593,7 @@ pseq1v3green <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -3633,7 +3633,7 @@ pseq2v3green <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -3674,7 +3674,7 @@ pseq1v2red <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -3716,7 +3716,7 @@ pseq1v3red <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -3756,7 +3756,7 @@ pseq2v3red <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -3798,7 +3798,7 @@ pseq1v2redEdge <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -3840,7 +3840,7 @@ pseq1v3redEdge <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -3880,7 +3880,7 @@ pseq2v3redEdge <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -3922,7 +3922,7 @@ pseq1v2NIR <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -3964,7 +3964,7 @@ pseq1v3NIR <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -4004,7 +4004,7 @@ pseq2v3NIR <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -4032,10 +4032,10 @@ ggsave(
 )
 
 PlotSEQvSEQreNIR <-grid.arrange(pseq1v2redEdge, pseq1v2NIR, pseq2v3redEdge, pseq2v3NIR,pseq1v3redEdge,pseq1v3NIR, nrow = 3)#Plots of  MRE Surveys Mean Data 
-
+PlotSEQvSEQreNIR
 ggsave(
   PlotSEQvSEQreNIR,
-  filename = "E:/glenn/Tramway_Rcode/figures/plots/PlotSEQvSEQredEdge_NIR.png",
+  filename = "figures/plots/PlotSEQvSEQredEdge_NIR.png",
   width = 16,
   height = 25,
   units = "cm"
@@ -4068,7 +4068,7 @@ pMRE1v2blue <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -4110,7 +4110,7 @@ pMRE1v3blue <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -4150,7 +4150,7 @@ pMRE2v3blue <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -4192,7 +4192,7 @@ pMRE1v2green <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -4234,7 +4234,7 @@ pMRE1v3green <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -4274,7 +4274,7 @@ pMRE2v3green <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -4315,7 +4315,7 @@ pMRE1v2red <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -4357,7 +4357,7 @@ pMRE1v3red <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -4397,7 +4397,7 @@ pMRE2v3red <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -4439,7 +4439,7 @@ pMRE1v2redEdge <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -4481,7 +4481,7 @@ pMRE1v3redEdge <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -4521,7 +4521,7 @@ pMRE2v3redEdge <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -4563,7 +4563,7 @@ pMRE1v2NIR <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -4605,7 +4605,7 @@ pMRE1v3NIR <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -4645,7 +4645,7 @@ pMRE2v3NIR <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
   #theme(text = element_text(size=20))+
@@ -4719,7 +4719,7 @@ ggsave(
     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
     #theme(text = element_text(size=20))+
@@ -4769,7 +4769,7 @@ ggsave(
     geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
     geom_point(aes(x, y), alpha=0.3, size = 1) +
     geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=3.0)+
-    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=3.0)+
+    geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=3.0)+
     geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=3.0)+
     geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=3.0)+
     #theme(text = element_text(size=20))+
@@ -4855,7 +4855,7 @@ pMMVI <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,2)),hjust='left',size=1.5)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=1.5)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=1.5)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=1.5)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=1.5)+
   #theme(text = element_text(size=20))+
@@ -4905,7 +4905,7 @@ pMSVI <- ggplot(df) +
   geom_smooth(aes(x, y,col='black',weight=0.01),method='lm',formula=y ~ x,se=FALSE) +
   geom_point(aes(x, y), alpha=0.3, size = 1) +
   geom_text(aes(x=0.0,y=0.5),label=paste0('MAD: ',round(MADval,3)),hjust='left',size=1.5)+
-  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,2)),hjust='left',size=1.5)+
+  geom_text(aes(x=0.0,y=0.47),label=paste0('R2: ',round(r2val,3)),hjust='left',size=1.5)+
   geom_text(aes(x=0.0,y=0.44),label=ccc,hjust='left', size=1.5)+
   geom_text(aes(x=0.0,y=0.41),label=equation,hjust='left', size=1.5)+
   #theme(text = element_text(size=20))+
